@@ -4,7 +4,6 @@ import Avator from "../../assets/avator.jpg"
 import ConcernedsIcon from "../../assets/concernedsIcon.png"
 import CollectionsIcon from "../../assets/collectionsIcon.png"
 import LogoutIcon from "../../assets/logoutIcon.png"
-import { useState } from "react"
 import Link from "next/link"
 
 export function Search() {
@@ -72,17 +71,13 @@ export default function Header(props: HeaderProps) {
 
     const { isHomePage, onAvatorClick, onPublishProblem } = props
 
-    function publishProblem() {
-        onPublishProblem()
-    }
-
     return (
         <div className="w-full h-20 pl-10 pr-24 bg-white fixed top-0 flex z-10 items-center cursor-pointer shadow-sm justify-between" >
             <Link className="text-3xl font-semibold text-blue-700" href={"/"}>金点子”深海孵化器“</Link>
             <div className="flex gap-x-12">
                 <div className="flex gap-x-2">
                     <Search />
-                    {isHomePage && <div className="pl-4 pr-4 h-14 bg-blue-700 flex justify-center items-center text-white text-xl rounded font-normal tracking-widest" onClick={publishProblem}>提问</div>}
+                    {isHomePage && <div className="pl-4 pr-4 h-14 bg-blue-700 flex justify-center items-center text-white text-xl rounded font-normal tracking-widest" onClick={() => onPublishProblem()}>提问</div>}
                 </div>
                 <Image src={Avator} alt={"用户头像"} width={56} height={56} onClick={onAvatorClick} className="rounded" />
             </div>

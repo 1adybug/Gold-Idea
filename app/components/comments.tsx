@@ -1,4 +1,4 @@
-import { Fragment, useState } from "react"
+import { useState } from "react"
 
 export interface TabItem {
     key: number
@@ -20,17 +20,13 @@ export function TabBar() {
 
     const [activedTab, setActivedTab] = useState(0)
 
-    function tabClick(tab: TabItem) {
-        setActivedTab(tab.key)
-    }
-
     return (
         <div className="flex items-center gap-x-2">
             {
                 tablist.map((tab: TabItem) => {
                     return (
                         <div key={tab.key} className="flex items-center gap-x-2">
-                            <div className={`text-xl cursor-pointer ${activedTab === tab.key ? "text-blue-600" : "text-gray-500"}`} onClick={() => tabClick(tab)}>{tab.content}</div>
+                            <div className={`text-xl cursor-pointer ${activedTab === tab.key ? "text-blue-600" : "text-gray-500"}`} onClick={() => setActivedTab(tab.key)}>{tab.content}</div>
                             {tab.key !== tablist.length - 1 && <div className="text-gray-500">|</div>}
                         </div>
                     )
