@@ -10,7 +10,7 @@ import Link from "next/link"
 export function Search() {
     return (
         <div className="flex">
-            <input className="h-14 pl-2 pr-2 text-xl w-96 border-2 border-gray-200 outline-none rounded-l" placeholder="探索深海金点子" />
+            <input className="h-14 pl-2 pr-2 text-xl w-96 border-2 border-gray-200 outline-none rounded-l" placeholder="探索“深海金点子”" />
             <div className="w-16 h-14 flex justify-center items-center bg-blue-700 rounded-r">
                 <Image src={SearchIcon} alt={"搜索图标"} width={30} height={30} />
             </div>
