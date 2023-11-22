@@ -15,6 +15,8 @@ export default function Home() {
     }
 
     function handlePublishProblem() {
+        console.log(1);
+        
         if (publishQuestionOpen) return
         setPublishQuestionOpen(true)
     }
