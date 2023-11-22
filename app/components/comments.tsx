@@ -29,10 +29,10 @@ export function TabBar() {
             {
                 tablist.map((tab: TabItem) => {
                     return (
-                        <Fragment>
-                            <div key={tab.key} className={`text-xl cursor-pointer ${activedTab === tab.key ? "text-blue-600" : "text-gray-500"}`} onClick={() => tabClick(tab)}>{tab.content}</div>
+                        <div key={tab.key}>
+                            <div className={`text-xl cursor-pointer ${activedTab === tab.key ? "text-blue-600" : "text-gray-500"}`} onClick={() => tabClick(tab)}>{tab.content}</div>
                             {tab.key !== tablist.length - 1 && <div className="px-1 text-gray-500">|</div>}
-                        </Fragment>
+                        </div>
                     )
                 })
             }
