@@ -29,9 +29,9 @@ export function TabBar() {
             {
                 tablist.map((tab: TabItem) => {
                     return (
-                        <div key={tab.key}>
+                        <div key={tab.key} className="flex items-center gap-x-2">
                             <div className={`text-xl cursor-pointer ${activedTab === tab.key ? "text-blue-600" : "text-gray-500"}`} onClick={() => tabClick(tab)}>{tab.content}</div>
-                            {tab.key !== tablist.length - 1 && <div className="px-1 text-gray-500">|</div>}
+                            {tab.key !== tablist.length - 1 && <div className="text-gray-500">|</div>}
                         </div>
                     )
                 })
