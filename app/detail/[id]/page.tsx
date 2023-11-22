@@ -94,6 +94,7 @@ const questionDemo = {
     ]
 }
 
+
 export default function Page({ params }: any) {
 
     const { id } = params
@@ -106,11 +107,6 @@ export default function Page({ params }: any) {
 
     function handlePublishProblem() {
 
-    }
-
-    function handleTextareaInputChange(event: any) {
-        // console.log(event);
-        setInputedValue(event.target.value)
     }
 
     return (
@@ -141,7 +137,7 @@ export default function Page({ params }: any) {
                     <div className="flex gap-x-6">
                         <Image src={userDemo.avator} alt="用户头像" width={56} className="rounded h-[56px]" />
                         <div className="w-full flex flex-col gap-y-10 bg-gray-100 p-3 rounded-md">
-                            <textarea onChange={handleTextareaInputChange} className="h-[200px] text-2xl bg-gray-100 focus:outline-none" placeholder="发表一条评论吧！" />
+                            <textarea className="h-[200px] text-2xl bg-gray-100 focus:outline-none" placeholder="发表一条评论吧！" />
                             <div className="flex items-center gap-x-6 ml-auto">
                                 <div className="text-2xl text-gray-500">{inputedValue.length}/1000</div>
                                 <button disabled={true} className="w-[110px] h-[50px] flex justify-center items-center text-white text-xl rounded bg-blue-600">发送</button>
