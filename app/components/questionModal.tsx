@@ -12,6 +12,8 @@ export default function QuestionModal(props: QuestionModalProps) {
 
     const { open, onCloseModal } = props
 
+    const [isOpen, setIsOpen] = useState(false)
+
     useEffect(() => {
         setIsOpen(open)
         const disableScroll = (e: WheelEvent) => {
@@ -28,7 +30,6 @@ export default function QuestionModal(props: QuestionModalProps) {
         }
     }, [open])
 
-    const [isOpen, setIsOpen] = useState(false)
 
     return (
         <Fragment>
