@@ -8,10 +8,13 @@ datasource db {
 }
 
 model Question {
-  questionId Int    @id @default(autoincrement())
+  questionId Int       @id @default(autoincrement())
   content    String
   goal       String
   publisher  User?
+  comments   Comment[]
+  createTime DateTime
+  updateTime DateTime
 }
 
 model User {
@@ -21,4 +24,24 @@ model User {
   policeNo String
   phone    String
   question Question @relation(fields: [userId], references: [questionId])
+  comment  Comment  @relation(fields: [userId], references: [commentId])
+  unit     Unit?
+}
+
+model Comment {
+  commentId  Int      @id @default(autoincrement())
+  publisher  User?
+  content    String
+  question   Question @relation(fields: [commentId], references: [questionId])
+  createTime DateTime
+  updateTime DateTime
+}
+
+model Unit {
+  unitId     Int    @id @default(autoincrement())
+  unitNo     String
+  unitName   String
+  createTime String
+  updateTime String
+  user       User   @relation(fields: [unitId], references: [userId])
 }
