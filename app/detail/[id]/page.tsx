@@ -7,6 +7,12 @@ import Header from "../../components/header"
 import Comments, { CommentItem } from "../../components/comments"
 import { PageProps } from "../../../.next/types/app/layout"
 
+export interface Unit {
+    id: string
+    unitNo: string
+    unitName: string
+}
+
 export interface User {
     userId: string
     avator: StaticImageData

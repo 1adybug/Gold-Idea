@@ -8,6 +8,17 @@ datasource db {
 }
 
 model Question {
-  id      String @id @default(cuid())
-  content String
+  questionId Int    @id @default(autoincrement())
+  content    String
+  goal       String
+  publisher  User?
+}
+
+model User {
+  userId   Int      @id @default(autoincrement())
+  avator   String?
+  userName String
+  policeNo String
+  phone    String
+  question Question @relation(fields: [userId], references: [questionId])
 }
