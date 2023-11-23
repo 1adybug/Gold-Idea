@@ -4,7 +4,7 @@ import Avator from "../../../assets/avator.jpg"
 import { StaticImageData } from "next/image"
 import Image from "next/image"
 import Header from "../../components/header"
-import Comments from "../../components/comments"
+import Comments, { CommentItem } from "../../components/comments"
 import { PageProps } from "../../../.next/types/app/layout"
 
 export interface User {
@@ -22,12 +22,7 @@ export interface QuestionDetail {
     goal: string
     createTime: string
     quizzer: User,
-    comments: {
-        id: string,
-        content: string,
-        createTime: string,
-        quizzer: User
-    }[]
+    comments: CommentItem[]
 }
 
 export function DetailFirstSection(props: QuestionDetail) {
@@ -43,7 +38,7 @@ export function DetailFirstSection(props: QuestionDetail) {
                         <Image src={quizzer.avator} alt="创建者头像" width={36} height={36} className="rounded" />
                         <div className="text-black font-medium">{quizzer.userName}</div>
                     </div>
-                    <div className="flex gap-x-2.5 items-center">
+                    <div className="flex gap-x-2.5 items-center text-gray-400">
                         <div>警号：{quizzer.policeNo}</div>
                         <div>所属单位：{quizzer.unit}</div>
                         <div>发表时间：{createTime}</div>
@@ -76,12 +71,12 @@ export function DetailSecondSection(props: DetailSecondSectionProps) {
                 <div className="w-full flex flex-col gap-y-10 bg-gray-100 p-3 rounded-md">
                     <textarea className="h-[200px] text-2xl bg-gray-100 focus:outline-none" placeholder="发表一条评论吧！" />
                     <div className="flex items-center gap-x-6 ml-auto">
-                        <div className="text-2xl text-gray-500">{inputedValue.length}/1000</div>
+                        <div className="text-2xl text-gray-400">{inputedValue.length}/1000</div>
                         <button disabled={true} className="w-[110px] h-[50px] flex justify-center items-center text-white text-xl rounded bg-blue-600">发送</button>
                     </div>
                 </div>
             </div>
-            <Comments />
+            <Comments comments={question.comments} />
         </div>
     )
 }
@@ -110,43 +105,31 @@ const questionDemo = {
     },
     comments: [
         {
-            id: "0010",
+            commentId: "c000",
+            questionId: "q000",
+            userId: "u000",
+            parentCommentId: "pc000",
             content: "这是第一条友善的评论",
-            createTime: "2023-11-22 16:00:03",
-            quizzer: {
-                userId: "0000",
-                avator: Avator,
-                userName: "王勇",
-                policeNo: "082xxx",
-                phone: "19942372693",
-                unit: "黄码派出所"
-            }
+            createTime: "2023-11-23 09:51",
+            updateTime: "2023-11-23 09:51"
         },
         {
-            id: "0012",
+            commentId: "c000",
+            questionId: "q000",
+            userId: "u000",
+            parentCommentId: "pc000",
             content: "这是第二条友善的评论",
-            createTime: "2023-11-22 16:00:05",
-            quizzer: {
-                userId: "0000",
-                avator: Avator,
-                userName: "王勇",
-                policeNo: "082xxx",
-                phone: "19942372693",
-                unit: "黄码派出所"
-            }
+            createTime: "2023-11-23 09:51",
+            updateTime: "2023-11-23 09:51"
         },
         {
-            id: "0012",
+            commentId: "c000",
+            questionId: "q000",
+            userId: "u000",
+            parentCommentId: "pc000",
             content: "这是第三条友善的评论",
-            createTime: "2023-11-22 16:00:06",
-            quizzer: {
-                userId: "0000",
-                avator: Avator,
-                userName: "王勇",
-                policeNo: "082xxx",
-                phone: "19942372693",
-                unit: "黄码派出所"
-            }
+            createTime: "2023-11-23 09:51",
+            updateTime: "2023-11-23 09:51"
         }
     ]
 }

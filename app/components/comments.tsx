@@ -36,10 +36,26 @@ export function TabBar() {
     )
 }
 
-export default function Comments() {
+export interface CommentItem {
+    commentId: string
+    questionId: string
+    userId: string
+    parentCommentId: string
+    content: string
+    createTime: string
+    updateTime: string
+}
+
+export default function Comments(props: { comments: CommentItem[] }) {
+
+    const { comments } = props
+
     return (
         <div className="w-full h-[1000px] mt-10 flex flex-col">
             <TabBar />
+            <div className="w-full h-full p-2.5">
+                {comments.map((comment: CommentItem) => <div>{comment.content}</div>)}
+            </div>
         </div>
     )
 }
