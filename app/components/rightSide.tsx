@@ -52,12 +52,11 @@ const sortList: SortItem[] = [
 
 export default function RightSide() {
 
-    // const [activedChild, setActivedChild] = useState(0)
     const [sortActivedChild, setSortActivedChild] = useState(0)
     const [filterActivedChild, setFilterActivedChild] = useState(0)
 
     return (
-        <div className="w-2/12 bg-white shadow-sm">
+        <div className="w-2/12 h-screen bg-white shadow-sm">
             {sortList.map((sortItem: SortItem) => {
                 return (
                     <div className="flex flex-col gap-y-2" key={sortItem.id}>

@@ -1,5 +1,6 @@
 import { Question } from "./questionContainer"
 import Quote from "../../assets/quote.png"
+import CollectIcon from "../../assets/collectIcon.png"
 import Image from "next/image"
 import Link from "next/link"
 
@@ -13,12 +14,16 @@ export default function QuestionCard(props: Question) {
             <div className="flex flex-wrap text-xl text-zinc-600 line-clamp-2 overflow-hidden">
                 {goal}
             </div>
-            <div className="mt-auto flex gap-x-3.5 items-center text-xl text-gray-500">
+            <div className="mt-auto flex gap-x-4 items-center text-xl text-gray-500">
                 <div className="flex gap-x-1">
                     <Image src={Quote} alt={"引用"} width={26} height={18} className="transform rotate-225 scale-x-[-1]" />
                     <div>{referCount}条引用</div>
                 </div>
-                <div>{createTime}</div>
+                <div>发布时间：{createTime}</div>
+                <div className="flex gap-x-1 items-center">
+                    <Image src={CollectIcon} alt={"收藏"} width={26} height={18} />
+                    <div>收藏</div>
+                </div>
             </div>
         </Link>
     )

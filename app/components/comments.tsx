@@ -54,7 +54,7 @@ export default function Comments(props: { comments: CommentItem[] }) {
         <div className="w-full h-[1000px] mt-10 flex flex-col">
             <TabBar />
             <div className="w-full h-full p-2.5">
-                {comments.map((comment: CommentItem) => <div>{comment.content}</div>)}
+                {comments.map((comment: CommentItem) => <div key={comment.commentId}>{comment.content}</div>)}
             </div>
         </div>
     )
