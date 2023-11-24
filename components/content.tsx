@@ -1,3 +1,4 @@
+"use client"
 import QuestionContainer from "./questionContainer";
 import RightSide from "./rightSide";
 

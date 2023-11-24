@@ -1,7 +1,8 @@
+"use client"
 import { Fragment, useEffect, useState } from "react"
-import ModalCloseIcon from "../../assets/modalCloseIcon.png"
+import ModalCloseIcon from "../assets/modalCloseIcon.png"
 import Image from "next/image"
-import Avator from "../../assets/avator.jpg"
+import Avator from "../assets/avator.jpg"
 
 export interface QuestionModalProps {
     open: boolean

@@ -1,5 +1,6 @@
+"use client"
 import { useEffect } from "react"
-import { findAllQuestions } from "../../pages/api"
+import { findAllQuestions } from "../pages/api"
 import QuestionCard from "./questionCard"
 
 export interface Question {

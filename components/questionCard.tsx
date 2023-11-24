@@ -1,6 +1,7 @@
+"use client"
 import { Question } from "./questionContainer"
-import Quote from "../../assets/quote.png"
-import CollectIcon from "../../assets/collectIcon.png"
+import Quote from "../assets/quote.png"
+import CollectIcon from "../assets/collectIcon.png"
 import Image from "next/image"
 import Link from "next/link"
 
