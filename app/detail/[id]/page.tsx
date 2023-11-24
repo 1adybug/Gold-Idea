@@ -1,10 +1,6 @@
 import { Fragment } from "react"
 import Avator from "../../../assets/avator.jpg"
-import { StaticImageData } from "next/image"
-import Image from "next/image"
 import Header from "../../../components/header"
-import Comments, { CommentItem } from "../../../components/comments"
-import { PageProps } from "../../../.next/types/app/layout"
 import DetailFirstSection from "../../../components/detailFirstSection"
 import DetailSecondSection from "../../../components/detailSecondSection"
 
@@ -67,7 +63,7 @@ const questionDemo = {
     ]
 }
 
-export default function Page({ params }: PageProps) {
+export default function Page({ params }: { params: { id: string } }) {
 
     const { id } = params
 
