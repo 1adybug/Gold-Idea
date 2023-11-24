@@ -53,6 +53,7 @@ export function CommentSection(props: CommentItem) {
                     <div className="text-gray-800">卜元浩</div>
                     <div className="text-gray-400">警号：082xxx</div>
                     <div className="text-gray-400">单位：清安派出所</div>
+                    <div className="text-gray-400">联系电话：15526265653</div>
                 </div>
                 <div className="text-2xl">{content}</div>
                 <div className="flex gap-x-6 items-center text-xl text-gray-400">

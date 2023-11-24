@@ -41,7 +41,7 @@ export default function QuestionModal(props: QuestionModalProps) {
                             <Image src={Avator} width={56} alt="用户头像" className="h-[56px] rounded" />
                             <textarea className="w-full text-2xl rounded-sm border border-gray-300 focus:outline-none p-2.5" placeholder="写下你的问题，准确地描述问题更容易得到解答" />
                         </div>
-                        <div className="w-[130px] h-[60px] text-white text-xl rounded bg-blue-700 flex justify-center items-center ml-auto">发布问题</div>
+                        <div className="w-[130px] h-[60px] text-white text-xl rounded bg-blue-700 flex justify-center items-center ml-auto">发布</div>
                     </div>
                     <Image src={ModalCloseIcon} alt="弹窗关闭图标" width={40} onClick={() => onCloseModal()} className="h-[40px] cursor-pointer" />
                 </div>
