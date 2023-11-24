@@ -1,8 +1,10 @@
 import { Fragment } from "react"
 import Avator from "../../../assets/avator.jpg"
+import XvTengAvator from "../../../assets/XvTengAvator.jpg"
 import Header from "../../../components/header"
 import DetailFirstSection from "../../../components/detailFirstSection"
 import DetailSecondSection from "../../../components/detailSecondSection"
+import LeftSideToolbar from "../../../components/leftSideToolbar"
 
 export interface Unit {
     id: string
@@ -26,8 +28,8 @@ const questionDemo = {
     createTime: "2023-11-22 13:55:01",
     quizzer: {
         userId: "0000",
-        avator: Avator,
-        userName: "王勇",
+        avator: XvTengAvator,
+        userName: "徐腾",
         policeNo: "082xxx",
         phone: "19942372693",
         unit: "黄码派出所"
@@ -78,6 +80,7 @@ export default function Page({ params }: { params: { id: string } }) {
     return (
         <Fragment>
             <Header isHomePage={false} />
+            <LeftSideToolbar />
             <div className="w-full h-scree flex flex-col gap-y-10 justify-center items-center pt-[110px]">
                 <DetailFirstSection id={questionDemo.id} content={questionDemo.content} goal={questionDemo.goal} createTime={questionDemo.createTime} quizzer={questionDemo.quizzer} comments={questionDemo.comments} />
                 <DetailSecondSection userDemo={userDemo} question={questionDemo} />

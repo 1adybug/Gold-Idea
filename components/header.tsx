@@ -87,7 +87,7 @@ export default function Header(props: HeaderProps) {
                 <div className="flex gap-x-12">
                     <div className="flex gap-x-2">
                         <Search />
-                        {isHomePage && <div className="pl-4 pr-4 h-14 bg-blue-700 flex justify-center items-center text-white text-xl rounded font-normal tracking-widest" onClick={handlePublishBtnCLick}>提问</div>}
+                        {isHomePage && <div className="pl-4 pr-4 h-14 bg-blue-700 flex justify-center items-center text-white text-xl rounded font-normal tracking-widest" onClick={handlePublishBtnCLick}>发表问题</div>}
                     </div>
                     <Image src={Avator} alt={"用户头像"} width={56} height={56} onClick={() => setAccountDropdownShow(!accountDropdownShow)} className="rounded" />
                 </div>
