@@ -155,7 +155,7 @@ export default function Page({ params }: PageProps) {
 
     return (
         <Fragment>
-            <Header onAvatorClick={handleAvatorClick} onPublishProblem={handlePublishProblem} isHomePage={false} />
+            <Header isHomePage={false} />
             <div className="w-full h-scree flex flex-col gap-y-10 justify-center items-center pt-[110px]">
                 <DetailFirstSection id={question.id} content={question.content} goal={question.goal} createTime={question.createTime} quizzer={question.quizzer} comments={question.comments} />
                 <DetailSecondSection userDemo={userDemo} question={question} />
