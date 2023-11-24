@@ -1,0 +1,11 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+    background: rgb(229, 232, 232);
+}
+
+.h-calc {
+    height: calc(100vh - 104px);
+}
