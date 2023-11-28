@@ -88,15 +88,15 @@ export default function QuestionContainer() {
 
     // const [questions, setQuestions] = useState<Question[]>([])
 
-    // useEffect(() => {
-    //     getAllQuestions()
-    // }, [])
+    useEffect(() => {
+        getAllQuestions()
+    }, [])
 
-    // async function getAllQuestions() {
-    //     const res = await findAllQuestions()
-    //     if (!res) return
-    //     console.log(res);
-    // }
+    async function getAllQuestions() {
+        const res = await findAllQuestions()
+        if (!res) return
+        console.log(res);
+    }
 
     return (
         <div className="w-9/12 flex flex-col gap-y-2.5 overflow-y-auto">

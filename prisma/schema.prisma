@@ -8,7 +8,7 @@ datasource db {
 }
 
 model Question {
-  questionId Int       @id @default(autoincrement())
+  id         Int       @id @default(autoincrement())
   content    String
   goal       String    @default("")
   publisher  User?
@@ -18,23 +18,25 @@ model Question {
 }
 
 model User {
-  userId   Int      @id @default(autoincrement())
-  avator   String?
-  userName String
-  policeNo String
-  phone    String
-  question Question @relation(fields: [userId], references: [questionId])
-  comment  Comment  @relation(fields: [userId], references: [commentId])
-  unit     Unit?
-  unitId   Int
+  id         Int      @id @default(autoincrement())
+  avator     String?
+  userName   String
+  policeNo   String
+  phone      String
+  questionId Int      @unique @default(0)
+  question   Question @relation(fields: [questionId], references: [id])
+  commentId  Int      @unique
+  comment    Comment  @relation(fields: [commentId], references: [id])
+  unit       Unit?
+  unitId     Int
 }
 
 model Comment {
-  commentId  Int      @id @default(autoincrement())
+  id         Int      @id @default(autoincrement())
   publisher  User?
   content    String
-  questionId String
-  question   Question @relation(fields: [commentId], references: [questionId])
+  questionId Int      @unique
+  question   Question @relation(fields: [questionId], references: [id])
   createTime DateTime @default(now())
   updateTime DateTime @default(now())
 }
@@ -45,6 +47,6 @@ model Unit {
   unitName   String
   createTime DateTime @default(now())
   updateTime DateTime @default(now())
-  user       User     @relation(fields: [unitId], references: [userId])
-  userId     String
+  userId     Int      @unique
+  user       User     @relation(fields: [userId], references: [id])
 }

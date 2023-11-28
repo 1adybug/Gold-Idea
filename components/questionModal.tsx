@@ -39,7 +39,7 @@ export default function QuestionModal(props: QuestionModalProps) {
                     <div className="w-[1000px] h-[500px] bg-white rounded flex flex-col gap-y-3 p-10">
                         <div className="flex h-full gap-x-2.5">
                             <Image src={Avator} width={56} alt="用户头像" className="h-[56px] rounded" />
-                            <textarea className="w-full text-2xl rounded-sm border border-gray-300 focus:outline-none p-2.5" placeholder="写下你的问题，准确地描述问题更容易得到解答" />
+                            <textarea className="min-h-[357px] max-h-[357px] w-full text-2xl rounded-sm border border-gray-300 focus:outline-none p-2.5" placeholder="写下你的问题，准确地描述问题更容易得到解答" />
                         </div>
                         <div className="w-[130px] h-[60px] text-white text-xl rounded bg-blue-700 flex justify-center items-center ml-auto">发布</div>
                     </div>
