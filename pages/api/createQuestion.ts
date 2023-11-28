@@ -1,10 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from "next"
-import { PrismaClient } from "@prisma/client"
+import { prisma } from "."
 
-const prisma = new PrismaClient()
-
-export default async function (req: NextApiRequest, res: NextApiResponse) {
-    if (req.method !== "POST") return res.status(405).json({ message: "请求方式出错！" })
+export default async function createQuestion(req: NextApiRequest, res: NextApiResponse) {
     const body = JSON.parse(req.body)
     try {
         const addRes = await prisma.question.create({ data: { content: body.content } })

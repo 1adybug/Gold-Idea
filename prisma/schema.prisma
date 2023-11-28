@@ -35,7 +35,7 @@ model Comment {
   id         Int      @id @default(autoincrement())
   publisher  User?
   content    String
-  questionId Int      @unique
+  questionId Int      
   question   Question @relation(fields: [questionId], references: [id])
   createTime DateTime @default(now())
   updateTime DateTime @default(now())

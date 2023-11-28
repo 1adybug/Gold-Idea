@@ -1,4 +1,3 @@
-"use client"
 import { Question } from "./questionContainer"
 import Quote from "../assets/quote.png"
 import CollectIcon from "../assets/collectIcon.png"
@@ -6,7 +5,11 @@ import AttentionIconForHome from "../assets/AttentionIconForHome.png"
 import Image from "next/image"
 import Link from "next/link"
 
-export default function QuestionCard(props: Question) {
+export interface QuestionCardProps extends Omit<Question, "comments"> {
+    referCount: number
+}
+
+export default function QuestionCard(props: QuestionCardProps) {
 
     const { id, content, goal, referCount, createTime } = props
 
