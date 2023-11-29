@@ -6,7 +6,11 @@ export default async function (req: NextApiRequest, res: NextApiResponse) {
     try {
         const findRes = await prisma.question.findMany({
             include: {
-                publisher: true,
+                publisher: {
+                    include: {
+                        unit: true
+                    }
+                },
                 comments: true
             }
         })

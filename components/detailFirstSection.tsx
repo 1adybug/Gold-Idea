@@ -1,6 +1,7 @@
 import Image, { StaticImageData } from "next/image"
 import { CommentItem } from "./comments"
 import XvTengAvator from "../assets/XvTengAvator.jpg"
+import { Unit } from "../app/detail/[id]/page"
 
 export interface User {
     id: string
@@ -10,6 +11,7 @@ export interface User {
     phone: string
     unitId: string
     commentId: number
+    unit: Unit
 }
 
 export interface QuestionDetail {
@@ -36,7 +38,7 @@ export default function DetailFirstSection(props: QuestionDetail) {
                     </div>
                     <div className="flex gap-x-2.5 items-center text-gray-400">
                         <div>警号：{publisher.policeNo}</div>
-                        <div>所属单位：{publisher.unitId}</div>
+                        <div>所属单位：{publisher.unit.unitName}</div>
                         <div>发表时间：{createTime}</div>
                     </div>
                 </div>

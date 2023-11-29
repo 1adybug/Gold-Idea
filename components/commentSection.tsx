@@ -15,7 +15,7 @@ export function CommentSection(props: CommentItem) {
                 <div className="flex gap-x-4 text-xl items-center">
                     <div className="text-gray-800">{publisher.userName}</div>
                     <div className="text-gray-400">警号：{publisher.policeNo}</div>
-                    <div className="text-gray-400">单位：{publisher.unitId}</div>
+                    <div className="text-gray-400">单位：{publisher.unit.unitName}</div>
                     <div className="text-gray-400">联系电话：{publisher.phone}</div>
                 </div>
                 <div className="text-2xl">{content}</div>

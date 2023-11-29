@@ -21,7 +21,7 @@ export default function QuestionCard(props: QuestionCardProps) {
                 <div className="flex items-center gap-x-2 text-gray-500">
                     <div>发布者：{publisher.userName}</div>
                     <div>警号：{publisher.policeNo}</div>
-                    <div>单位：{publisher.unitId}</div>
+                    <div>单位：{publisher.unit.unitName}</div>
                     <div>手机号：{publisher.phone}</div>
                 </div>
             </div>

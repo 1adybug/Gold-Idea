@@ -11,10 +11,18 @@ export default async function findQuestionByID(req: NextApiRequest, res: NextApi
                 id: Number(id)
             },
             include: {
-                publisher: true,
+                publisher: {
+                    include: {
+                        unit: true
+                    }
+                },
                 comments: {
                     include: {
-                        publisher: true
+                        publisher: {
+                            include: {
+                                unit: true
+                            }
+                        }
                     }
                 }
             }
