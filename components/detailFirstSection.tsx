@@ -2,12 +2,13 @@ import Image, { StaticImageData } from "next/image"
 import { CommentItem } from "./comments"
 
 export interface User {
-    userId: string
+    id: string
     avator: StaticImageData
     userName: string
     policeNo: string
-    phone: string,
-    unit: string
+    phone: string
+    unitId: string
+    commitId: string
 }
 
 export interface QuestionDetail {
@@ -34,7 +35,7 @@ export default function DetailFirstSection(props: QuestionDetail) {
                     </div>
                     <div className="flex gap-x-2.5 items-center text-gray-400">
                         <div>警号：{quizzer.policeNo}</div>
-                        <div>所属单位：{quizzer.unit}</div>
+                        <div>所属单位：{quizzer.unitId}</div>
                         <div>发表时间：{createTime}</div>
                     </div>
                 </div>
