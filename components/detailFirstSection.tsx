@@ -76,7 +76,7 @@ export default function DetailFirstSection(props: QuestionDetail) {
                     </div>
                 </div>
             </div>
-            <QuestionModal open={modalOpen} onCloseModal={() => setModalOpen(true)} source={modalSource} />
+            <QuestionModal open={modalOpen} onCloseModal={() => setModalOpen(false)} source={modalSource} />
         </Fragment>
     )
 }
