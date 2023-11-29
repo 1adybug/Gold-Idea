@@ -9,6 +9,10 @@ export default async function findQuestionByID(req: NextApiRequest, res: NextApi
         const findRes = await prisma.question.findUnique({
             where: {
                 id: Number(id)
+            },
+            include: {
+                publisher: true,
+                comments: true
             }
         })
         if (!findRes) return res.status(404).json({ message: "找不到问题！" })

@@ -1,10 +1,11 @@
 import QuestionCard from "./questionCard"
 import { User } from "./detailFirstSection"
+import { CommentItem } from "./comments"
 export interface Question {
     id: string
     content: string
     goal: string
-    comments: Comment[]
+    comments: CommentItem[]
     createTime: string
     publisher: User
 }

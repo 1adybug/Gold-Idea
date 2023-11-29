@@ -4,6 +4,7 @@ import Image from "next/image"
 import ToTopIcon from "../assets/toTop.png"
 import AppraiseIcon from "../assets/appraise.png"
 import BuYuanHaoAvator from "../assets/BuYuanHaoAvator.jpg"
+import advanceTime from "../utils/timeFormatConversion"
 
 export interface TabItem {
     key: number
@@ -73,7 +74,7 @@ export function CommentSection(props: CommentItem) {
 }
 
 export interface CommentItem {
-    commentId: string
+    id: string
     questionId: string
     userId: string
     parentCommentId: string
@@ -90,7 +91,7 @@ export default function Comments(props: { comments: CommentItem[] }) {
         <div className="w-full h-full mt-10 flex flex-col">
             <TabBar />
             <div className="w-full h-full p-2.5 flex flex-col gap-y-10 pt-10 pb-10">
-                {comments.map((comment: CommentItem) => <CommentSection key={comment.commentId} commentId={comment.commentId} questionId={comment.questionId} userId={comment.userId} parentCommentId={comment.parentCommentId} content={comment.content} createTime={comment.createTime} updateTime={comment.updateTime} />)}
+                {comments.map((comment: CommentItem) => <CommentSection key={comment.id} questionId={comment.questionId} userId={comment.userId} parentCommentId={comment.parentCommentId} content={comment.content} createTime={advanceTime(comment.createTime)} updateTime={comment.updateTime} id={comment.id} />)}
             </div>
         </div>
     )
