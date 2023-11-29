@@ -12,7 +12,11 @@ export default async function findQuestionByID(req: NextApiRequest, res: NextApi
             },
             include: {
                 publisher: true,
-                comments: true
+                comments: {
+                    include: {
+                        publisher: true
+                    }
+                }
             }
         })
         if (!findRes) return res.status(404).json({ message: "找不到问题！" })

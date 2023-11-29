@@ -1,3 +1,4 @@
+"use server"
 import { Fragment } from "react"
 import Avator from "../../../assets/avator.jpg"
 import Header from "../../../components/header"

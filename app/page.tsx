@@ -1,3 +1,4 @@
+"use server"
 import Header from "../components/header";
 import Content from "../components/content";
 import { Fragment } from "react";

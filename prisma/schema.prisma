@@ -18,27 +18,27 @@ model Question {
   updateTime  DateTime  @default(now())
 }
 
+model Comment {
+  id          Int      @id @default(autoincrement())
+  content     String
+  publisherId Int
+  publisher   User     @relation(fields: [publisherId], references: [id])
+  questionId  Int
+  question    Question @relation(fields: [questionId], references: [id])
+  createTime  DateTime @default(now())
+  updateTime  DateTime @default(now())
+}
+
 model User {
   id        Int        @id @default(autoincrement())
   avator    String?
   userName  String
   policeNo  String
   phone     String
-  commentId Int        @unique
-  comment   Comment    @relation(fields: [commentId], references: [id])
+  comments  Comment[]
   questions Question[]
-  unit      Unit?
   unitId    Int
-}
-
-model Comment {
-  id         Int      @id @default(autoincrement())
-  publisher  User?
-  content    String
-  questionId Int
-  question   Question @relation(fields: [questionId], references: [id])
-  createTime DateTime @default(now())
-  updateTime DateTime @default(now())
+  unit      Unit?
 }
 
 model Unit {
