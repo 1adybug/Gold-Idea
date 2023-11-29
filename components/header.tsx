@@ -46,7 +46,7 @@ export default function Header(props: HeaderProps) {
                 </div>
             </div>
             {accountDropdownShow && <AccountDropdown />}
-            <QuestionModal open={publishQuestionOpen} onCloseModal={() => setPublishQuestionOpen(false)} />
+            <QuestionModal open={publishQuestionOpen} onCloseModal={() => setPublishQuestionOpen(false)} source={"publishQuestion"} />
         </Fragment>
     )
 }

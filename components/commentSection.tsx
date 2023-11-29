@@ -3,10 +3,15 @@ import Image from "next/image"
 import BuYuanHaoAvator from "../assets/BuYuanHaoAvator.jpg"
 import ToTopIcon from "../assets/toTop.png"
 import AppraiseIcon from "../assets/appraise.png"
+import ReplyIcon from "../assets/replyIcon.png"
 
-export function CommentSection(props: CommentItem) {
+export interface CommentSectionProps extends CommentItem {
+    onAddReplyClick: () => void
+}
 
-    const { content, createTime, publisher } = props
+export function CommentSection(props: CommentSectionProps) {
+
+    const { content, createTime, publisher, onAddReplyClick } = props
 
     return (
         <div className="flex gap-x-6">
@@ -28,6 +33,10 @@ export function CommentSection(props: CommentItem) {
                     <div className="flex gap-x-2 items-center cursor-pointer">
                         <Image src={AppraiseIcon} alt={"评优图标"} width={20} height={20} />
                         <div>评优</div>
+                    </div>
+                    <div className="flex gap-x-2 items-center cursor-pointer">
+                        <Image src={ReplyIcon} alt={"评优图标"} width={20} height={20} />
+                        <div onClick={() => onAddReplyClick()}>回复</div>
                     </div>
                 </div>
             </div>
