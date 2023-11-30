@@ -53,13 +53,13 @@ export default function DetailFirstSection(props: QuestionDetail) {
                 <div className="text-2xl text-gray-600 border-l-[8px] border-blue-600 pl-3">{goal}</div>
                 <div className="flex gap-x-6 items-center text-xl text-gray-400">
                     <div>发表时间：{advanceTime(createTime)}</div>
-                    <div className="flex gap-x-2 items-center cursor-pointer" onClick={() => onFunctionClick("addGoal")}>
+                    {!goal && <div className="flex gap-x-2 items-center cursor-pointer" onClick={() => onFunctionClick("addGoal")}>
                         <Image src={GoalIcon} alt={"置顶图标"} width={21} height={21} />
                         <div>添加目的</div>
-                    </div>
+                    </div>}
                     <div className="flex gap-x-2 items-center cursor-pointer" onClick={() => onFunctionClick("addComment")}>
                         <Image src={ReplyIcon} alt={"评优图标"} width={20} height={20} />
-                        <div>添加评论</div>
+                        <div>留个言吧</div>
                     </div>
                 </div>
             </div>
