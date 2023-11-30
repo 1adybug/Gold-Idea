@@ -34,9 +34,9 @@ export function CommentSection(props: CommentSectionProps) {
                         <Image src={AppraiseIcon} alt={"评优图标"} width={20} height={20} />
                         <div>评优</div>
                     </div>
-                    <div className="flex gap-x-2 items-center cursor-pointer">
+                    <div className="flex gap-x-2 items-center cursor-pointer" onClick={() => onAddReplyClick()}>
                         <Image src={ReplyIcon} alt={"评优图标"} width={20} height={20} />
-                        <div onClick={() => onAddReplyClick()}>回复</div>
+                        <div>回复</div>
                     </div>
                 </div>
             </div>
