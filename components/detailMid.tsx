@@ -31,7 +31,7 @@ export default function DetailMid(props: DetailMidProps) {
 
     return (
         <Fragment>
-            <div className="w-full h-screen mt-[140px] flex flex-col gap-y-10 justify-center items-center pt-[110px]">
+            <div className="w-full h-auto mt-[140px] flex flex-col gap-y-10 justify-center items-center">
                 <DetailFirstSection id={question.id} content={question.content} goal={question.goal} createTime={question.createTime} comments={question.comments} publisher={question.publisher} onFunctionClick={handleFunctionClick} />
                 <DetailSecondSection userDemo={userDemo} question={question} onAddReplyClick={handleAddReplyClick} />
             </div>

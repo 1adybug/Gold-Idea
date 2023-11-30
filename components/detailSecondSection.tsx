@@ -18,7 +18,7 @@ export default function DetailSecondSection(props: DetailSecondSectionProps) {
     const [inputedValue, setInputedValue] = useState("")
 
     return (
-        <div className="w-[1200px] h-full flex flex-col gap-y-6 p-10 rounded bg-white shadow-sm">
+        <div className="w-[1200px] h-auto min-h-[300px] flex flex-col gap-y-6 p-10 rounded bg-white shadow-sm">
             <div className="text-2xl text-black font-semibold">留言&nbsp;&nbsp;{question.comments.length}</div>
             {/* <div className="flex gap-x-6">
                 <Image src={userDemo.avator} alt="用户头像" width={56} className="rounded h-[56px]" />

@@ -7,6 +7,8 @@ import GoalIcon from "../assets/flagIcon.png"
 import ReplyIcon from "../assets/replyIcon.png"
 import { Fragment } from "react"
 import { QuestionModalSource } from "./questionModal"
+import PencileIcon from "../assets/pencileIcon.png"
+import LeaveMessageIcon from "../assets/leaveMessageIcon.png"
 
 export interface User {
     id: string
@@ -35,7 +37,7 @@ export default function DetailFirstSection(props: QuestionDetail) {
 
     return (
         <Fragment>
-            <div className="w-[1200px] h-full p-10 rounded bg-white shadow-sm flex flex-col gap-y-10">
+            <div className="w-[1200px] h-auro p-10 rounded bg-white shadow-sm flex flex-col gap-y-10">
                 <div className="flex flex-col gap-y-4">
                     <div className="text-3xl font-semibold">{content}</div>
                     <div className="flex gap-x-4 items-center text-xl text-gray-600">
@@ -50,17 +52,18 @@ export default function DetailFirstSection(props: QuestionDetail) {
                         </div>
                     </div>
                 </div>
-                <div className="text-2xl text-gray-600 border-l-[8px] border-blue-600 pl-3">{goal}</div>
-                <div className="flex gap-x-6 items-center text-xl text-gray-400">
-                    <div>发表时间：{advanceTime(createTime)}</div>
-                    {!goal && <div className="flex gap-x-2 items-center cursor-pointer" onClick={() => onFunctionClick("addGoal")}>
-                        <Image src={GoalIcon} alt={"置顶图标"} width={21} height={21} />
-                        <div>添加目的</div>
+                <div className="text-2xl text-gray-600 border-l-[8px] border-blue-600 pl-3">{goal ? goal : "暂无目的"}</div>
+                <div className="flex gap-x-6 items-center">
+                    <div className="w-[120px] h-[50px] rounded-md bg-blue-600 text-white font-semibold text-2xl flex justify-center items-center cursor-pointer">关注</div>
+                    {!goal && <div className="w-[160px] h-[50px] flex gap-x-1 rounded-md  border-2 border-blue-500 justify-center items-center cursor-pointer" onClick={() => onFunctionClick("addGoal")}>
+                        <Image src={PencileIcon} alt={"添加目的图标"} width={24} height={24} />
+                        <div className="text-blue-600 font-semibol text-2xl">添加目的</div>
                     </div>}
-                    <div className="flex gap-x-2 items-center cursor-pointer" onClick={() => onFunctionClick("addComment")}>
-                        <Image src={ReplyIcon} alt={"评优图标"} width={20} height={20} />
-                        <div>留个言吧</div>
+                    <div className="w-[160px] h-[50px] flex gap-x-1 rounded-md border-2 border-blue-500 justify-center items-center cursor-pointer" onClick={() => onFunctionClick("addComment")}>
+                        <Image src={LeaveMessageIcon} alt={"添加目的图标"} width={24} height={24} />
+                        <div className="text-blue-600 font-semibol text-2xl">添加留言</div>
                     </div>
+                    <div className="text-xl text-gray-400">发表时间：{advanceTime(createTime)}</div>
                 </div>
             </div>
         </Fragment>

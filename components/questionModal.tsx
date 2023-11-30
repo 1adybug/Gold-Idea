@@ -4,7 +4,7 @@ import ModalCloseIcon from "../assets/modalCloseIcon.png"
 import Image from "next/image"
 import Avator from "../assets/avator.jpg"
 import { addQuestion } from "../pages/api"
-import { useRouter } from "next/router"
+import { useRouter } from "next/navigation"
 
 export type QuestionModalSource = "publishQuestion" | "addGoal" | "addComment" | "addReply"
 export interface QuestionModalProps {
@@ -31,9 +31,9 @@ export default function QuestionModal(props: QuestionModalProps) {
 
     const { open, source, onCloseModal } = props
 
+    const router = useRouter()
     const [isOpen, setIsOpen] = useState(false)
     const [inputedValue, setInputedValue] = useState("")
-    const router = useRouter()
 
     useEffect(() => {
         setIsOpen(open)
@@ -56,12 +56,11 @@ export default function QuestionModal(props: QuestionModalProps) {
     }
 
     async function submit() {
-        const res = await addQuestion()
-        if (!res.ok) return
+        const res = await addQuestion(inputedValue,1)
+        if (!res.id) return
         setIsOpen(false)
         setInputedValue("")
-        console.log(res);
-        // router.push("/")
+        router.push(`/detail/${res.id}`)
     }
 
     return (
@@ -71,7 +70,7 @@ export default function QuestionModal(props: QuestionModalProps) {
                     <div className="w-[1000px] h-[500px] bg-white rounded flex flex-col gap-y-3 p-10">
                         <div className="flex h-full gap-x-2.5">
                             <Image src={Avator} width={56} alt="用户头像" className="h-[56px] rounded" />
-                            <textarea className="min-h-[357px] max-h-[357px] w-full text-2xl rounded-sm border border-gray-300 focus:outline-none p-2.5" placeholder={Placeholders[source]} onChange={handleInput} />
+                            <textarea className="min-h-[357px] max-h-[357px] w-full text-2xl rounded-sm border border-gray-200 focus:outline-none p-2.5" placeholder={Placeholders[source]} onChange={handleInput} />
                         </div>
                         <div className="w-[130px] h-[60px] text-white text-xl rounded bg-blue-700 flex justify-center items-center ml-auto cursor-pointer" onClick={submit}>{ModalSubmitBtnText[source]}</div>
                     </div>
