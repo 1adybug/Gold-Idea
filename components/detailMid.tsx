@@ -16,15 +16,15 @@ export default function DetailMid(props: DetailMidProps) {
 
     const [modalOpen, setModalOpen] = useState(false)
     const [modalSource, setModalSource] = useState<QuestionModalSource>("addGoal")
+    const [thisQuestionId, setThisQuestionId] = useState<number | undefined>(0)
 
-    function handleFunctionClick(source: QuestionModalSource) {
-        console.log(source);
+    function handleFunctionClick(source: QuestionModalSource, id?: number) {
         setModalSource(source)
+        setThisQuestionId(id)
         setModalOpen(true)
     }
 
     function handleAddReplyClick(source: QuestionModalSource) {
-        console.log(source);
         setModalSource(source)
         setModalOpen(true)
     }
@@ -35,7 +35,7 @@ export default function DetailMid(props: DetailMidProps) {
                 <DetailFirstSection id={question.id} content={question.content} goal={question.goal} createTime={question.createTime} comments={question.comments} publisher={question.publisher} onFunctionClick={handleFunctionClick} />
                 <DetailSecondSection userDemo={userDemo} question={question} onAddReplyClick={handleAddReplyClick} />
             </div>
-            <QuestionModal open={modalOpen} source={modalSource} onCloseModal={() => setModalOpen(false)} />
+            <QuestionModal open={modalOpen} source={modalSource} onCloseModal={() => setModalOpen(false)} questionId={thisQuestionId} />
         </Fragment>
     )
 }

@@ -51,7 +51,7 @@ const sortList: SortItem[] = [
     }
 ]
 
-export default function RightSide() {
+export default function Drainage() {
 
     const [sortActivedChild, setSortActivedChild] = useState(0)
     const [filterActivedChild, setFilterActivedChild] = useState(0)

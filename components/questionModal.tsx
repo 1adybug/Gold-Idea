@@ -3,13 +3,14 @@ import { Fragment, useEffect, useState } from "react"
 import ModalCloseIcon from "../assets/modalCloseIcon.png"
 import Image from "next/image"
 import Avator from "../assets/avator.jpg"
-import { addQuestion } from "../pages/api"
+import { addGoal, addQuestion } from "../pages/api"
 import { useRouter } from "next/navigation"
 
 export type QuestionModalSource = "publishQuestion" | "addGoal" | "addComment" | "addReply"
 export interface QuestionModalProps {
     open: boolean
     source: QuestionModalSource
+    questionId?: number
     onCloseModal: () => void
 }
 
@@ -29,7 +30,7 @@ export const ModalSubmitBtnText: Record<string, string> = {
 
 export default function QuestionModal(props: QuestionModalProps) {
 
-    const { open, source, onCloseModal } = props
+    const { open, source, questionId, onCloseModal } = props
 
     const router = useRouter()
     const [isOpen, setIsOpen] = useState(false)
@@ -56,11 +57,20 @@ export default function QuestionModal(props: QuestionModalProps) {
     }
 
     async function submit() {
-        const res = await addQuestion(inputedValue,1)
-        if (!res.id) return
         setIsOpen(false)
         setInputedValue("")
-        router.push(`/detail/${res.id}`)
+        if (source === "publishQuestion") {
+            const res = await addQuestion(inputedValue, 1)
+            if (!res.id) return
+            router.push(`/detail/${res.id}`)
+            return
+        }
+        if (source === "addGoal" && questionId) {
+            const res = await addGoal(questionId, inputedValue, 1)
+            if (!res) return
+            router.refresh()
+            return
+        }
     }
 
     return (

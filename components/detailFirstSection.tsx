@@ -3,8 +3,6 @@ import { CommentItem } from "./comments"
 import XvTengAvator from "../assets/XvTengAvator.jpg"
 import { Unit } from "../app/detail/[id]/page"
 import advanceTime from "../utils/timeFormatConversion"
-import GoalIcon from "../assets/flagIcon.png"
-import ReplyIcon from "../assets/replyIcon.png"
 import { Fragment } from "react"
 import { QuestionModalSource } from "./questionModal"
 import PencileIcon from "../assets/pencileIcon.png"
@@ -28,12 +26,12 @@ export interface QuestionDetail {
     createTime: string
     publisher: User,
     comments: CommentItem[]
-    onFunctionClick: (source: QuestionModalSource) => void
+    onFunctionClick: (source: QuestionModalSource, id?: number) => void
 }
 
 export default function DetailFirstSection(props: QuestionDetail) {
 
-    const { content, publisher, createTime, goal, onFunctionClick } = props
+    const { id, content, publisher, createTime, goal, onFunctionClick } = props
 
     return (
         <Fragment>
@@ -55,11 +53,11 @@ export default function DetailFirstSection(props: QuestionDetail) {
                 <div className="text-2xl text-gray-600 border-l-[8px] border-blue-600 pl-3">{goal ? goal : "暂无目的"}</div>
                 <div className="flex gap-x-6 items-center">
                     <div className="w-[120px] h-[50px] rounded-md bg-blue-600 text-white font-semibold text-2xl flex justify-center items-center cursor-pointer">关注</div>
-                    {!goal && <div className="w-[160px] h-[50px] flex gap-x-1 rounded-md  border-2 border-blue-500 justify-center items-center cursor-pointer" onClick={() => onFunctionClick("addGoal")}>
+                    {!goal && <div className="w-[160px] h-[50px] flex gap-x-1 rounded-md  border-2 border-blue-500 justify-center items-center cursor-pointer" onClick={() => onFunctionClick("addGoal", id)}>
                         <Image src={PencileIcon} alt={"添加目的图标"} width={24} height={24} />
                         <div className="text-blue-600 font-semibol text-2xl">添加目的</div>
                     </div>}
-                    <div className="w-[160px] h-[50px] flex gap-x-1 rounded-md border-2 border-blue-500 justify-center items-center cursor-pointer" onClick={() => onFunctionClick("addComment")}>
+                    <div className="w-[160px] h-[50px] flex gap-x-1 rounded-md border-2 border-blue-500 justify-center items-center cursor-pointer" onClick={() => onFunctionClick("addComment", id)}>
                         <Image src={LeaveMessageIcon} alt={"添加目的图标"} width={24} height={24} />
                         <div className="text-blue-600 font-semibol text-2xl">添加留言</div>
                     </div>

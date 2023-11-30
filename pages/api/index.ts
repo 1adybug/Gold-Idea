@@ -14,3 +14,17 @@ export async function addQuestion(content: string, publisherId: number) {
     const data = await res.json()
     return data
 }
+
+export async function addGoal(questionId: number, goal: string, publisherId: number) {
+    const res = await fetch("/api/addGoal", {
+        method: "POST",
+        body: JSON.stringify({
+            questionId,
+            goal,
+            publisherId
+        })
+    })
+    if (res.status !== 200) throw new Error("创建目的出错！")
+    const data = await res.json()
+    return data
+}
