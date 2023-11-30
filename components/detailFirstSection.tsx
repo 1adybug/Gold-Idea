@@ -1,4 +1,3 @@
-"use client"
 import Image, { StaticImageData } from "next/image"
 import { CommentItem } from "./comments"
 import XvTengAvator from "../assets/XvTengAvator.jpg"
@@ -6,8 +5,8 @@ import { Unit } from "../app/detail/[id]/page"
 import advanceTime from "../utils/timeFormatConversion"
 import GoalIcon from "../assets/flagIcon.png"
 import ReplyIcon from "../assets/replyIcon.png"
-import { Fragment, useState } from "react"
-import QuestionModal, { QuestionModalSource } from "./questionModal"
+import { Fragment } from "react"
+import { QuestionModalSource } from "./questionModal"
 
 export interface User {
     id: string
@@ -21,30 +20,18 @@ export interface User {
 }
 
 export interface QuestionDetail {
-    id: string
+    id: number
     content: string
     goal: string
     createTime: string
     publisher: User,
     comments: CommentItem[]
+    onFunctionClick: (source: QuestionModalSource) => void
 }
 
 export default function DetailFirstSection(props: QuestionDetail) {
 
-    const { content, publisher, createTime, goal } = props
-
-    const [modalOpen, setModalOpen] = useState(false)
-    const [modalSource, setModalSource] = useState<QuestionModalSource>("addGoal")
-
-    function handleAddGoalClick() {
-        setModalSource("addGoal")
-        setModalOpen(true)
-    }
-
-    function handleAddCommentClick() {
-        setModalSource("addComment")
-        setModalOpen(true)
-    }
+    const { content, publisher, createTime, goal, onFunctionClick } = props
 
     return (
         <Fragment>
@@ -68,15 +55,14 @@ export default function DetailFirstSection(props: QuestionDetail) {
                     <div>发表时间：{advanceTime(createTime)}</div>
                     <div className="flex gap-x-2 items-center cursor-pointer">
                         <Image src={GoalIcon} alt={"置顶图标"} width={21} height={21} />
-                        <div onClick={handleAddGoalClick}>添加目的</div>
+                        <div onClick={() => onFunctionClick("addGoal")}>添加目的</div>
                     </div>
                     <div className="flex gap-x-2 items-center cursor-pointer">
                         <Image src={ReplyIcon} alt={"评优图标"} width={20} height={20} />
-                        <div onClick={handleAddCommentClick}>添加评论</div>
+                        <div onClick={() => onFunctionClick("addComment")}>添加评论</div>
                     </div>
                 </div>
             </div>
-            <QuestionModal open={modalOpen} onCloseModal={() => setModalOpen(false)} source={modalSource} />
         </Fragment>
     )
 }

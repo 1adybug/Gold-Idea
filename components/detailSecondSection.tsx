@@ -2,15 +2,18 @@
 import { useState } from "react"
 import Comments from "./comments"
 import { QuestionDetail, User } from "./detailFirstSection"
+import { Question } from "./questionContainer"
+import { QuestionModalSource } from "./questionModal"
 
 export interface DetailSecondSectionProps {
     userDemo: User
-    question: QuestionDetail
+    question: Question
+    onAddReplyClick: (source: QuestionModalSource) => void
 }
 
 export default function DetailSecondSection(props: DetailSecondSectionProps) {
 
-    const { userDemo, question } = props
+    const { userDemo, question,onAddReplyClick } = props
 
     const [inputedValue, setInputedValue] = useState("")
 
@@ -27,7 +30,7 @@ export default function DetailSecondSection(props: DetailSecondSectionProps) {
                     </div>
                 </div>
             </div> */}
-            <Comments comments={question.comments} />
+            <Comments comments={question.comments} onAddReplyClick={onAddReplyClick} />
         </div>
     )
 }

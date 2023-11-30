@@ -1,12 +1,11 @@
 "use server"
 import { Fragment } from "react"
-import Avator from "../../../assets/avator.jpg"
 import Header from "../../../components/header"
-import DetailFirstSection from "../../../components/detailFirstSection"
-import DetailSecondSection from "../../../components/detailSecondSection"
 import LeftSideToolbar from "../../../components/leftSideToolbar"
 import { Question } from "../../../components/questionContainer"
 import { API_BASE_URL } from "../../../constant/publicURL"
+import Avator from "../../../assets/avator.jpg"
+import DetailMid from "../../../components/detailMid"
 
 export interface Unit {
     id: string
@@ -45,10 +44,7 @@ export default async function Page({ params }: { params: { id: string } }) {
         <Fragment>
             <Header isHomePage={false} />
             <LeftSideToolbar />
-            <div className="w-full h-scree flex flex-col gap-y-10 justify-center items-center pt-[110px]">
-                <DetailFirstSection id={question.id} content={question.content} goal={question.goal} createTime={question.createTime} comments={question.comments} publisher={question.publisher} />
-                <DetailSecondSection userDemo={userDemo} question={question} />
-            </div>
+            <DetailMid question={question} userDemo={userDemo}/>
         </Fragment>
     )
 }

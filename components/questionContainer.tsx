@@ -2,7 +2,7 @@ import QuestionCard from "./questionCard"
 import { User } from "./detailFirstSection"
 import { CommentItem } from "./comments"
 export interface Question {
-    id: string
+    id: number
     content: string
     goal: string
     comments: CommentItem[]
