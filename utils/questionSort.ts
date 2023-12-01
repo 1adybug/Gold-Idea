@@ -10,7 +10,7 @@ export function sortByCommentsCount(questions: Question[]) {
     return result
 }
 
-export function sortByUpdateTime(questions: Question[]) {
+export function sortByUpdateTimeDesc(questions: Question[]) {
     const questionsDeepCopy = wyDeepClone(questions)
     const result = questionsDeepCopy.sort((a, b) => {
         return dayjs(b.updateTime).unix() - dayjs(a.updateTime).unix()
