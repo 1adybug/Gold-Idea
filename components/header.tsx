@@ -33,6 +33,10 @@ export default function Header(props: HeaderProps) {
         setPublishQuestionOpen(true)
     }
 
+    function foo() {
+        console.log("foo")
+    }
+
     return (
         <Fragment>
             <div className="w-full h-20 pl-10 pr-24 bg-white fixed top-0 flex z-10 items-center cursor-pointer shadow-sm justify-between" >
@@ -46,7 +50,7 @@ export default function Header(props: HeaderProps) {
                 </div>
             </div>
             {accountDropdownShow && <AccountDropdown />}
-            <QuestionModal open={publishQuestionOpen} onCloseModal={() => setPublishQuestionOpen(false)} source={"publishQuestion"} />
+            <QuestionModal open={publishQuestionOpen} onCloseModal={() => setPublishQuestionOpen(false)} source={"publishQuestion"} onFetchNewQuestionDetail={foo} />
         </Fragment>
     )
 }

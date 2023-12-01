@@ -3,7 +3,7 @@ import { Fragment, useEffect, useState } from "react"
 import ModalCloseIcon from "../assets/modalCloseIcon.png"
 import Image from "next/image"
 import Avator from "../assets/avator.jpg"
-import { addGoal, addQuestion } from "../pages/api"
+import { addComment, addGoal, addQuestion } from "../pages/api"
 import { useRouter } from "next/navigation"
 
 export type QuestionModalSource = "publishQuestion" | "addGoal" | "addComment" | "addReply"
@@ -12,6 +12,7 @@ export interface QuestionModalProps {
     source: QuestionModalSource
     questionId?: number
     onCloseModal: () => void
+    onFetchNewQuestionDetail: () => void
 }
 
 export const Placeholders: Record<string, string> = {
@@ -30,7 +31,7 @@ export const ModalSubmitBtnText: Record<string, string> = {
 
 export default function QuestionModal(props: QuestionModalProps) {
 
-    const { open, source, questionId, onCloseModal } = props
+    const { open, source, questionId, onCloseModal, onFetchNewQuestionDetail } = props
 
     const router = useRouter()
     const [isOpen, setIsOpen] = useState(false)
@@ -68,7 +69,13 @@ export default function QuestionModal(props: QuestionModalProps) {
         if (source === "addGoal" && questionId) {
             const res = await addGoal(questionId, inputedValue, 1)
             if (!res) return
-            router.refresh()
+            onFetchNewQuestionDetail()
+            return
+        }
+        if (source === "addComment" && questionId) {
+            const res = await addComment(questionId, inputedValue, 2)
+            if (!res) return
+            onFetchNewQuestionDetail()
             return
         }
     }
