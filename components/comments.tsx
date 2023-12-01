@@ -25,12 +25,10 @@ export default function Comments(props: CommentsProps) {
     const { comments, onAddReplyClick } = props
 
     return (
-        <Fragment>
-            <div className="w-full h-full flex flex-col justify-center items-center">
+            <div className="h-full flex flex-col justify-center items-cente">
                 {comments.length ? <div className="w-full h-full p-2.5 flex flex-col gap-y-10 pt-10 pb-10">
                     {commentsTimeDescSort(comments).map((comment: CommentItem) => <CommentSection key={comment.id} questionId={comment.questionId} content={comment.content} createTime={advanceTime(comment.createTime)} updateTime={comment.updateTime} id={comment.id} publisherId={comment.publisherId} publisher={comment.publisher} onAddReplyClick={() => onAddReplyClick("addReply")} />)}
                 </div> : <div className="text-3xl text-gray-400">暂无留言</div>}
             </div>
-        </Fragment>
     )
 }
