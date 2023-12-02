@@ -1,12 +1,20 @@
 import Image, { StaticImageData } from "next/image"
 import { CommentItem } from "./comments"
 import XvTengAvator from "../assets/XvTengAvator.jpg"
+import BuYuanHaoAvator from "../assets/BuYuanHaoAvator.jpg"
+import WangyongAvator from "../assets/avator.jpg"
 import { Unit } from "../app/detail/[id]/page"
 import advanceTime from "../utils/timeFormatConversion"
 import { Fragment } from "react"
 import { QuestionModalSource } from "./questionModal"
 import PencileIcon from "../assets/pencileIcon.png"
 import LeaveMessageIcon from "../assets/leaveMessageIcon.png"
+
+export const AvatorMap: Record<string, StaticImageData> = {
+    "徐腾": XvTengAvator,
+    "卜元浩": BuYuanHaoAvator,
+    "王勇": WangyongAvator
+}
 
 export interface User {
     id: string
@@ -40,7 +48,7 @@ export default function DetailFirstSection(props: QuestionDetail) {
                     <div className="text-3xl font-semibold">{content}</div>
                     <div className="flex gap-x-4 items-center text-xl text-gray-600">
                         <div className="flex gap-x-2.5 items-center">
-                            <Image src={XvTengAvator} alt="创建者头像" width={36} height={36} className="rounded" />
+                            <Image src={AvatorMap[publisher.userName]} alt="创建者头像" width={36} height={36} className="rounded" />
                             <div className="text-black font-medium">{publisher.userName}</div>
                         </div>
                         <div className="flex gap-x-4 items-center text-gray-400">

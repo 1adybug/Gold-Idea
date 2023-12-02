@@ -2,11 +2,14 @@
 import { CommentItem } from "./comments"
 import Image from "next/image"
 import BuYuanHaoAvator from "../assets/BuYuanHaoAvator.jpg"
+import XvTengAvator from "../assets/XvTengAvator.jpg"
+import WangyongAvator from "../assets/avator.jpg"
 import ToTopIcon from "../assets/toTop.png"
 import AppraiseIcon from "../assets/appraise.png"
 import ReplyIcon from "../assets/replyIcon.png"
 import CancelReplyIcon from "../assets/cancelReplyIcon.png"
 import { useState } from "react"
+import { AvatorMap } from "./detailFirstSection"
 
 export interface CommentSectionProps extends CommentItem {
     onAddReplyClick: () => void
@@ -20,7 +23,7 @@ export function CommentSection(props: CommentSectionProps) {
 
     return (
         <div className="w-full flex gap-x-6">
-            <Image src={BuYuanHaoAvator} alt={"用户头像"} width={46} className="rounded h-[46px]" />
+            <Image src={AvatorMap[publisher.userName]} alt={"用户头像"} width={46} className="rounded h-[46px]" />
             <div className="w-full flex flex-col gap-y-6">
                 <div className="flex gap-x-4 text-xl items-center">
                     <div className="text-gray-800">{publisher.userName}</div>

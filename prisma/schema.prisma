@@ -25,8 +25,20 @@ model Comment {
   publisher   User     @relation(fields: [publisherId], references: [id])
   questionId  Int
   question    Question @relation(fields: [questionId], references: [id])
+  replyId     Int      @unique
+  reply       Reply    @relation(fields: [replyId], references: [id])
   createTime  DateTime @default(now())
   updateTime  DateTime @default(now())
+}
+
+model Reply {
+  id         Int      @id @default(autoincrement())
+  content    String
+  comment    Comment?
+  publisherId Int
+  publisher  User     @relation(fields: [publisherId], references: [id])
+  createTime DateTime @default(now())
+  updateTime DateTime @default(now())
 }
 
 model User {
@@ -36,7 +48,8 @@ model User {
   policeNo  String
   phone     String
   comments  Comment[]
-  questions Question[]
+  favQuestions Question[]
+  replies   Reply[]
   unitId    Int
   unit      Unit?
 }
