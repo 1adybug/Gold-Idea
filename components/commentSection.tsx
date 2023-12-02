@@ -41,7 +41,7 @@ export function CommentSection(props: CommentSectionProps) {
                     </div>
                     {Number(id) === currentCommentId ? <div className="flex gap-x-2 items-center cursor-pointer" onClick={() => setCurrentCommentId(-1)}>
                         <Image src={CancelReplyIcon} alt={"评优图标"} width={20} height={20} />
-                        <div className="text-blue-500">取消回复</div>
+                        <div className="text-blue-600">取消回复</div>
                     </div> :
                         <div className="flex gap-x-2 items-center cursor-pointer" onClick={() => setCurrentCommentId(Number(id))}>
                             <Image src={ReplyIcon} alt={"评优图标"} width={20} height={20} />
