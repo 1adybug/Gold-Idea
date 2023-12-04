@@ -6,6 +6,8 @@ export default async function addComment(req: NextApiRequest, res: NextApiRespon
     const body = JSON.parse(req.body)
     const { questionId, content, publisherId } = body
 
+    console.log(questionId, content, publisherId)
+
     if (questionId !== undefined && typeof questionId !== "number") return res.status(400).json({ message: "问题id参数类型错误！" })
     if (content !== undefined && typeof content !== "string") return res.status(400).json({ message: "内容参数类型错误！" })
     if (publisherId !== undefined && typeof publisherId !== "number") return res.status(400).json({ message: "发布者id参数类型错误！" })
@@ -20,6 +22,6 @@ export default async function addComment(req: NextApiRequest, res: NextApiRespon
         })
         res.status(200).json(addCommentRes)
     } catch (err) {
-        res.status(400).json({ message: "添加评论出错！" })
+        res.status(400).json({ message: "添加评论出错！" + err })
     }
 }

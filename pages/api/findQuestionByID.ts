@@ -18,6 +18,15 @@ export default async function findQuestionByID(req: NextApiRequest, res: NextApi
                 },
                 comments: {
                     include: {
+                        reply: {
+                            include: {
+                                publisher: {
+                                    include: {
+                                        unit: true
+                                    }
+                                }
+                            }
+                        },
                         publisher: {
                             include: {
                                 unit: true
@@ -30,6 +39,6 @@ export default async function findQuestionByID(req: NextApiRequest, res: NextApi
         if (!findRes) return res.status(404).json({ message: "找不到问题！" })
         res.status(200).json(findRes)
     } catch (err) {
-        res.status(400).json({ message: "获取全部问题出错！" })
+        res.status(400).json({ message: "获取问题出错！" })
     }
 }

@@ -25,33 +25,33 @@ model Comment {
   publisher   User     @relation(fields: [publisherId], references: [id])
   questionId  Int
   question    Question @relation(fields: [questionId], references: [id])
-  replyId     Int      @unique
-  reply       Reply    @relation(fields: [replyId], references: [id])
+  reply       Reply?
   createTime  DateTime @default(now())
   updateTime  DateTime @default(now())
 }
 
 model Reply {
-  id         Int      @id @default(autoincrement())
-  content    String
-  comment    Comment?
+  id          Int      @id @default(autoincrement())
+  content     String
   publisherId Int
-  publisher  User     @relation(fields: [publisherId], references: [id])
-  createTime DateTime @default(now())
-  updateTime DateTime @default(now())
+  publisher   User     @relation(fields: [publisherId], references: [id])
+  commentId   Int?     @unique
+  comment     Comment? @relation(fields: [commentId], references: [id])
+  createTime  DateTime @default(now())
+  updateTime  DateTime @default(now())
 }
 
 model User {
-  id        Int        @id @default(autoincrement())
-  avator    String?
-  userName  String
-  policeNo  String
-  phone     String
-  comments  Comment[]
+  id           Int        @id @default(autoincrement())
+  avator       String?
+  userName     String
+  policeNo     String
+  phone        String
+  comments     Comment[]
   favQuestions Question[]
-  replies   Reply[]
-  unitId    Int
-  unit      Unit?
+  replies      Reply[]
+  unitId       Int
+  unit         Unit?
 }
 
 model Unit {
