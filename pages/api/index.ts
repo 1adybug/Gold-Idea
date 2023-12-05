@@ -2,6 +2,19 @@ import { PrismaClient } from "@prisma/client"
 
 export const prisma = new PrismaClient()
 
+export async function pagingRequest(pageNo: number, pageSize: number) {
+    const res = await fetch("/api/pagingRequest", {
+        method: "POST",
+        body: JSON.stringify({
+            pageNo,
+            pageSize
+        })
+    })
+    if (res.status !== 200) throw new Error("问题分页请求出错！")
+    const data = await res.json()
+    return data
+}
+
 export async function addQuestion(content: string, publisherId: number) {
     const res = await fetch("/api/createQuestion", {
         method: "POST",

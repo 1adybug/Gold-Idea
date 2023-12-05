@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next"
 import { prisma } from "./index"
 
-export default async function (req: NextApiRequest, res: NextApiResponse) {
+export default async function findAllQuestions(req: NextApiRequest, res: NextApiResponse) {
     if (req.method !== "GET") return res.status(405).json({ message: "请求方式出错！" })
     try {
         const findRes = await prisma.question.findMany({

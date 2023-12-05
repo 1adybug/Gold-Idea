@@ -16,18 +16,20 @@ export interface Question {
 
 export interface QuestionContainerProps {
     questions: Question[]
+    pageNo: number
+    onScrollToBottom: (newPageNo: number) => void
 }
 
 export default async function QuestionContainer(props: QuestionContainerProps) {
 
-    const { questions } = props
+    const { pageNo, questions, onScrollToBottom } = props
 
     useEffect(() => {
         function handleScroll() {
             const { scrollTop, clientHeight, scrollHeight } = document.documentElement;
 
             if (scrollTop + clientHeight >= scrollHeight) {
-                // 页面滚动到底部了，执行相应的操作
+                onScrollToBottom(pageNo + 1)
                 console.log('已滚动到底部');
             }
         }
@@ -41,8 +43,8 @@ export default async function QuestionContainer(props: QuestionContainerProps) {
 
     return (
         <div className="w-9/12 flex flex-col gap-y-2.5 overflow-y-auto">
-            {questions.map((question: Question) => <QuestionCard key={question.id} id={question.id} content={question.content} goal={question.goal} referCount={question.comments.length} createTime={question.createTime} publisher={question.publisher} updateTime={question.updateTime} />)}
-            <Skeleton active className="bg-white p-8"/>
+            {questions && questions.map((question: Question) => <QuestionCard key={question.id} id={question.id} content={question.content} goal={question.goal} referCount={question.comments.length} createTime={question.createTime} publisher={question.publisher} updateTime={question.updateTime} />)}
+            <Skeleton active className="bg-white p-8" />
         </div>
     )
 }
