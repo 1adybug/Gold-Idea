@@ -15,6 +15,7 @@ model Question {
   publisher   User          @relation(fields: [publisherId], references: [id])
   comments    Comment[]
   collections Collections[]
+  attentions  Attentions[]
   createTime  DateTime      @default(now())
   updateTime  DateTime      @default(now()) @updatedAt
 }
@@ -51,6 +52,7 @@ model User {
   Question    Question[]
   comments    Comment[]
   collections Collections[]
+  attentions  Attentions[]
   replies     Reply[]
   unitId      Int
   unit        Unit?
@@ -67,6 +69,18 @@ model Unit {
 }
 
 model Collections {
+  id         Int      @id @default(autoincrement())
+  userId     Int
+  user       User     @relation(fields: [userId], references: [id])
+  questionId Int
+  question   Question @relation(fields: [questionId], references: [id])
+  createTime DateTime @default(now())
+  updateTime DateTime @default(now()) @updatedAt
+
+  @@unique([userId, questionId])
+}
+
+model Attentions {
   id         Int      @id @default(autoincrement())
   userId     Int
   user       User     @relation(fields: [userId], references: [id])

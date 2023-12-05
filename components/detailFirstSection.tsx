@@ -1,3 +1,4 @@
+"use client"
 import Image, { StaticImageData } from "next/image"
 import { CommentItem } from "./comments"
 import XvTengAvator from "../assets/XvTengAvator.jpg"
@@ -5,10 +6,12 @@ import BuYuanHaoAvator from "../assets/BuYuanHaoAvator.jpg"
 import WangyongAvator from "../assets/avator.jpg"
 import { Unit } from "../app/detail/[id]/page"
 import advanceTime from "../utils/timeFormatConversion"
-import { Fragment } from "react"
+import { Fragment, useEffect, useState } from "react"
 import { QuestionModalSource } from "./questionModal"
 import PencileIcon from "../assets/pencileIcon.png"
 import LeaveMessageIcon from "../assets/leaveMessageIcon.png"
+import { Attention, Collection } from "./questionContainer"
+import { useUserInfo } from "../store"
 
 export const AvatorMap: Record<string, StaticImageData> = {
     "徐腾": XvTengAvator,
@@ -34,12 +37,26 @@ export interface QuestionDetail {
     createTime: string
     publisher: User,
     comments: CommentItem[]
+    collections: Collection[]
     onFunctionClick: (source: QuestionModalSource, id?: number) => void
 }
 
 export default function DetailFirstSection(props: QuestionDetail) {
 
-    const { id, content, publisher, createTime, goal, onFunctionClick } = props
+    const { id, content, publisher, createTime, goal, collections, onFunctionClick } = props
+    const [userInfo, setUserInfo] = useUserInfo()
+    const [isCollected, setIsCollected] = useState(false)
+
+    useEffect(() => {
+        judgeIsCollected()
+    }, [])
+
+    function judgeIsCollected() {
+        if (collections.find((collection: Collection) => collection.userId === userInfo.id)) {
+            setIsCollected(true)
+            return
+        }
+    }
 
     return (
         <Fragment>
@@ -60,7 +77,7 @@ export default function DetailFirstSection(props: QuestionDetail) {
                 </div>
                 <div className="text-2xl text-gray-600 border-l-[8px] border-blue-600 pl-3">{goal ? goal : "暂无目的"}</div>
                 <div className="flex gap-x-6 items-center">
-                    <div className="w-[120px] h-[50px] rounded-md bg-blue-600 text-white font-semibold text-2xl flex justify-center items-center cursor-pointer">关注</div>
+                    <div className={`w-[120px] h-[50px] rounded-md text-white font-semibold text-2xl flex justify-center items-center cursor-pointer ${isCollected ? "bg-gray-400" : "bg-blue-600"}`}>{isCollected ? "已关注" : "关注"}</div>
                     {!goal && <div className="w-[160px] h-[50px] flex gap-x-1 rounded-md  border-2 border-blue-500 justify-center items-center cursor-pointer" onClick={() => onFunctionClick("addGoal", id)}>
                         <Image src={PencileIcon} alt={"添加目的图标"} width={24} height={24} />
                         <div className="text-blue-600 font-semibol text-2xl">添加目的</div>

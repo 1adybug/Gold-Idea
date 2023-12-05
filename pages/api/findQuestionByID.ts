@@ -2,7 +2,7 @@ import { NextApiRequest, NextApiResponse } from "next"
 import { prisma } from "."
 
 export default async function findQuestionByID(req: NextApiRequest, res: NextApiResponse) {
-    
+
     if (req.method !== "GET") return res.status(405).json({ message: "请求方式出错！" })
     const { id } = req.query
 
@@ -36,7 +36,9 @@ export default async function findQuestionByID(req: NextApiRequest, res: NextApi
                             }
                         }
                     }
-                }
+                },
+                collections: true,
+                attentions: true
             }
         })
         if (!findRes) return res.status(404).json({ message: "找不到问题！" })

@@ -12,12 +12,16 @@ export interface Collection {
     createTime: string
     updateTime: string
 }
+
+export interface Attention extends Collection { }
+
 export interface Question {
     id: number
     content: string
     goal: string
     comments: CommentItem[]
     collections: Collection[]
+    attentions: Attention[]
     createTime: string
     updateTime: string
     publisher: User
@@ -48,7 +52,7 @@ export default async function QuestionContainer(props: QuestionContainerProps) {
 
     return (
         <div className="w-9/12 flex flex-col gap-y-2.5 overflow-y-auto">
-            {questions && questions.map((question: Question) => <QuestionCard key={question.id} id={question.id} content={question.content} goal={question.goal} referCount={question.comments.length} createTime={question.createTime} publisher={question.publisher} updateTime={question.updateTime} collections={question.collections} />)}
+            {questions && questions.map((question: Question) => <QuestionCard key={question.id} id={question.id} content={question.content} goal={question.goal} referCount={question.comments.length} createTime={question.createTime} publisher={question.publisher} updateTime={question.updateTime} collections={question.collections} attentions={question.attentions} />)}
             <Skeleton active className="bg-white p-8" />
         </div>
     )

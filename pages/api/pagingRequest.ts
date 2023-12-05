@@ -24,7 +24,8 @@ export default async function pagingRequest(req: NextApiRequest, res: NextApiRes
                     }
                 },
                 comments: true,
-                collections: true
+                collections: true,
+                attentions: true
             }
         })
         if (!pagingRequestRes) return

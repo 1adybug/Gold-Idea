@@ -1,12 +1,13 @@
 "use client"
 import { Collection, Question } from "./questionContainer"
 import Quote from "../assets/quote.png"
-import AttentionIconForHome from "../assets/AttentionIconForHome.png"
 import Image from "next/image"
 import Link from "next/link"
 import advanceTime from "../utils/timeFormatConversion"
 import DefaultCollectionIcon from "../assets/defaultCollect.png"
 import CollectedIcon from "../assets/collected.png"
+import UnAttentionedIcon from "../assets/unattentioned.png"
+import AttentionedIcon from "../assets/attentioned.png"
 import { useUserInfo } from "../store"
 import { useEffect, useState } from "react"
 export interface QuestionCardProps extends Omit<Question, "comments"> {
@@ -15,9 +16,10 @@ export interface QuestionCardProps extends Omit<Question, "comments"> {
 
 export default function QuestionCard(props: QuestionCardProps) {
 
-    const { id, content, goal, referCount, createTime, publisher, collections } = props
+    const { id, content, goal, referCount, createTime, publisher, collections, attentions } = props
     const [userInfo, setUserInfo] = useUserInfo()
     const [isCollected, setIsCollected] = useState(false)
+    const [isAttentioned, setIsAttentioned] = useState(false)
 
     useEffect(() => {
         isCollectedJudge()
@@ -26,6 +28,10 @@ export default function QuestionCard(props: QuestionCardProps) {
     function isCollectedJudge() {
         if (collections.find((collection: Collection) => collection.userId === userInfo.id)) {
             setIsCollected(true)
+            return
+        }
+        if(attentions.find((attention: Collection) => attention.userId === userInfo.id)) {
+            setIsAttentioned(true)
             return
         }
     }
@@ -52,11 +58,11 @@ export default function QuestionCard(props: QuestionCardProps) {
                 <div>发布时间：{advanceTime(createTime)}</div>
                 <div className="flex gap-x-1 items-center transform -translate-y-[1px] cursor-pointer">
                     <Image src={isCollected ? CollectedIcon : DefaultCollectionIcon} alt={"收藏图标"} width={24} height={14} />
-                    {isCollected ? <div>已收藏</div> : <div>收藏</div>}
+                    {isCollected ? <div className="text-blue-600">已收藏</div> : <div>收藏</div>}
                 </div>
                 <div className="flex gap-x-1 items-center cursor-pointer">
-                    <Image src={AttentionIconForHome} alt={"关注图标"} width={24} height={14} />
-                    <div>关注</div>
+                    <Image src={isAttentioned ? AttentionedIcon : UnAttentionedIcon} alt={"关注图标"} width={24} height={14} />
+                    {isAttentioned ? <div className="text-blue-600">已关注</div> : <div>关注</div>}
                 </div>
             </div>
         </Link>
