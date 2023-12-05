@@ -9,7 +9,7 @@ import { Fragment, useState } from "react"
 import { AvatorMap } from "./detailFirstSection"
 import advanceTime from "../utils/timeFormatConversion"
 import { addReply } from "../pages/api"
-import { message } from "antd"
+// import { message } from "antd"
 
 export interface CommentSectionProps extends CommentItem {
     onAddReplySucceed: () => void
@@ -29,7 +29,8 @@ export function CommentSection(props: CommentSectionProps) {
     async function handleReply() {
         const res = await addReply(Number(id), inputedValue, 2)
         if (!res) return
-        message.success("回复成功")
+        // message.success("回复成功")
+        setCurrentCommentId(-1)
         onAddReplySucceed()
     }
 

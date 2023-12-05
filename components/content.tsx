@@ -19,7 +19,7 @@ export default function Content() {
         const res = await pagingRequest(pageNo, pageSize)
         if (!res) return
         if (questions.length) {
-            setQuestions(sortByCommentsCount([...questions, ...res]))
+            setQuestions([...questions, ...res])
             return
         }
         setQuestions(res)
