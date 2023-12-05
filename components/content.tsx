@@ -1,7 +1,7 @@
 "use client"
 import QuestionContainer, { Question } from "./questionContainer";
 import Drainage from "./drainage";
-import { sortByCommentsCount, sortByUpdateTimeDesc } from "../utils/questionSort";
+import { sortByCommentsCount } from "../utils/questionSort";
 import { useEffect, useState } from "react";
 import { pagingRequest } from "../pages/api";
 

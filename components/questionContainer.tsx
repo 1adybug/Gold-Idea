@@ -27,15 +27,11 @@ export default async function QuestionContainer(props: QuestionContainerProps) {
     useEffect(() => {
         function handleScroll() {
             const { scrollTop, clientHeight, scrollHeight } = document.documentElement;
-
             if (scrollTop + clientHeight >= scrollHeight) {
                 onScrollToBottom(pageNo + 1)
-                console.log('已滚动到底部');
             }
         }
-
         window.addEventListener('scroll', handleScroll);
-
         return () => {
             window.removeEventListener('scroll', handleScroll);
         };

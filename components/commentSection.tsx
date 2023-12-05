@@ -12,12 +12,12 @@ import { addReply } from "../pages/api"
 import { message } from "antd"
 
 export interface CommentSectionProps extends CommentItem {
-    onAddReplyClick: () => void
+    onAddReplySucceed: () => void
 }
 
 export function CommentSection(props: CommentSectionProps) {
 
-    const { id, content, createTime, publisher, reply, onAddReplyClick } = props
+    const { id, content, createTime, publisher, reply, onAddReplySucceed } = props
 
     const [currentCommentId, setCurrentCommentId] = useState(-1)
     const [inputedValue, setinputedValue] = useState("")
@@ -30,6 +30,7 @@ export function CommentSection(props: CommentSectionProps) {
         const res = await addReply(Number(id), inputedValue, 2)
         if (!res) return
         message.success("回复成功")
+        onAddReplySucceed()
     }
 
     return (
@@ -81,7 +82,7 @@ export function CommentSection(props: CommentSectionProps) {
                 }
                 {Number(id) === currentCommentId && <div className="h-auto rounded-lg border-2 border-blue-600 p-2">
                     <textarea className="w-full min-h-[180px] max-h-[180px] text-xl focus:outline-none" placeholder={"回复" + publisher.userName} onChange={textareaChange} />
-                    <div className="bg-blue-600 w-[100px] h-[40px] rounded-md flex justify-center items-center text-white ml-auto" onClick={handleReply}>回复</div>
+                    <div className="bg-blue-600 w-[100px] h-[40px] rounded-md flex justify-center items-center text-white ml-auto cursor-pointer" onClick={handleReply}>回复</div>
                 </div>}
             </div>
         </div>

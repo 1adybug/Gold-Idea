@@ -73,7 +73,7 @@ export default function Drainage(props: DrainageProps) {
     }
 
     return (
-        <div className="w-2/12 h-calc sticky top-[104px] bg-white shadow-sm">
+        <div className="w-2/12 h-drainage sticky top-[104px] bg-white shadow-sm">
             {sortList.map((sortItem: SortItem) => {
                 return (
                     <div className="flex flex-col gap-y-2" key={sortItem.id}>
