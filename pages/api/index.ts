@@ -69,3 +69,31 @@ export async function addReply(commentId: number, content: string, publisherId: 
     const data = await res.json()
     return data
 }
+
+export async function collectQuestion(questionId: number, userId: number, isCollected: boolean) {
+    const res = await fetch("/api/collectQuestion", {
+        method: "POST",
+        body: JSON.stringify({
+            questionId,
+            userId,
+            isCollected
+        })
+    })
+    if (res.status !== 200) throw new Error("收藏问题出错！")
+    const data = await res.json()
+    return data
+}
+
+export async function attentionQuestion(questionId: number, userId: number, isAttentioned: boolean) {
+    const res = await fetch("/api/attentionQuestion", {
+        method: "POST",
+        body: JSON.stringify({
+            questionId,
+            userId,
+            isAttentioned
+        })
+    })
+    if (res.status !== 200) throw new Error("关注问题出错！")
+    const data = await res.json()
+    return data
+}
