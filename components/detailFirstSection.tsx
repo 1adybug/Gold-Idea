@@ -17,7 +17,7 @@ export const AvatorMap: Record<string, StaticImageData> = {
 }
 
 export interface User {
-    id: string
+    id: number
     avator: StaticImageData
     userName: string
     policeNo: string

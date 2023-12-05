@@ -6,13 +6,13 @@ import LeftSideToolbar from "../../../components/leftSideToolbar"
 import Avator from "../../../assets/avator.jpg"
 import DetailMid from "../../../components/detailMid"
 export interface Unit {
-    id: string
+    id: number
     unitNo: string
     unitName: string
 }
 
 const userDemo = {
-    id: "0000",
+    id: 0,
     avator: Avator,
     userName: "王勇",
     policeNo: "082xxx",
@@ -20,7 +20,7 @@ const userDemo = {
     unitId: "黄码派出所",
     commentId: 1,
     unit: {
-        id: "0000",
+        id: 1,
         unitNo: "0000",
         unitName: "黄码派出所"
     }

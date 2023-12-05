@@ -16,7 +16,7 @@ model Question {
   comments    Comment[]
   collections Collections[]
   createTime  DateTime      @default(now())
-  updateTime  DateTime      @default(now())
+  updateTime  DateTime      @default(now()) @updatedAt
 }
 
 model Comment {
@@ -28,7 +28,7 @@ model Comment {
   question    Question @relation(fields: [questionId], references: [id])
   reply       Reply?
   createTime  DateTime @default(now())
-  updateTime  DateTime @default(now())
+  updateTime  DateTime @default(now()) @updatedAt
 }
 
 model Reply {
@@ -39,7 +39,7 @@ model Reply {
   commentId   Int?     @unique
   comment     Comment? @relation(fields: [commentId], references: [id])
   createTime  DateTime @default(now())
-  updateTime  DateTime @default(now())
+  updateTime  DateTime @default(now()) @updatedAt
 }
 
 model User {
@@ -48,22 +48,22 @@ model User {
   userName    String
   policeNo    String
   phone       String
+  Question    Question[]
   comments    Comment[]
   collections Collections[]
   replies     Reply[]
   unitId      Int
   unit        Unit?
-  Question    Question[]
 }
 
 model Unit {
   unitId     Int      @id @default(autoincrement())
   unitNo     String
   unitName   String
-  createTime DateTime @default(now())
-  updateTime DateTime @default(now())
   userId     Int      @unique
   user       User     @relation(fields: [userId], references: [id])
+  createTime DateTime @default(now())
+  updateTime DateTime @default(now()) @updatedAt
 }
 
 model Collections {
@@ -73,7 +73,7 @@ model Collections {
   questionId Int
   question   Question @relation(fields: [questionId], references: [id])
   createTime DateTime @default(now())
-  updateTime DateTime @default(now())
+  updateTime DateTime @default(now()) @updatedAt
 
   @@unique([userId, questionId])
 }

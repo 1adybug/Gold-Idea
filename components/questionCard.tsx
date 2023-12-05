@@ -1,18 +1,34 @@
-import { Question } from "./questionContainer"
+"use client"
+import { Collection, Question } from "./questionContainer"
 import Quote from "../assets/quote.png"
-import CollectIcon from "../assets/collectIcon.png"
 import AttentionIconForHome from "../assets/AttentionIconForHome.png"
 import Image from "next/image"
 import Link from "next/link"
 import advanceTime from "../utils/timeFormatConversion"
-
+import DefaultCollectionIcon from "../assets/defaultCollect.png"
+import CollectedIcon from "../assets/collected.png"
+import { useUserInfo } from "../store"
+import { useEffect, useState } from "react"
 export interface QuestionCardProps extends Omit<Question, "comments"> {
     referCount: number
 }
 
 export default function QuestionCard(props: QuestionCardProps) {
 
-    const { id, content, goal, referCount, createTime, publisher } = props
+    const { id, content, goal, referCount, createTime, publisher, collections } = props
+    const [userInfo, setUserInfo] = useUserInfo()
+    const [isCollected, setIsCollected] = useState(false)
+
+    useEffect(() => {
+        isCollectedJudge()
+    }, [])
+
+    function isCollectedJudge() {
+        if (collections.find((collection: Collection) => collection.userId === userInfo.id)) {
+            setIsCollected(true)
+            return
+        }
+    }
 
     return (
         <Link className="w-full h-full bg-white text-black flex flex-col gap-y-8 p-8 cursor-pointer" href={`/detail/${id}`}>
@@ -35,8 +51,8 @@ export default function QuestionCard(props: QuestionCardProps) {
                 </div>
                 <div>发布时间：{advanceTime(createTime)}</div>
                 <div className="flex gap-x-1 items-center transform -translate-y-[1px] cursor-pointer">
-                    <Image src={CollectIcon} alt={"收藏图标"} width={24} height={14} />
-                    <div>收藏</div>
+                    <Image src={isCollected ? CollectedIcon : DefaultCollectionIcon} alt={"收藏图标"} width={24} height={14} />
+                    {isCollected ? <div>已收藏</div> : <div>收藏</div>}
                 </div>
                 <div className="flex gap-x-1 items-center cursor-pointer">
                     <Image src={AttentionIconForHome} alt={"关注图标"} width={24} height={14} />
