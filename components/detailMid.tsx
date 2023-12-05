@@ -6,6 +6,7 @@ import { Question } from "./questionContainer"
 import QuestionModal, { QuestionModalSource } from "./questionModal"
 import { API_BASE_URL } from "../constant/publicURL"
 import { Skeleton } from "antd"
+import LeftSideToolbar from "./leftSideToolbar"
 
 export interface DetailMidProps {
     questionId: number
@@ -61,6 +62,7 @@ export default function DetailMid(props: DetailMidProps) {
                     <Skeleton active className="bg-white p-8 w-[1200px] mt-[140px]" />
                 </div>
             }
+            {question && <LeftSideToolbar questionId={question.id} attentions={question.attentions} />}
             <QuestionModal open={modalOpen} source={modalSource} onCloseModal={() => setModalOpen(false)} questionId={thisQuestionId} onFetchNewQuestionDetail={() => fetchQuestion()} />
         </Fragment>
     )

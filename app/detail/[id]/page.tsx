@@ -1,6 +1,5 @@
 import { Fragment } from "react"
 import Header from "../../../components/header"
-import LeftSideToolbar from "../../../components/leftSideToolbar"
 // import { Question } from "../../../components/questionContainer"
 // import { API_BASE_URL } from "../../../constant/publicURL"
 import Avator from "../../../assets/avator.jpg"
@@ -41,7 +40,6 @@ export default async function Page({ params }: { params: { id: string } }) {
     return (
         <Fragment>
             <Header isHomePage={false} />
-            <LeftSideToolbar />
             <DetailMid userDemo={userDemo} questionId={Number(id)}/>
         </Fragment>
     )
