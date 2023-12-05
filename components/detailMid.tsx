@@ -5,6 +5,7 @@ import DetailSecondSection from "./detailSecondSection"
 import { Question } from "./questionContainer"
 import QuestionModal, { QuestionModalSource } from "./questionModal"
 import { API_BASE_URL } from "../constant/publicURL"
+import { Skeleton } from "antd"
 
 export interface DetailMidProps {
     // question: Question
@@ -26,6 +27,7 @@ export default function DetailMid(props: DetailMidProps) {
     const [modalSource, setModalSource] = useState<QuestionModalSource>("addGoal")
     const [thisQuestionId, setThisQuestionId] = useState<number | undefined>(0)
     const [question, setQuestion] = useState<Question | null>(null)
+    const [gotQuestion, setGotQuestion] = useState(false)
 
     useEffect(() => {
         fetchQuestion()
@@ -34,6 +36,7 @@ export default function DetailMid(props: DetailMidProps) {
     async function fetchQuestion() {
         const res = await findQuestionById(questionId)
         if (!res) return
+        setGotQuestion(true)
         setQuestion(res)
     }
 
@@ -50,10 +53,16 @@ export default function DetailMid(props: DetailMidProps) {
 
     return (
         <Fragment>
-            {question && <div className="w-full h-auto mt-[140px] flex flex-col gap-y-10 justify-center items-center">
-                <DetailFirstSection id={question.id} content={question.content} goal={question.goal} createTime={question.createTime} comments={question.comments} publisher={question.publisher} onFunctionClick={handleFunctionClick} />
-                <DetailSecondSection userDemo={userDemo} question={question} onAddReplyClick={handleAddReplyClick} />
-            </div>}
+            {
+                gotQuestion ? <Fragment>
+                    {question && <div className="w-full h-auto mt-[140px] flex flex-col gap-y-10 justify-center items-center">
+                        <DetailFirstSection id={question.id} content={question.content} goal={question.goal} createTime={question.createTime} comments={question.comments} publisher={question.publisher} onFunctionClick={handleFunctionClick} />
+                        <DetailSecondSection userDemo={userDemo} question={question} onAddReplyClick={handleAddReplyClick} />
+                    </div>}
+                </Fragment> : <div className="flex justify-center">
+                    <Skeleton active className="bg-white p-8 w-[1200px] mt-[140px]" />
+                </div>
+            }
             <QuestionModal open={modalOpen} source={modalSource} onCloseModal={() => setModalOpen(false)} questionId={thisQuestionId} onFetchNewQuestionDetail={() => fetchQuestion()} />
         </Fragment>
     )

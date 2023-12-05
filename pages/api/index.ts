@@ -42,3 +42,17 @@ export async function addComment(questionId: number, content: string, publisherI
     const data = await res.json()
     return data
 }
+
+export async function addReply(commentId: number, content: string, publisherId: number) {
+    const res = await fetch("/api/addReply", {
+        method: "POST",
+        body: JSON.stringify({
+            commentId,
+            content,
+            publisherId
+        })
+    })
+    if (res.status !== 200) throw new Error("添加回复出错！")
+    const data = await res.json()
+    return data
+}

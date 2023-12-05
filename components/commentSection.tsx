@@ -8,7 +8,8 @@ import CancelReplyIcon from "../assets/cancelReplyIcon.png"
 import { Fragment, useState } from "react"
 import { AvatorMap } from "./detailFirstSection"
 import advanceTime from "../utils/timeFormatConversion"
-import { comment } from "postcss"
+import { addReply } from "../pages/api"
+import { message } from "antd"
 
 export interface CommentSectionProps extends CommentItem {
     onAddReplyClick: () => void
@@ -19,6 +20,17 @@ export function CommentSection(props: CommentSectionProps) {
     const { id, content, createTime, publisher, reply, onAddReplyClick } = props
 
     const [currentCommentId, setCurrentCommentId] = useState(-1)
+    const [inputedValue, setinputedValue] = useState("")
+
+    function textareaChange(e: React.ChangeEvent<HTMLTextAreaElement>) {
+        setinputedValue(e.target.value)
+    }
+
+    async function handleReply() {
+        const res = await addReply(Number(id), inputedValue, 2)
+        if (!res) return
+        message.success("回复成功")
+    }
 
     return (
         <div className="w-full flex gap-x-6">
@@ -68,8 +80,8 @@ export function CommentSection(props: CommentSectionProps) {
                 </div>
                 }
                 {Number(id) === currentCommentId && <div className="h-auto rounded-lg border-2 border-blue-600 p-2">
-                    <textarea className="w-full min-h-[180px] max-h-[180px] text-xl focus:outline-none" placeholder={"回复" + publisher.userName} />
-                    <div className="bg-blue-600 w-[100px] h-[40px] rounded-md flex justify-center items-center text-white ml-auto">回复</div>
+                    <textarea className="w-full min-h-[180px] max-h-[180px] text-xl focus:outline-none" placeholder={"回复" + publisher.userName} onChange={textareaChange} />
+                    <div className="bg-blue-600 w-[100px] h-[40px] rounded-md flex justify-center items-center text-white ml-auto" onClick={handleReply}>回复</div>
                 </div>}
             </div>
         </div>

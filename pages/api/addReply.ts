@@ -1,25 +1,25 @@
 import { NextApiRequest, NextApiResponse } from "next"
 import { prisma } from "."
 
-export default async function addComment(req: NextApiRequest, res: NextApiResponse) {
+export default async function addReply(req: NextApiRequest, res: NextApiResponse) {
     if (req.method !== "POST") return res.status(405).json({ message: "请求方式出错！" })
     const body = JSON.parse(req.body)
-    const { questionId, content, publisherId } = body
+    const { commentId, content, publisherId } = body
 
-    if (questionId !== undefined && typeof questionId !== "number") return res.status(400).json({ message: "问题id参数类型错误！" })
+    if (commentId !== undefined && typeof commentId !== "number") return res.status(400).json({ message: "问题id参数类型错误！" })
     if (content !== undefined && typeof content !== "string") return res.status(400).json({ message: "内容参数类型错误！" })
     if (publisherId !== undefined && typeof publisherId !== "number") return res.status(400).json({ message: "发布者id参数类型错误！" })
 
     try {
-        const addCommentRes = await prisma.comment.create({
+        const addReplyRes = await prisma.reply.create({
             data: {
-                questionId,
+                commentId,
                 content,
                 publisherId
             }
         })
-        res.status(200).json(addCommentRes)
+        res.status(200).json(addReplyRes)
     } catch (err) {
-        res.status(400).json({ message: "添加评论出错！" + err })
+        res.status(400).json({ message: "添加回复出错！" + err })
     }
 }

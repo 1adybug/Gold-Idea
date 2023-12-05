@@ -8,14 +8,15 @@ datasource db {
 }
 
 model Question {
-  id          Int       @id @default(autoincrement())
+  id          Int           @id @default(autoincrement())
   content     String
-  goal        String    @default("")
+  goal        String        @default("")
   publisherId Int
-  publisher   User      @relation(fields: [publisherId], references: [id])
+  publisher   User          @relation(fields: [publisherId], references: [id])
   comments    Comment[]
-  createTime  DateTime  @default(now())
-  updateTime  DateTime  @default(now())
+  collections Collections[]
+  createTime  DateTime      @default(now())
+  updateTime  DateTime      @default(now())
 }
 
 model Comment {
@@ -42,16 +43,17 @@ model Reply {
 }
 
 model User {
-  id           Int        @id @default(autoincrement())
-  avator       String?
-  userName     String
-  policeNo     String
-  phone        String
-  comments     Comment[]
-  favQuestions Question[]
-  replies      Reply[]
-  unitId       Int
-  unit         Unit?
+  id          Int           @id @default(autoincrement())
+  avator      String?
+  userName    String
+  policeNo    String
+  phone       String
+  comments    Comment[]
+  collections Collections[]
+  replies     Reply[]
+  unitId      Int
+  unit        Unit?
+  Question    Question[]
 }
 
 model Unit {
@@ -62,4 +64,16 @@ model Unit {
   updateTime DateTime @default(now())
   userId     Int      @unique
   user       User     @relation(fields: [userId], references: [id])
+}
+
+model Collections {
+  id         Int      @id @default(autoincrement())
+  userId     Int
+  user       User     @relation(fields: [userId], references: [id])
+  questionId Int
+  question   Question @relation(fields: [questionId], references: [id])
+  createTime DateTime @default(now())
+  updateTime DateTime @default(now())
+
+  @@unique([userId, questionId])
 }
