@@ -12,7 +12,8 @@ import { useUserInfo } from "../store"
 import React, { useEffect, useState } from "react"
 import { attentionQuestion, collectQuestion } from "../pages/api"
 import NProgress from 'nprogress'
-import 'nprogress/nprogress.css';
+import 'nprogress/nprogress.css'
+
 export interface QuestionCardProps extends Omit<Question, "comments"> {
     referCount: number
 }
