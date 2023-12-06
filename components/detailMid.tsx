@@ -7,6 +7,8 @@ import QuestionModal, { QuestionModalSource } from "./questionModal"
 import { API_BASE_URL } from "../constant/publicURL"
 import { Skeleton } from "antd"
 import LeftSideToolbar from "./leftSideToolbar"
+import NProgress from 'nprogress'
+import 'nprogress/nprogress.css';
 
 export interface DetailMidProps {
     questionId: number
@@ -30,6 +32,7 @@ export default function DetailMid(props: DetailMidProps) {
     const [gotQuestion, setGotQuestion] = useState(false)
 
     useEffect(() => {
+        NProgress.done()
         fetchQuestion()
     }, [])
 

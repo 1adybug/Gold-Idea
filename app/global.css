@@ -9,3 +9,8 @@ body {
 .h-drainage {
     height: calc(100vh - 104px);
 }
+
+#nprogress .bar {
+    background: #1064ff !important;
+    height: 2px !important;
+}

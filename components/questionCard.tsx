@@ -11,6 +11,8 @@ import AttentionedIcon from "../assets/attentioned.png"
 import { useUserInfo } from "../store"
 import React, { useEffect, useState } from "react"
 import { attentionQuestion, collectQuestion } from "../pages/api"
+import NProgress from 'nprogress'
+import 'nprogress/nprogress.css';
 export interface QuestionCardProps extends Omit<Question, "comments"> {
     referCount: number
 }
@@ -83,13 +85,21 @@ export default function QuestionCard(props: QuestionCardProps) {
         }
     }
 
-    function handleLinkClicked(){
-        
+    function handleLinkClick() {
+        NProgress.start();
+        NProgress.configure({
+            minimum: 0.1,
+            showSpinner: false,
+            easing: 'ease',
+            speed: 500,
+            trickle: false,
+            trickleSpeed: 200
+        });
     }
 
     return (
-        <Link className="w-full h-full bg-white text-black flex flex-col gap-y-8 p-8 cursor-pointer" href={`/detail/${id}`}>
-            <div onClick={handleLinkClicked}>
+        <Link className="w-full h-full bg-white text-black p-8 cursor-pointer" href={`/detail/${id}`}>
+            <div onClick={handleLinkClick} className="flex flex-col gap-y-8">
                 <div className="flex flex-col gap-y-4">
                     <div className="text-2xl font-semibold text-stone-800">{content}</div>
                     <div className="flex items-center gap-x-2 text-gray-500">
