@@ -62,6 +62,17 @@ export default function DetailFirstSection(props: QuestionDetail) {
         }
     }
 
+    async function attentionClick() {
+        if (isAttentioned) {
+            setIsAttentioned(false)
+            return
+        }
+        if (!isAttentioned) {
+            setIsAttentioned(true)
+            return
+        }
+    }
+
     return (
         <Fragment>
             <div className="w-[1200px] h-auro p-10 rounded bg-white shadow-sm flex flex-col gap-y-10">
@@ -81,7 +92,7 @@ export default function DetailFirstSection(props: QuestionDetail) {
                 </div>
                 <div className="text-2xl text-gray-600 border-l-[8px] border-blue-600 pl-3">{goal ? goal : "暂无目的"}</div>
                 <div className="flex gap-x-6 items-center">
-                    <div className={`w-[120px] h-[50px] rounded-md text-white font-semibold text-2xl flex justify-center items-center cursor-pointer ${isAttentioned ? "bg-gray-400" : "bg-blue-600"}`}>{isAttentioned ? "已关注" : "关注"}</div>
+                    <div className={`w-[120px] h-[50px] rounded-md text-white font-semibold text-2xl flex justify-center items-center cursor-pointer ${isAttentioned ? "bg-gray-400" : "bg-blue-600"}`} onClick={attentionClick}>{isAttentioned ? "已关注" : "关注"}</div>
                     {!goal && <div className="w-[160px] h-[50px] flex gap-x-1 rounded-md  border-2 border-blue-500 justify-center items-center cursor-pointer" onClick={() => onFunctionClick("addGoal", id)}>
                         <Image src={PencileIcon} alt={"添加目的图标"} width={24} height={24} />
                         <div className="text-blue-600 font-semibol text-2xl">添加目的</div>

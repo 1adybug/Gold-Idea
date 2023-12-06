@@ -10,15 +10,16 @@ import UnAttentionedIcon from "../assets/unattentioned.png"
 import AttentionedIcon from "../assets/attentioned.png"
 import { useUserInfo } from "../store"
 import React, { useEffect, useState } from "react"
-import { collectQuestion } from "../pages/api"
+import { attentionQuestion, collectQuestion } from "../pages/api"
 export interface QuestionCardProps extends Omit<Question, "comments"> {
     referCount: number
     onCollect: () => void
+    onAttention: () => void
 }
 
 export default function QuestionCard(props: QuestionCardProps) {
 
-    const { id, content, goal, referCount, createTime, publisher, collections, attentions, onCollect } = props
+    const { id, content, goal, referCount, createTime, publisher, collections, attentions, onCollect, onAttention } = props
     const [userInfo, setUserInfo] = useUserInfo()
     const [isCollected, setIsCollected] = useState(false)
     const [isAttentioned, setIsAttentioned] = useState(false)
@@ -66,6 +67,22 @@ export default function QuestionCard(props: QuestionCardProps) {
         }
     }
 
+    async function handleAttention(event: React.MouseEvent<HTMLDivElement>) {
+        event.preventDefault()
+        if (isAttentioned) {
+            const res = await attentionQuestion(id, userInfo.id, isAttentioned)
+            if (!res) return
+            onAttention()
+            return
+        }
+        if (!isAttentioned) {
+            const res = await attentionQuestion(id, userInfo.id, isAttentioned)
+            if (!res) return
+            onAttention()
+            return
+        }
+    }
+
     return (
         <Link className="w-full h-full bg-white text-black flex flex-col gap-y-8 p-8 cursor-pointer" href={`/detail/${id}`}>
             <div className="flex flex-col gap-y-4">
@@ -91,7 +108,7 @@ export default function QuestionCard(props: QuestionCardProps) {
                     {isCollected ? <div className="text-blue-600">已收藏</div> : <div>收藏</div>}
                 </div>
                 <div className="flex gap-x-1 items-center cursor-pointer">
-                    <Image src={isAttentioned ? AttentionedIcon : UnAttentionedIcon} alt={"关注图标"} width={24} height={14} />
+                    <Image src={isAttentioned ? AttentionedIcon : UnAttentionedIcon} alt={"关注图标"} width={24} height={14} onClick={handleAttention} />
                     {isAttentioned ? <div className="text-blue-600">已关注</div> : <div>关注</div>}
                 </div>
             </div>
