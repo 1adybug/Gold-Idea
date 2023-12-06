@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next"
 import { prisma } from "."
 
-export default async function collectQuestion(res: NextApiResponse, req: NextApiRequest) {
+export default async function collectQuestion(req: NextApiRequest, res: NextApiResponse) {
     if (req.method !== "POST") return res.status(405).json({ message: "请求方式出错！" })
 
     const body = JSON.parse(req.body)

@@ -1,5 +1,5 @@
 "use client"
-import { Collection, Question } from "./questionContainer"
+import { Attention, Collection, Question } from "./questionContainer"
 import Quote from "../assets/quote.png"
 import Image from "next/image"
 import Link from "next/link"
@@ -9,29 +9,59 @@ import CollectedIcon from "../assets/collected.png"
 import UnAttentionedIcon from "../assets/unattentioned.png"
 import AttentionedIcon from "../assets/attentioned.png"
 import { useUserInfo } from "../store"
-import { useEffect, useState } from "react"
+import React, { useEffect, useState } from "react"
+import { collectQuestion } from "../pages/api"
 export interface QuestionCardProps extends Omit<Question, "comments"> {
     referCount: number
+    onCollect: () => void
 }
 
 export default function QuestionCard(props: QuestionCardProps) {
 
-    const { id, content, goal, referCount, createTime, publisher, collections, attentions } = props
+    const { id, content, goal, referCount, createTime, publisher, collections, attentions, onCollect } = props
     const [userInfo, setUserInfo] = useUserInfo()
     const [isCollected, setIsCollected] = useState(false)
     const [isAttentioned, setIsAttentioned] = useState(false)
 
     useEffect(() => {
         isCollectedJudge()
-    }, [])
+        isAttentionedJudge()
+    }, [collections, attentions])
 
     function isCollectedJudge() {
         if (collections.find((collection: Collection) => collection.userId === userInfo.id)) {
             setIsCollected(true)
             return
         }
-        if(attentions.find((attention: Collection) => attention.userId === userInfo.id)) {
+        if (!collections.find((collection: Collection) => collection.userId === userInfo.id)) {
+            setIsCollected(false)
+            return
+        }
+    }
+
+    function isAttentionedJudge() {
+        if (attentions.find((attention: Attention) => attention.userId === userInfo.id)) {
             setIsAttentioned(true)
+            return
+        }
+        if (!attentions.find((attention: Attention) => attention.userId === userInfo.id)) {
+            setIsAttentioned(false)
+            return
+        }
+    }
+
+    async function handleCollect(event: React.MouseEvent<HTMLDivElement>) {
+        event.preventDefault()
+        if (isCollected) {
+            const res = await collectQuestion(id, userInfo.id, isCollected)
+            if (!res) return
+            onCollect()
+            return
+        }
+        if (!isCollected) {
+            const res = await collectQuestion(id, userInfo.id, isCollected)
+            if (!res) return
+            onCollect()
             return
         }
     }
@@ -56,7 +86,7 @@ export default function QuestionCard(props: QuestionCardProps) {
                     <div>{referCount}条引用</div>
                 </div>
                 <div>发布时间：{advanceTime(createTime)}</div>
-                <div className="flex gap-x-1 items-center transform -translate-y-[1px] cursor-pointer">
+                <div className="flex gap-x-1 items-center transform -translate-y-[1px] cursor-pointer" onClick={handleCollect}>
                     <Image src={isCollected ? CollectedIcon : DefaultCollectionIcon} alt={"收藏图标"} width={24} height={14} />
                     {isCollected ? <div className="text-blue-600">已收藏</div> : <div>收藏</div>}
                 </div>

@@ -55,14 +55,14 @@ export default function DetailMid(props: DetailMidProps) {
             {
                 gotQuestion ? <Fragment>
                     {question && <div className="w-full h-auto mt-[140px] flex flex-col gap-y-10 justify-center items-center">
-                        <DetailFirstSection id={question.id} content={question.content} goal={question.goal} createTime={question.createTime} comments={question.comments} publisher={question.publisher} onFunctionClick={handleFunctionClick} collections={question.collections} />
+                        <DetailFirstSection id={question.id} content={question.content} goal={question.goal} createTime={question.createTime} comments={question.comments} publisher={question.publisher} onFunctionClick={handleFunctionClick} attentions={question.attentions} />
                         <DetailSecondSection userDemo={userDemo} question={question} onAddReplySucceed={onAddReplySucceed} />
                     </div>}
                 </Fragment> : <div className="flex justify-center">
                     <Skeleton active className="bg-white p-8 w-[1200px] mt-[140px]" />
                 </div>
             }
-            {question && <LeftSideToolbar questionId={question.id} attentions={question.attentions} />}
+            {question && <LeftSideToolbar questionId={question.id} collections={question.collections} />}
             <QuestionModal open={modalOpen} source={modalSource} onCloseModal={() => setModalOpen(false)} questionId={thisQuestionId} onFetchNewQuestionDetail={() => fetchQuestion()} />
         </Fragment>
     )

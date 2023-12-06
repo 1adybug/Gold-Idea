@@ -31,11 +31,12 @@ export interface QuestionContainerProps {
     questions: Question[]
     pageNo: number
     onScrollToBottom: (newPageNo: number) => void
+    onCollect: () => void
 }
 
 export default async function QuestionContainer(props: QuestionContainerProps) {
 
-    const { pageNo, questions, onScrollToBottom } = props
+    const { pageNo, questions, onScrollToBottom, onCollect } = props
 
     useEffect(() => {
         function handleScroll() {
@@ -52,7 +53,7 @@ export default async function QuestionContainer(props: QuestionContainerProps) {
 
     return (
         <div className="w-9/12 flex flex-col gap-y-2.5 overflow-y-auto">
-            {questions && questions.map((question: Question) => <QuestionCard key={question.id} id={question.id} content={question.content} goal={question.goal} referCount={question.comments.length} createTime={question.createTime} publisher={question.publisher} updateTime={question.updateTime} collections={question.collections} attentions={question.attentions} />)}
+            {questions && questions.map((question: Question) => <QuestionCard key={question.id} id={question.id} content={question.content} goal={question.goal} referCount={question.comments.length} createTime={question.createTime} publisher={question.publisher} updateTime={question.updateTime} collections={question.collections} attentions={question.attentions} onCollect={onCollect} />)}
             <Skeleton active className="bg-white p-8" />
         </div>
     )
