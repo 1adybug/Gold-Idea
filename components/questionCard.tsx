@@ -13,13 +13,11 @@ import React, { useEffect, useState } from "react"
 import { attentionQuestion, collectQuestion } from "../pages/api"
 export interface QuestionCardProps extends Omit<Question, "comments"> {
     referCount: number
-    onCollect: () => void
-    onAttention: () => void
 }
 
 export default function QuestionCard(props: QuestionCardProps) {
 
-    const { id, content, goal, referCount, createTime, publisher, collections, attentions, onCollect, onAttention } = props
+    const { id, content, goal, referCount, createTime, publisher, collections, attentions } = props
     const [userInfo, setUserInfo] = useUserInfo()
     const [isCollected, setIsCollected] = useState(false)
     const [isAttentioned, setIsAttentioned] = useState(false)
@@ -56,11 +54,11 @@ export default function QuestionCard(props: QuestionCardProps) {
         const res = await collectQuestion(id, userInfo.id, isCollected)
         if (!res) return
         if (isCollected) {
-            onCollect()
+            setIsCollected(false)
             return
         }
         if (!isCollected) {
-            onCollect()
+            setIsCollected(true)
             return
         }
     }
@@ -70,11 +68,11 @@ export default function QuestionCard(props: QuestionCardProps) {
         const res = await attentionQuestion(id, userInfo.id, isAttentioned)
         if (!res) return
         if (isAttentioned) {
-            onAttention()
+            setIsAttentioned(false)
             return
         }
         if (!isAttentioned) {
-            onAttention()
+            setIsAttentioned(true)
             return
         }
     }
