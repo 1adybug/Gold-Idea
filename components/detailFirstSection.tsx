@@ -12,6 +12,7 @@ import PencileIcon from "../assets/pencileIcon.png"
 import LeaveMessageIcon from "../assets/leaveMessageIcon.png"
 import { Attention } from "./questionContainer"
 import { useUserInfo } from "../store"
+import { attentionQuestion } from "../pages/api"
 
 export const AvatorMap: Record<string, StaticImageData> = {
     "徐腾": XvTengAvator,
@@ -63,6 +64,8 @@ export default function DetailFirstSection(props: QuestionDetail) {
     }
 
     async function attentionClick() {
+        const res = await attentionQuestion(id, userInfo.id, isAttentioned)
+        if (!res) return
         if (isAttentioned) {
             setIsAttentioned(false)
             return

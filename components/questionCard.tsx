@@ -53,15 +53,13 @@ export default function QuestionCard(props: QuestionCardProps) {
 
     async function handleCollect(event: React.MouseEvent<HTMLDivElement>) {
         event.preventDefault()
+        const res = await collectQuestion(id, userInfo.id, isCollected)
+        if (!res) return
         if (isCollected) {
-            const res = await collectQuestion(id, userInfo.id, isCollected)
-            if (!res) return
             onCollect()
             return
         }
         if (!isCollected) {
-            const res = await collectQuestion(id, userInfo.id, isCollected)
-            if (!res) return
             onCollect()
             return
         }
@@ -69,15 +67,13 @@ export default function QuestionCard(props: QuestionCardProps) {
 
     async function handleAttention(event: React.MouseEvent<HTMLDivElement>) {
         event.preventDefault()
+        const res = await attentionQuestion(id, userInfo.id, isAttentioned)
+        if (!res) return
         if (isAttentioned) {
-            const res = await attentionQuestion(id, userInfo.id, isAttentioned)
-            if (!res) return
             onAttention()
             return
         }
         if (!isAttentioned) {
-            const res = await attentionQuestion(id, userInfo.id, isAttentioned)
-            if (!res) return
             onAttention()
             return
         }
