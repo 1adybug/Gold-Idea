@@ -8,16 +8,19 @@ datasource db {
 }
 
 model Question {
-  id          Int           @id @default(autoincrement())
-  content     String
-  goal        String        @default("")
-  publisherId Int
-  publisher   User          @relation(fields: [publisherId], references: [id])
-  comments    Comment[]
-  collections Collections[]
-  attentions  Attentions[]
-  createTime  DateTime      @default(now())
-  updateTime  DateTime      @default(now()) @updatedAt
+  id              Int           @id @default(autoincrement())
+  content         String
+  goal            String        @default("")
+  publisherId     Int
+  publisher       User          @relation(name: "PublishQuestions", fields: [publisherId], references: [id])
+  comments        Comment[]
+  collections     Collections[]
+  attentions      Attentions[]
+  createTime      DateTime      @default(now())
+  updateTime      DateTime      @default(now()) @updatedAt
+  deleted         Boolean       @default(false)
+  deletedByUserId Int?
+  deletedBy       User?         @relation(name: "DeleteQuestions", fields: [deletedByUserId], references: [id])
 }
 
 model Comment {
@@ -44,18 +47,19 @@ model Reply {
 }
 
 model User {
-  id          Int           @id @default(autoincrement())
-  avator      String?
-  userName    String
-  policeNo    String
-  phone       String
-  Question    Question[]
-  comments    Comment[]
-  collections Collections[]
-  attentions  Attentions[]
-  replies     Reply[]
-  unitId      Int
-  unit        Unit?
+  id               Int           @id @default(autoincrement())
+  avator           String?
+  userName         String
+  policeNo         String
+  phone            String
+  Question         Question[]    @relation(name: "PublishQuestions")
+  comments         Comment[]
+  collections      Collections[]
+  attentions       Attentions[]
+  replies          Reply[]
+  unitId           Int
+  unit             Unit?
+  deletedQuestions Question[]    @relation(name: "DeleteQuestions")
 }
 
 model Unit {
