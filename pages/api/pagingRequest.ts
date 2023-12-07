@@ -25,12 +25,17 @@ export default async function pagingRequest(req: NextApiRequest, res: NextApiRes
                 },
                 comments: true,
                 collections: true,
-                attentions: true
+                attentions: true,
+                deletedBy: {
+                    include: {
+                        unit: true
+                    }
+                }
             }
         })
         if (!pagingRequestRes) return
         res.status(200).json(pagingRequestRes)
-    } catch (err) {
+    } catch (error) {
         res.status(400).json({ message: "分页请求出错！" })
     }
 }

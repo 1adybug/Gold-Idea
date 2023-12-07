@@ -12,15 +12,15 @@ model Question {
   content         String
   goal            String        @default("")
   publisherId     Int
-  publisher       User          @relation(name: "PublishQuestions", fields: [publisherId], references: [id])
+  publisher       User          @relation("PublishQuestions", fields: [publisherId], references: [id])
   comments        Comment[]
   collections     Collections[]
   attentions      Attentions[]
   createTime      DateTime      @default(now())
   updateTime      DateTime      @default(now()) @updatedAt
   deleted         Boolean       @default(false)
-  deletedByUserId Int?
-  deletedBy       User?         @relation(name: "DeleteQuestions", fields: [deletedByUserId], references: [id])
+  deletedByUserId Int?          
+  deletedBy       User?         @relation("DeleteQuestions", fields: [deletedByUserId], references: [id])
 }
 
 model Comment {
@@ -47,19 +47,19 @@ model Reply {
 }
 
 model User {
-  id               Int           @id @default(autoincrement())
-  avator           String?
-  userName         String
-  policeNo         String
-  phone            String
-  Question         Question[]    @relation(name: "PublishQuestions")
-  comments         Comment[]
-  collections      Collections[]
-  attentions       Attentions[]
-  replies          Reply[]
-  unitId           Int
-  unit             Unit?
-  deletedQuestions Question[]    @relation(name: "DeleteQuestions")
+  id              Int           @id @default(autoincrement())
+  avator          String?
+  userName        String
+  policeNo        String
+  phone           String
+  Question        Question[]    @relation("PublishQuestions")
+  comments        Comment[]
+  collections     Collections[]
+  attentions      Attentions[]
+  replies         Reply[]
+  unitId          Int
+  unit            Unit?
+  deleteQuestions Question[]    @relation("DeleteQuestions")
 }
 
 model Unit {
