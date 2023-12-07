@@ -67,7 +67,7 @@ export default function LeftSideToolbar(props: LeftSideToolbarProps) {
                     <Image src={DeleteIcon} width={34} height={34} alt="删除图标" />
                 </div>
             </div>
-            <DeleteModal open={deleteModalOpen} />
+            <DeleteModal open={deleteModalOpen} onClose={() => setDeleteModalOpen(false)} />
         </Fragment>
     )
 }
