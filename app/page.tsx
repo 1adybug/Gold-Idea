@@ -1,6 +1,6 @@
 import Header from "../components/header";
 import Content from "../components/content";
-import { Fragment } from "react";
+import { Fragment, Suspense } from "react";
 
 // import { API_BASE_URL } from "../constant/publicURL";
 
@@ -17,7 +17,9 @@ export default async function Home() {
     return (
         <Fragment>
             <Header isHomePage={true} />
-            <Content />
+            <Suspense>
+                <Content />
+            </Suspense>
         </Fragment>
     )
 }
