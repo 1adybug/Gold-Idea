@@ -17,6 +17,9 @@ export default async function pagingRequest(req: NextApiRequest, res: NextApiRes
         const pagingRequestRes = await prisma.question.findMany({
             skip,
             take,
+            where: {
+                deleted: false
+            },
             include: {
                 publisher: {
                     include: {
