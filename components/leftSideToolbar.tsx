@@ -7,8 +7,9 @@ import Image from "next/image"
 import { Collection } from "./questionContainer"
 import { Fragment, useEffect, useState } from "react"
 import { useUserInfo } from "../store"
-import { collectQuestion } from "../pages/api"
+import { collectQuestion, deleteQuestion } from "../pages/api"
 import DeleteModal from "./deleteModal"
+import { useRouter } from "next/navigation"
 
 export interface LeftSideToolbarProps {
     questionId: number
@@ -21,6 +22,7 @@ export default function LeftSideToolbar(props: LeftSideToolbarProps) {
     const [userInfo, setUserInfo] = useUserInfo()
     const [isCollected, setIsCollected] = useState(false)
     const [deleteModalOpen, setDeleteModalOpen] = useState(false)
+    const router = useRouter()
 
     useEffect(() => {
         judgeIsCollected()
@@ -51,7 +53,9 @@ export default function LeftSideToolbar(props: LeftSideToolbarProps) {
     }
 
     async function handleConfirmDelete() {
-
+        const res = await deleteQuestion(questionId, userInfo.id)
+        if (!res) return
+        router.push("/")
     }
 
     return (
@@ -67,7 +71,7 @@ export default function LeftSideToolbar(props: LeftSideToolbarProps) {
                     <Image src={DeleteIcon} width={34} height={34} alt="删除图标" />
                 </div>
             </div>
-            <DeleteModal open={deleteModalOpen} onClose={() => setDeleteModalOpen(false)} />
+            <DeleteModal open={deleteModalOpen} onClose={() => setDeleteModalOpen(false)} onConfirm={handleConfirmDelete} />
         </Fragment>
     )
 }

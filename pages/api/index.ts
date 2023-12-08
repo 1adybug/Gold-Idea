@@ -97,3 +97,16 @@ export async function attentionQuestion(questionId: number, userId: number, isAt
     const data = await res.json()
     return data
 }
+
+export async function deleteQuestion(questionId: number, userId: number) {
+    const res = await fetch("/api/deleteQuestion", {
+        method: "POST",
+        body: JSON.stringify({
+            questionId,
+            userId
+        })
+    })
+    if (res.status !== 200) throw new Error("删除问题出错！")
+    const data = await res.json()
+    return data
+}

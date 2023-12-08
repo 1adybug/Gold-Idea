@@ -9,7 +9,6 @@ import { Fragment, useState } from "react"
 import { AvatorMap } from "./detailFirstSection"
 import advanceTime from "../utils/timeFormatConversion"
 import { addReply } from "../pages/api"
-// import { message } from "antd"
 
 export interface CommentSectionProps extends CommentItem {
     onAddReplySucceed: () => void
@@ -29,14 +28,13 @@ export function CommentSection(props: CommentSectionProps) {
     async function handleReply() {
         const res = await addReply(Number(id), inputedValue, 2)
         if (!res) return
-        // message.success("回复成功")
         setCurrentCommentId(-1)
         onAddReplySucceed()
     }
 
     return (
         <div className="w-full flex gap-x-6">
-            <Image src={AvatorMap[publisher.userName]} alt={"用户头像"} width={46} className="rounded h-[46px]" />
+            <Image src={AvatorMap[publisher.userName]} alt={"用户头像"} width={46} className="rounded h-[46px] w-auto" />
             <div className="w-full flex flex-col gap-y-6">
                 <div className="flex gap-x-4 text-xl items-center text-gray-400">
                     <div className="text-gray-800">{publisher.userName}</div>
@@ -68,7 +66,7 @@ export function CommentSection(props: CommentSectionProps) {
                     }
                 </div>
                 {reply && <div className="flex gap-x-6">
-                    <Image src={AvatorMap[reply.publisher.userName]} alt={"用户头像"} width={46} className="rounded h-[46px]" />
+                    <Image src={AvatorMap[reply.publisher.userName]} alt={"用户头像"} width={46} className="rounded h-[46px] w-auto" />
                     <div className="flex flex-col gap-y-6">
                         <div className="flex gap-x-4 items-center text-gray-400">
                             <div className="text-black">{reply.publisher.userName}</div>

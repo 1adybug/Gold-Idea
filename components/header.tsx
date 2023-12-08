@@ -11,17 +11,9 @@ export function Search() {
 
     const [inputFocused, setInputFocused] = useState(false)
 
-    function handleSearchFocus() {
-        setInputFocused(true)
-    }
-
-    function handleSearchBlur() {
-        setInputFocused(false)
-    }
-
     return (
         <div className="flex">
-            <input className={`h-14 pl-2 pr-2 text-xl border-2 border-blue-700 outline-none rounded-l transition-width duration-300 ${inputFocused ? "w-[600px]" : "w-96"}`} placeholder="探索“深海金点子”" onFocus={handleSearchFocus} onBlur={handleSearchBlur} />
+            <input className={`h-14 pl-2 pr-2 text-xl border-2 border-blue-700 outline-none rounded-l transition-width duration-300 ${inputFocused ? "w-[600px]" : "w-96"}`} placeholder="探索“深海金点子”" onFocus={() => setInputFocused(true)} onBlur={() => setInputFocused(false)} />
             <div className="w-16 h-14 flex justify-center items-center bg-blue-700 rounded-r">
                 <Image src={SearchIcon} alt={"搜索图标"} width={30} height={30} />
             </div>

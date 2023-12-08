@@ -19,7 +19,7 @@ model Question {
   createTime      DateTime      @default(now())
   updateTime      DateTime      @default(now()) @updatedAt
   deleted         Boolean       @default(false)
-  deletedByUserId Int?          
+  deletedByUserId Int?
   deletedBy       User?         @relation("DeleteQuestions", fields: [deletedByUserId], references: [id])
 }
 

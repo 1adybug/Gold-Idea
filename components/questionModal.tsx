@@ -84,12 +84,12 @@ export default function QuestionModal(props: QuestionModalProps) {
                 <div className="fixed z-20 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex gap-x-2.5">
                     <div className="w-[1000px] h-[500px] bg-white rounded flex flex-col gap-y-3 p-10">
                         <div className="flex h-full gap-x-2.5">
-                            <Image src={Avator} width={56} alt="用户头像" className="h-[56px] rounded" />
+                            <Image src={Avator} width={56} alt="用户头像" className="h-[56px] w-auto rounded" />
                             <textarea className="min-h-[357px] max-h-[357px] w-full text-2xl rounded-sm border border-gray-200 focus:outline-none p-2.5" placeholder={Placeholders[source]} onChange={handleInput} />
                         </div>
                         <div className="w-[130px] h-[60px] text-white text-xl rounded bg-blue-700 flex justify-center items-center ml-auto cursor-pointer" onClick={submit}>{ModalSubmitBtnText[source]}</div>
                     </div>
-                    <Image src={ModalCloseIcon} alt="弹窗关闭图标" width={40} onClick={() => onCloseModal()} className="h-[40px] cursor-pointer" />
+                    <Image src={ModalCloseIcon} alt="弹窗关闭图标" width={40} onClick={() => onCloseModal()} className="h-[40px] w-auto cursor-pointer" />
                 </div>
             </div>}
         </Fragment>
