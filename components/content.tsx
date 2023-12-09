@@ -19,10 +19,10 @@ export default function Content() {
     async function init() {
         const res = await pagingRequest(pageNo, pageSize)
         if (!res) return
-        if (questions.length && pageNo > 1) {
-            setQuestions([...questions, ...res])
-            return
-        }
+        // if (questions.length && pageNo > 1) {
+        //     setQuestions([...questions, ...res])
+        //     return
+        // }
         setQuestions(res)
     }
 

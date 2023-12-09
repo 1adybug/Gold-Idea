@@ -2,6 +2,7 @@ import Header from "../components/header";
 import Content from "../components/content";
 import { Suspense } from "react";
 import UserProvider from "../components/userProvider";
+import { setupRouterProgress } from "../utils/router";
 
 // import { API_BASE_URL } from "../constant/publicURL";
 
@@ -14,6 +15,7 @@ import UserProvider from "../components/userProvider";
 export default async function Home() {
 
     // const questions = await getQuestions()
+    setupRouterProgress()
 
     return (
         <UserProvider>
