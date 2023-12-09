@@ -11,8 +11,8 @@ import { QuestionModalSource } from "./questionModal"
 import PencileIcon from "../assets/pencileIcon.png"
 import LeaveMessageIcon from "../assets/leaveMessageIcon.png"
 import { Attention } from "./questionContainer"
-import { useUserInfo } from "../store"
 import { attentionQuestion } from "../pages/api"
+import { useUser } from "../app/lib/userContext"
 
 export const AvatorMap: Record<string, StaticImageData> = {
     "徐腾": XvTengAvator,
@@ -45,8 +45,9 @@ export interface QuestionDetail {
 export default function DetailFirstSection(props: QuestionDetail) {
 
     const { id, content, publisher, createTime, goal, attentions, onFunctionClick } = props
-    const [userInfo, setUserInfo] = useUserInfo()
+    // const [userInfo, setUserInfo] = useUserInfo()
     const [isAttentioned, setIsAttentioned] = useState(false)
+    const { userInfo } = useUser()
 
     useEffect(() => {
         judgeIsAttentioned()

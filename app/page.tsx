@@ -1,6 +1,7 @@
 import Header from "../components/header";
 import Content from "../components/content";
 import { Fragment, Suspense } from "react";
+import UserProvider from "../components/userProvider";
 
 // import { API_BASE_URL } from "../constant/publicURL";
 
@@ -15,11 +16,11 @@ export default async function Home() {
     // const questions = await getQuestions()
 
     return (
-        <Fragment>
+        <UserProvider>
             <Header isHomePage={true} />
             <Suspense>
                 <Content />
             </Suspense>
-        </Fragment>
+        </UserProvider>
     )
 }

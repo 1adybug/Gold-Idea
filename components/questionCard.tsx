@@ -8,11 +8,11 @@ import DefaultCollectionIcon from "../assets/defaultCollect.png"
 import CollectedIcon from "../assets/collected.png"
 import UnAttentionedIcon from "../assets/unattentioned.png"
 import AttentionedIcon from "../assets/attentioned.png"
-import { useUserInfo } from "../store"
 import React, { useEffect, useState } from "react"
 import { attentionQuestion, collectQuestion } from "../pages/api"
 import NProgress from 'nprogress'
 import 'nprogress/nprogress.css'
+import { useUser } from "../app/lib/userContext"
 
 export interface QuestionCardProps extends Omit<Question, "comments"> {
     referCount: number
@@ -21,11 +21,11 @@ export interface QuestionCardProps extends Omit<Question, "comments"> {
 export default function QuestionCard(props: QuestionCardProps) {
 
     const { id, content, goal, referCount, createTime, publisher, collections, attentions } = props
-    const [userInfo, setUserInfo] = useUserInfo()
     const [currentCollectionsCount, setCurrentCollectionsCount] = useState(collections.length)
     const [currentAttentionsCount, setCurrentAttentionsCount] = useState(attentions.length)
     const [isCollected, setIsCollected] = useState(false)
     const [isAttentioned, setIsAttentioned] = useState(false)
+    const { userInfo } = useUser()
 
     useEffect(() => {
         isCollectedJudge()

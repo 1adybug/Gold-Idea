@@ -4,6 +4,7 @@ import Header from "../../../components/header"
 // import { API_BASE_URL } from "../../../constant/publicURL"
 import Avator from "../../../assets/avator.jpg"
 import DetailMid from "../../../components/detailMid"
+import UserProvider from "../../../components/userProvider"
 export interface Unit {
     id: number
     unitNo: string
@@ -38,10 +39,10 @@ export default async function Page({ params }: { params: { id: string } }) {
     // const question: Question = await findQuestionById(Number(id))
 
     return (
-        <Fragment>
+        <UserProvider>
             <Header isHomePage={false} />
-            <DetailMid userDemo={userDemo} questionId={Number(id)}/>
-        </Fragment>
+            <DetailMid userDemo={userDemo} questionId={Number(id)} />
+        </UserProvider>
     )
 }
 

@@ -6,10 +6,10 @@ import CollectedIcon from "../assets/collected.png"
 import Image from "next/image"
 import { Collection } from "./questionContainer"
 import { Fragment, useEffect, useState } from "react"
-import { useUserInfo } from "../store"
 import { collectQuestion, deleteQuestion } from "../pages/api"
 import DeleteModal from "./deleteModal"
 import { useRouter } from "next/navigation"
+import { useUser } from "../app/lib/userContext"
 
 export interface LeftSideToolbarProps {
     questionId: number
@@ -19,10 +19,10 @@ export interface LeftSideToolbarProps {
 export default function LeftSideToolbar(props: LeftSideToolbarProps) {
 
     const { questionId, collections } = props
-    const [userInfo, setUserInfo] = useUserInfo()
     const [isCollected, setIsCollected] = useState(false)
     const [deleteModalOpen, setDeleteModalOpen] = useState(false)
     const router = useRouter()
+    const { userInfo } = useUser()
 
     useEffect(() => {
         judgeIsCollected()
