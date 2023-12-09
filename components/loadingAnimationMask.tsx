@@ -1,6 +1,6 @@
 "use client"
 import { Spin } from "antd";
-import { Fragment, useEffect, useState } from "react";
+import { Fragment, useEffect } from "react";
 
 export interface LoadingAnimationMaskProps {
     open: boolean
