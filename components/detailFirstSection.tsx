@@ -45,7 +45,6 @@ export interface QuestionDetail {
 export default function DetailFirstSection(props: QuestionDetail) {
 
     const { id, content, publisher, createTime, goal, attentions, onFunctionClick } = props
-    // const [userInfo, setUserInfo] = useUserInfo()
     const [isAttentioned, setIsAttentioned] = useState(false)
     const { userInfo } = useUser()
 

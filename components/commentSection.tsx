@@ -26,7 +26,7 @@ export function CommentSection(props: CommentSectionProps) {
     }
 
     async function handleReply() {
-        const res = await addReply(Number(id), inputedValue, 2)
+        const res = await addReply(Number(id), inputedValue, 1)
         if (!res) return
         setCurrentCommentId(-1)
         onAddReplySucceed()

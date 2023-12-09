@@ -71,7 +71,7 @@ export default function QuestionModal(props: QuestionModalProps) {
             return
         }
         if (source === "addComment" && questionId) {
-            const res = await addComment(questionId, inputedValue, 2)
+            const res = await addComment(questionId, inputedValue, 1)
             if (!res) return
             onFetchNewQuestionDetail()
             return
