@@ -24,27 +24,29 @@ model Question {
 }
 
 model Comment {
-  id          Int      @id @default(autoincrement())
-  content     String
-  publisherId Int
-  publisher   User     @relation(fields: [publisherId], references: [id])
-  questionId  Int
-  question    Question @relation(fields: [questionId], references: [id])
-  reply       Reply?
-  createTime  DateTime @default(now())
-  updateTime  DateTime @default(now()) @updatedAt
+  id            Int       @id @default(autoincrement())
+  content       String
+  publisherId   Int
+  publisher     User      @relation(fields: [publisherId], references: [id])
+  questionId    Int
+  question      Question  @relation(fields: [questionId], references: [id])
+  parentId      Int?
+  parent        Comment?  @relation("ChildComment", fields: [parentId], references: [id])
+  childComments Comment[] @relation("ChildComment")
+  createTime    DateTime  @default(now())
+  updateTime    DateTime  @default(now()) @updatedAt
 }
 
-model Reply {
-  id          Int      @id @default(autoincrement())
-  content     String
-  publisherId Int
-  publisher   User     @relation(fields: [publisherId], references: [id])
-  commentId   Int?     @unique
-  comment     Comment? @relation(fields: [commentId], references: [id])
-  createTime  DateTime @default(now())
-  updateTime  DateTime @default(now()) @updatedAt
-}
+// model Reply {
+//   id          Int      @id @default(autoincrement())
+//   content     String
+//   publisherId Int
+//   publisher   User     @relation(fields: [publisherId], references: [id])
+//   commentId   Int?     @unique
+//   comment     Comment? @relation(fields: [commentId], references: [id])
+//   createTime  DateTime @default(now())
+//   updateTime  DateTime @default(now()) @updatedAt
+// }
 
 model User {
   id              Int           @id @default(autoincrement())
@@ -56,7 +58,7 @@ model User {
   comments        Comment[]
   collections     Collections[]
   attentions      Attentions[]
-  replies         Reply[]
+  // replies         Reply[]
   unitId          Int
   unit            Unit?
   deleteQuestions Question[]    @relation("DeleteQuestions")
