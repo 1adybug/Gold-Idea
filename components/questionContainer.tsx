@@ -33,7 +33,7 @@ export interface QuestionContainerProps {
     onScrollToBottom: (newPageNo: number) => void
 }
 
-export default async function QuestionContainer(props: QuestionContainerProps) {
+export default function QuestionContainer(props: QuestionContainerProps) {
 
     const { pageNo, questions, onScrollToBottom } = props
 

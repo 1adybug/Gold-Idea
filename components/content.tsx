@@ -2,7 +2,7 @@
 import QuestionContainer, { Question } from "./questionContainer";
 import Drainage from "./drainage";
 import { sortByCommentsCount } from "../utils/questionSort";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { pagingRequest } from "../pages/api";
 import UserProvider from "./userProvider";
 
@@ -19,12 +19,16 @@ export default function Content() {
     async function init() {
         const res = await pagingRequest(pageNo, pageSize)
         if (!res) return
-        // if (questions.length && pageNo > 1) {
-        //     setQuestions([...questions, ...res])
-        //     return
-        // }
+        if (questions.length && pageNo > 1) {
+            setQuestions([...questions, ...res])
+            return
+        }
         setQuestions(res)
     }
+
+    const test = useMemo(() => {
+
+    },[questions])
 
     function handleSortChangeClick(firstKey: number, secondKey: number) {
         if (firstKey === 2) {

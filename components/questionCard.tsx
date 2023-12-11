@@ -89,13 +89,13 @@ export default function QuestionCard(props: QuestionCardProps) {
     }
 
     function handleLinkClick() {
-        // NProgress.start()
-        // NProgress.configure({
-        //     minimum: 0.1,
-        //     showSpinner: false,
-        //     easing: 'ease',
-        //     speed: 500,
-        // });
+        NProgress.start()
+        NProgress.configure({
+            minimum: 0.1,
+            showSpinner: false,
+            easing: 'ease',
+            speed: 500,
+        });
     }
 
     return (
