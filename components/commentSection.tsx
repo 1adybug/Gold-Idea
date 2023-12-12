@@ -10,14 +10,16 @@ import { AvatorMap } from "./detailFirstSection"
 import advanceTime from "../utils/timeFormatConversion"
 import { addReply } from "../pages/api"
 import traverseChildComments from "../utils/traverseChildComments"
+import RightArrow from "../assets/rightArrow.png"
 
 export interface CommentItemProps extends Omit<CommentItem, "childComments"> {
+    parent: CommentItem
     onAddReplySucceed: (parentId: number, replyContent: string) => void
 }
 
 export function Comment(props: CommentItemProps) {
 
-    const { id, content, createTime, publisher, onAddReplySucceed } = props
+    const { id, content, parent, createTime, publisher, onAddReplySucceed } = props
 
     const [currentCommentId, setCurrentCommentId] = useState(-1)
     const [inputedValue, setinputedValue] = useState("")
@@ -36,7 +38,11 @@ export function Comment(props: CommentItemProps) {
         <Image src={AvatorMap[publisher.userName]} alt={"用户头像"} width={46} className="rounded h-[46px]" />
         <div className="w-full flex flex-col gap-y-6">
             <div className="flex gap-x-4 text-xl items-center text-gray-400">
-                <div className="text-gray-800">{publisher.userName}</div>
+                <div className="text-gray-800 font-bold">{publisher.userName}</div>
+                <div className="flex items-center">
+                    <Image src={RightArrow} alt={"右箭头图标"} width={20} height={20} />
+                    <div className="text-gray-800 font-bold">{parent.publisher.userName}</div>
+                </div>
                 <div>警号：{publisher.policeNo}</div>
                 <div>单位：{publisher.unit.unitName}</div>
                 <div>联系电话：{publisher.phone}</div>
@@ -86,11 +92,6 @@ export function CommentSection(props: CommentSectionProps) {
         setinputedValue(e.target.value)
     }
 
-    useEffect(() => {
-        console.log(traverseChildComments(comment));
-
-    }, [])
-
     async function handleReply() {
         const res = await addReply(Number(id), inputedValue, 1)
         if (!res) return
@@ -109,7 +110,7 @@ export function CommentSection(props: CommentSectionProps) {
             <Image src={AvatorMap[publisher.userName]} alt={"用户头像"} width={46} className="rounded h-[46px] w-auto" />
             <div className="w-full flex flex-col gap-y-6">
                 <div className="flex gap-x-4 text-xl items-center text-gray-400">
-                    <div className="text-gray-800">{publisher.userName}</div>
+                    <div className="text-gray-800 font-bold">{publisher.userName}</div>
                     <div>警号：{publisher.policeNo}</div>
                     <div>单位：{publisher.unit.unitName}</div>
                     <div>联系电话：{publisher.phone}</div>
@@ -140,7 +141,7 @@ export function CommentSection(props: CommentSectionProps) {
                     <div className="bg-blue-600 w-[100px] h-[40px] rounded-md flex justify-center items-center text-white ml-auto cursor-pointer" onClick={handleReply}>回复</div>
                 </div>}
                 {traverseChildComments(comment).childComments.map((childComment: CommentItem) => {
-                    return <Comment onAddReplySucceed={handleAddReplySucceed} id={childComment.id} content={childComment.content} publisherId={childComment.publisherId} questionId={childComment.questionId} createTime={childComment.createTime} updateTime={childComment.updateTime} publisher={childComment.publisher} />
+                    return <Comment onAddReplySucceed={handleAddReplySucceed} id={childComment.id} content={childComment.content} publisherId={childComment.publisherId} questionId={childComment.questionId} createTime={childComment.createTime} updateTime={childComment.updateTime} publisher={childComment.publisher} parent={childComment.parent} />
                 })}
             </div>
         </div>
