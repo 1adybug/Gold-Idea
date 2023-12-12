@@ -5,7 +5,7 @@ import ToTopIcon from "../assets/toTop.png"
 import AppraiseIcon from "../assets/appraise.png"
 import ReplyIcon from "../assets/replyIcon.png"
 import CancelReplyIcon from "../assets/cancelReplyIcon.png"
-import { Fragment, useEffect, useState } from "react"
+import { useState } from "react"
 import { AvatorMap } from "./detailFirstSection"
 import advanceTime from "../utils/timeFormatConversion"
 import { addReply } from "../pages/api"
@@ -49,7 +49,7 @@ export function Comment(props: CommentItemProps) {
             </div>
             <div className="text-2xl">{content}</div>
             <div className="flex gap-x-6 items-center text-xl text-gray-400">
-                <div>发布时间：{createTime}</div>
+                <div>发布时间：{advanceTime(createTime)}</div>
                 <div className="flex gap-x-2 items-center cursor-pointer">
                     <Image src={ToTopIcon} alt={"置顶图标"} width={21} height={21} />
                     <div>置顶</div>
@@ -117,7 +117,7 @@ export function CommentSection(props: CommentSectionProps) {
                 </div>
                 <div className="text-2xl">{content}</div>
                 <div className="flex gap-x-6 items-center text-xl text-gray-400">
-                    <div>发布时间：{createTime}</div>
+                    <div>发布时间：{advanceTime(createTime)}</div>
                     <div className="flex gap-x-2 items-center cursor-pointer">
                         <Image src={ToTopIcon} alt={"置顶图标"} width={21} height={21} />
                         <div>置顶</div>
