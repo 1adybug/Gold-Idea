@@ -50,7 +50,25 @@ export default async function findQuestionByID(req: NextApiRequest, res: NextApi
                                         unit: true
                                     }
                                 },
-                                childComments: true
+                                childComments: {
+                                    include: {
+                                        parent: {
+                                            include: {
+                                                publisher: {
+                                                    include: {
+                                                        unit: true
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        publisher: {
+                                            include: {
+                                                unit: true
+                                            }
+                                        },
+                                        childComments: true
+                                    }
+                                }
                             }
                         }
                     }

@@ -37,17 +37,6 @@ model Comment {
   updateTime    DateTime  @default(now()) @updatedAt
 }
 
-// model Reply {
-//   id          Int      @id @default(autoincrement())
-//   content     String
-//   publisherId Int
-//   publisher   User     @relation(fields: [publisherId], references: [id])
-//   commentId   Int?     @unique
-//   comment     Comment? @relation(fields: [commentId], references: [id])
-//   createTime  DateTime @default(now())
-//   updateTime  DateTime @default(now()) @updatedAt
-// }
-
 model User {
   id              Int           @id @default(autoincrement())
   avator          String?
@@ -58,7 +47,6 @@ model User {
   comments        Comment[]
   collections     Collections[]
   attentions      Attentions[]
-  // replies         Reply[]
   unitId          Int
   unit            Unit?
   deleteQuestions Question[]    @relation("DeleteQuestions")
