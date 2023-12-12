@@ -2,7 +2,7 @@
 import QuestionContainer, { Question } from "./questionContainer";
 import Drainage from "./drainage";
 import { sortByCommentsCount } from "../utils/questionSort";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { pagingRequest } from "../pages/api";
 import UserProvider from "./userProvider";
 
@@ -25,10 +25,6 @@ export default function Content() {
         }
         setQuestions(res)
     }
-
-    const test = useMemo(() => {
-
-    },[questions])
 
     function handleSortChangeClick(firstKey: number, secondKey: number) {
         if (firstKey === 2) {

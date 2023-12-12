@@ -2,7 +2,6 @@ import { NextApiRequest, NextApiResponse } from "next"
 import { prisma } from "."
 
 export default async function findQuestionByID(req: NextApiRequest, res: NextApiResponse) {
-    
     if (req.method !== "GET") return res.status(405).json({ message: "请求方式出错！" })
     const { id } = req.query
 
@@ -26,10 +25,31 @@ export default async function findQuestionByID(req: NextApiRequest, res: NextApi
                                 unit: true
                             }
                         },
-                        parent: true,
+                        parent: {
+                            include: {
+                                publisher: {
+                                    include: {
+                                        unit: true
+                                    }
+                                }
+                            }
+                        },
                         childComments: {
                             include: {
-                                parent: true,
+                                parent: {
+                                    include: {
+                                        publisher: {
+                                            include: {
+                                                unit: true
+                                            }
+                                        }
+                                    }
+                                },
+                                publisher: {
+                                    include: {
+                                        unit: true
+                                    }
+                                },
                                 childComments: true
                             }
                         }
