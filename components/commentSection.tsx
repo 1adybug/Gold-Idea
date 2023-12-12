@@ -8,7 +8,7 @@ import CancelReplyIcon from "../assets/cancelReplyIcon.png"
 import { useState } from "react"
 import { AvatorMap } from "./detailFirstSection"
 import advanceTime from "../utils/timeFormatConversion"
-import { addReply } from "../pages/api"
+import { addComment, addReply } from "../pages/api"
 import traverseChildComments from "../utils/traverseChildComments"
 import RightArrow from "../assets/rightArrow.png"
 
@@ -77,13 +77,14 @@ export function Comment(props: CommentItemProps) {
 }
 
 export interface CommentSectionProps extends Omit<CommentItem, "childComments"> {
+    questionId: number
     comment: CommentItem
     onAddReplySucceed: () => void
 }
 
 export function CommentSection(props: CommentSectionProps) {
 
-    const { id, content, createTime, publisher, comment, onAddReplySucceed } = props
+    const { questionId, id, content, createTime, publisher, comment, onAddReplySucceed } = props
 
     const [currentCommentId, setCurrentCommentId] = useState(-1)
     const [inputedValue, setinputedValue] = useState("")
@@ -93,14 +94,14 @@ export function CommentSection(props: CommentSectionProps) {
     }
 
     async function handleReply() {
-        const res = await addReply(Number(id), inputedValue, 1)
+        const res = await addComment(Number(questionId), inputedValue, 1)
         if (!res) return
         setCurrentCommentId(-1)
         onAddReplySucceed()
     }
 
     async function handleAddReplySucceed(parentId: number, replyContent: string) {
-        const res = await addReply(parentId, replyContent, 1)
+        const res = await addComment(Number(questionId), replyContent, 1, parentId);
         if (!res) return
         onAddReplySucceed()
     }

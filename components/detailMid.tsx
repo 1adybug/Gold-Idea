@@ -39,8 +39,6 @@ export default function DetailMid(props: DetailMidProps) {
     async function fetchQuestion() {
         const res = await findQuestionById(questionId)
         if (!res) return
-        console.log(res);
-        
         setGotQuestion(true)
         setQuestion(res)
     }

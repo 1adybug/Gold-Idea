@@ -42,13 +42,14 @@ export async function addGoal(questionId: number, goal: string, publisherId: num
     return data
 }
 
-export async function addComment(questionId: number, content: string, publisherId: number) {
+export async function addComment(questionId: number, content: string, publisherId: number, parentId?: number) {
     const res = await fetch("/api/addComment", {
         method: "POST",
         body: JSON.stringify({
             questionId,
             content,
-            publisherId
+            publisherId,
+            parentId
         })
     })
     if (res.status !== 200) throw new Error("添加评论出错！")

@@ -26,13 +26,14 @@ export interface ReplyItem {
 }
 
 export interface CommentsProps {
+    questionId: number
     comments: CommentItem[]
     onAddReplySucceed: () => void
 }
 
 export default function Comments(props: CommentsProps) {
 
-    const { comments, onAddReplySucceed } = props
+    const {questionId, comments, onAddReplySucceed } = props
 
     return (
         <div className="h-full flex flex-col justify-center items-cente">
