@@ -40,7 +40,7 @@ export function Comment(props: CommentItemProps) {
             <div className="flex gap-x-4 text-xl items-center text-gray-400">
                 <div className="text-gray-800 font-bold">{publisher.userName}</div>
                 <div className="flex items-center">
-                    <Image src={RightArrow} alt={"右箭头图标"} width={20} height={20} />
+                    <Image src={RightArrow} alt={"右箭头图标"} width={18} height={18} />
                     <div className="text-gray-800 font-bold">{parent.publisher.userName}</div>
                 </div>
                 <div>警号：{publisher.policeNo}</div>
@@ -93,14 +93,14 @@ export function CommentSection(props: CommentSectionProps) {
     }
 
     async function handleReply() {
-        const res = await addComment(Number(questionId), inputedValue, 1, Number(id))
+        const res = await addComment(Number(questionId), inputedValue, 2, Number(id))
         if (!res) return
         setCurrentCommentId(-1)
         onAddReplySucceed()
     }
 
     async function handleAddReplySucceed(parentId: number, replyContent: string) {
-        const res = await addComment(Number(questionId), replyContent, 1, parentId)
+        const res = await addComment(Number(questionId), replyContent, 2, parentId)
         if (!res) return
         onAddReplySucceed()
     }

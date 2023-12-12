@@ -1,5 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next"
 import { prisma } from "."
+import generateInclude from "../../utils/generateInclude"
 
 export default async function findQuestionByID(req: NextApiRequest, res: NextApiResponse) {
     if (req.method !== "GET") return res.status(405).json({ message: "请求方式出错！" })
@@ -34,43 +35,7 @@ export default async function findQuestionByID(req: NextApiRequest, res: NextApi
                                 }
                             }
                         },
-                        childComments: {
-                            include: {
-                                parent: {
-                                    include: {
-                                        publisher: {
-                                            include: {
-                                                unit: true
-                                            }
-                                        }
-                                    }
-                                },
-                                publisher: {
-                                    include: {
-                                        unit: true
-                                    }
-                                },
-                                childComments: {
-                                    include: {
-                                        parent: {
-                                            include: {
-                                                publisher: {
-                                                    include: {
-                                                        unit: true
-                                                    }
-                                                }
-                                            }
-                                        },
-                                        publisher: {
-                                            include: {
-                                                unit: true
-                                            }
-                                        },
-                                        childComments: true
-                                    }
-                                }
-                            }
-                        }
+                        childComments: generateInclude(20)
                     }
                 },
                 collections: true,
