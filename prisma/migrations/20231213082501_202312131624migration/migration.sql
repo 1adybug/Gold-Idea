@@ -21,9 +21,13 @@ CREATE TABLE "Comment" (
     "parentId" INTEGER,
     "createTime" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updateTime" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "isPinned" BOOLEAN NOT NULL DEFAULT false,
+    "pinNote" TEXT,
+    "pinnedUserId" INTEGER,
     CONSTRAINT "Comment_publisherId_fkey" FOREIGN KEY ("publisherId") REFERENCES "User" ("id") ON DELETE RESTRICT ON UPDATE CASCADE,
     CONSTRAINT "Comment_questionId_fkey" FOREIGN KEY ("questionId") REFERENCES "Question" ("id") ON DELETE RESTRICT ON UPDATE CASCADE,
-    CONSTRAINT "Comment_parentId_fkey" FOREIGN KEY ("parentId") REFERENCES "Comment" ("id") ON DELETE SET NULL ON UPDATE CASCADE
+    CONSTRAINT "Comment_parentId_fkey" FOREIGN KEY ("parentId") REFERENCES "Comment" ("id") ON DELETE SET NULL ON UPDATE CASCADE,
+    CONSTRAINT "Comment_pinnedUserId_fkey" FOREIGN KEY ("pinnedUserId") REFERENCES "User" ("id") ON DELETE SET NULL ON UPDATE CASCADE
 );
 
 -- CreateTable

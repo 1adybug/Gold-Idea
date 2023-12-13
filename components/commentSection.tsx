@@ -5,10 +5,10 @@ import ToTopIcon from "../assets/toTop.png"
 import AppraiseIcon from "../assets/appraise.png"
 import ReplyIcon from "../assets/replyIcon.png"
 import CancelReplyIcon from "../assets/cancelReplyIcon.png"
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import { AvatorMap } from "./detailFirstSection"
 import advanceTime from "../utils/timeFormatConversion"
-import { addComment, addReply } from "../pages/api"
+import { addComment } from "../pages/api"
 // import traverseChildComments from "../utils/traverseChildComments"
 import RightArrow from "../assets/rightArrow.png"
 import traverseChildComments from "../utils/traverseChildComments"
@@ -93,14 +93,14 @@ export function CommentSection(props: CommentSectionProps) {
     }
 
     async function handleReply() {
-        const res = await addComment(Number(questionId), inputedValue, 2, Number(id))
+        const res = await addComment(Number(questionId), inputedValue, 1, Number(id))
         if (!res) return
         setCurrentCommentId(-1)
         onAddReplySucceed()
     }
 
     async function handleAddReplySucceed(parentId: number, replyContent: string) {
-        const res = await addComment(Number(questionId), replyContent, 2, parentId)
+        const res = await addComment(Number(questionId), replyContent, 1, parentId)
         if (!res) return
         onAddReplySucceed()
     }
@@ -141,7 +141,7 @@ export function CommentSection(props: CommentSectionProps) {
                     <div className="bg-blue-600 w-[100px] h-[40px] rounded-md flex justify-center items-center text-white ml-auto cursor-pointer" onClick={handleReply}>回复</div>
                 </div>}
                 {traverseChildComments(comment).childComments.map((childComment: CommentItem) => {
-                    return <Comment key={childComment.id} onAddReplySucceed={handleAddReplySucceed} id={childComment.id} content={childComment.content} publisherId={childComment.publisherId} questionId={childComment.questionId} createTime={childComment.createTime} updateTime={childComment.updateTime} publisher={childComment.publisher} parent={childComment.parent} parentId={childComment.parentId} />
+                    return <Comment key={childComment.id} onAddReplySucceed={handleAddReplySucceed} id={childComment.id} content={childComment.content} publisherId={childComment.publisherId} questionId={childComment.questionId} createTime={childComment.createTime} updateTime={childComment.updateTime} publisher={childComment.publisher} parent={childComment.parent} parentId={childComment.parentId} isPinned={false} />
                 })}
             </div>
         </div>

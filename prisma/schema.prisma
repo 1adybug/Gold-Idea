@@ -35,6 +35,10 @@ model Comment {
   childComments Comment[] @relation("ChildComment")
   createTime    DateTime  @default(now())
   updateTime    DateTime  @default(now()) @updatedAt
+  isPinned      Boolean   @default(false)
+  pinNote       String?
+  pinnedUserId  Int?
+  isPinnedBy    User?     @relation("PinnedRelations", fields: [pinnedUserId], references: [id])
 }
 
 model User {
@@ -45,6 +49,7 @@ model User {
   phone           String
   Question        Question[]    @relation("PublishQuestions")
   comments        Comment[]
+  pinneds         Comment[]     @relation("PinnedRelations")
   collections     Collections[]
   attentions      Attentions[]
   unitId          Int

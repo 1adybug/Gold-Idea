@@ -14,6 +14,10 @@ export interface CommentItem {
     parentId: number
     parent: CommentItem
     childComments: CommentItem[]
+    isPinned: boolean
+    pinNote?: string
+    pinnedUserId?: number
+    isPinnedBy?: User
 }
 
 export interface ReplyItem {
@@ -38,7 +42,7 @@ export default function Comments(props: CommentsProps) {
     return (
         <div className="h-full flex flex-col justify-center items-cente">
             {comments.length ? <div className="w-full h-full p-2.5 flex flex-col gap-y-10 pt-10 pb-10">
-                {commentsTimeDescSort(comments.filter((comment: CommentItem) => !comment.parentId)).map((comment: CommentItem) => <CommentSection key={comment.id} questionId={comment.questionId} content={comment.content} createTime={advanceTime(comment.createTime)} updateTime={comment.updateTime} id={comment.id} publisherId={comment.publisherId} publisher={comment.publisher} onAddReplySucceed={() => onAddReplySucceed()} comment={comment} parent={comment.parent} parentId={comment.parentId} />)}
+                {commentsTimeDescSort(comments.filter((comment: CommentItem) => !comment.parentId)).map((comment: CommentItem) => <CommentSection key={comment.id} questionId={comment.questionId} content={comment.content} createTime={advanceTime(comment.createTime)} updateTime={comment.updateTime} id={comment.id} publisherId={comment.publisherId} publisher={comment.publisher} onAddReplySucceed={() => onAddReplySucceed()} comment={comment} parent={comment.parent} parentId={comment.parentId} isPinned={false} />)}
             </div> : <div className="text-3xl text-gray-400 flex justify-center">暂无留言</div>}
         </div>
     )
