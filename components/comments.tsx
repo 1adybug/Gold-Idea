@@ -4,7 +4,7 @@ import { User } from "./detailFirstSection"
 import commentsTimeDescSort from "../utils/commentsTimeDescSort"
 
 export interface CommentItem {
-    id: string
+    id: number
     content: string
     publisherId: number
     questionId: number
