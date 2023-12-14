@@ -24,10 +24,14 @@ CREATE TABLE "Comment" (
     "isPinned" BOOLEAN NOT NULL DEFAULT false,
     "pinNote" TEXT,
     "pinnedUserId" INTEGER,
+    "isHonored" BOOLEAN NOT NULL DEFAULT false,
+    "honorNote" TEXT,
+    "honoredUserId" INTEGER,
     CONSTRAINT "Comment_publisherId_fkey" FOREIGN KEY ("publisherId") REFERENCES "User" ("id") ON DELETE RESTRICT ON UPDATE CASCADE,
     CONSTRAINT "Comment_questionId_fkey" FOREIGN KEY ("questionId") REFERENCES "Question" ("id") ON DELETE RESTRICT ON UPDATE CASCADE,
     CONSTRAINT "Comment_parentId_fkey" FOREIGN KEY ("parentId") REFERENCES "Comment" ("id") ON DELETE SET NULL ON UPDATE CASCADE,
-    CONSTRAINT "Comment_pinnedUserId_fkey" FOREIGN KEY ("pinnedUserId") REFERENCES "User" ("id") ON DELETE SET NULL ON UPDATE CASCADE
+    CONSTRAINT "Comment_pinnedUserId_fkey" FOREIGN KEY ("pinnedUserId") REFERENCES "User" ("id") ON DELETE SET NULL ON UPDATE CASCADE,
+    CONSTRAINT "Comment_honoredUserId_fkey" FOREIGN KEY ("honoredUserId") REFERENCES "User" ("id") ON DELETE SET NULL ON UPDATE CASCADE
 );
 
 -- CreateTable

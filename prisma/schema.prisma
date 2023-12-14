@@ -39,6 +39,10 @@ model Comment {
   pinNote       String?
   pinnedUserId  Int?
   isPinnedBy    User?     @relation("PinnedRelations", fields: [pinnedUserId], references: [id])
+  isHonored    Boolean   @default(false)
+  honorNote     String?
+  honoredUserId Int?
+  isHonoredBy   User?     @relation("HonoredRelations", fields: [honoredUserId], references: [id])
 }
 
 model User {
@@ -50,6 +54,7 @@ model User {
   Question        Question[]    @relation("PublishQuestions")
   comments        Comment[]
   pinneds         Comment[]     @relation("PinnedRelations")
+  honors          Comment[]     @relation("HonoredRelations")
   collections     Collections[]
   attentions      Attentions[]
   unitId          Int

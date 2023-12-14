@@ -3,16 +3,17 @@ import { Fragment, useEffect, useState } from "react"
 import ModalCloseIcon from "../assets/modalCloseIcon.png"
 import Image from "next/image"
 import Avator from "../assets/avator.jpg"
-import { addComment, addGoal, addQuestion, toTopComment } from "../pages/api"
+import { addComment, addGoal, addQuestion, toHonorComment, toTopComment } from "../pages/api"
 import { useRouter } from "next/navigation"
 import { useUser } from "../app/lib/userContext"
 
-export type QuestionModalSource = "publishQuestion" | "addGoal" | "addComment" | "addReply" | "toTop"
+export type QuestionModalSource = "publishQuestion" | "addGoal" | "addComment" | "addReply" | "toTop" | "honor"
 export interface QuestionModalProps {
     open: boolean
     source: QuestionModalSource
     questionId?: number
     commentId?: number
+    honorStatus?: boolean
     onCloseModal: () => void
     onFetchNewQuestionDetail: () => void
 }
@@ -22,7 +23,8 @@ export const Placeholders: Record<string, string> = {
     "addGoal": "写下您的目的...",
     "addComment": "写下您的留言...",
     "addReply": "写下您的回复...",
-    "toTop": "写下您的备注..."
+    "toTop": "写下您的备注...",
+    "honor": "写下您的备注..."
 }
 
 export const ModalSubmitBtnText: Record<string, string> = {
@@ -30,12 +32,13 @@ export const ModalSubmitBtnText: Record<string, string> = {
     "addGoal": "提交",
     "addComment": "提交",
     "addReply": "提交",
-    "toTop": "提交"
+    "toTop": "提交",
+    "honor": "提交"
 }
 
 export default function QuestionModal(props: QuestionModalProps) {
 
-    const { open, source, questionId, commentId, onCloseModal, onFetchNewQuestionDetail } = props
+    const { open, source, questionId, commentId, honorStatus, onCloseModal, onFetchNewQuestionDetail } = props
 
     const router = useRouter()
     const [inputedValue, setInputedValue] = useState("")
@@ -83,6 +86,12 @@ export default function QuestionModal(props: QuestionModalProps) {
         }
         if (source == "toTop" && questionId && commentId) {
             const res = await toTopComment(questionId, commentId, inputedValue, userInfo.id)
+            if (!res) return
+            onFetchNewQuestionDetail()
+            return
+        }
+        if (source == "honor" && questionId && commentId && honorStatus !== undefined) {
+            const res = await toHonorComment(questionId, commentId, inputedValue, userInfo.id, honorStatus)
             if (!res) return
             onFetchNewQuestionDetail()
             return

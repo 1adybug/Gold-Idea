@@ -5,7 +5,7 @@ import ToTopIcon from "../assets/toTop.png"
 import AppraiseIcon from "../assets/appraise.png"
 import ReplyIcon from "../assets/replyIcon.png"
 import CancelReplyIcon from "../assets/cancelReplyIcon.png"
-import { useState } from "react"
+import { Fragment, useState } from "react"
 import { AvatorMap } from "./detailFirstSection"
 import advanceTime from "../utils/timeFormatConversion"
 import { addComment } from "../pages/api"
@@ -13,15 +13,17 @@ import { addComment } from "../pages/api"
 import RightArrow from "../assets/rightArrow.png"
 import traverseChildComments from "../utils/traverseChildComments"
 import ToppedIcon from "../assets/toppedIcon.png"
+import HonoredIcon from "../assets/honored.png"
 
 export interface CommentItemProps extends Omit<CommentItem, "childComments"> {
     parent: CommentItem
     onAddReplySucceed: (parentId: number, replyContent: string) => void
+    onHonorSucceed: (id: number, honorStatus: boolean) => void
 }
 
 export function Comment(props: CommentItemProps) {
 
-    const { id, content, parent, createTime, publisher, onAddReplySucceed } = props
+    const { id, content, parent, createTime, publisher, isHonored, onAddReplySucceed, onHonorSucceed } = props
 
     const [currentCommentId, setCurrentCommentId] = useState(-1)
     const [inputedValue, setinputedValue] = useState("")
@@ -51,13 +53,14 @@ export function Comment(props: CommentItemProps) {
             <div className="text-2xl">{content}</div>
             <div className="flex gap-x-6 items-center text-xl text-gray-400">
                 <div>发布时间：{advanceTime(createTime)}</div>
-                {/* <div className="flex gap-x-2 items-center cursor-pointer">
-                    <Image src={ToTopIcon} alt={"置顶图标"} width={21} height={21} />
-                    <div onClick={() => onTopClicked(id)}>置顶</div>
-                </div> */}
                 <div className="flex gap-x-2 items-center cursor-pointer">
-                    <Image src={AppraiseIcon} alt={"评优图标"} width={20} height={20} />
-                    <div>评优</div>
+                    {isHonored ? <Fragment>
+                        <Image src={HonoredIcon} alt={"取消评优图标"} width={20} height={20} />
+                        <div onClick={() => onHonorSucceed(id, true)}>取消评优</div>
+                    </Fragment> : <Fragment>
+                        <Image src={AppraiseIcon} alt={"评优图标"} width={20} height={20} />
+                        <div onClick={() => onHonorSucceed(id, false)}>评优</div>
+                    </Fragment>}
                 </div>
                 {Number(id) === currentCommentId ? <div className="flex gap-x-2 items-center cursor-pointer" onClick={() => setCurrentCommentId(-1)}>
                     <Image src={CancelReplyIcon} alt={"评优图标"} width={20} height={20} />
@@ -81,11 +84,12 @@ export interface CommentSectionProps extends Omit<CommentItem, "childComments"> 
     comment: CommentItem
     onAddReplySucceed: () => void
     onTopClick: (id: number) => void
+    onHonorClick: (id: number, honorStatus: boolean) => void
 }
 
 export function CommentSection(props: CommentSectionProps) {
 
-    const { questionId, id, content, createTime, publisher, comment, isPinned, pinnedUserId, isPinnedBy, onAddReplySucceed, onTopClick } = props
+    const { questionId, id, content, createTime, publisher, comment, isPinned, isHonored, onAddReplySucceed, onTopClick, onHonorClick } = props
 
     const [currentCommentId, setCurrentCommentId] = useState(-1)
     const [inputedValue, setinputedValue] = useState("")
@@ -107,6 +111,10 @@ export function CommentSection(props: CommentSectionProps) {
         onAddReplySucceed()
     }
 
+    function handleHonorClick(id: number, honorStatus: boolean) {
+        onHonorClick(id, honorStatus)
+    }
+
     return (
         <div className="w-full flex gap-x-6">
             <Image src={AvatorMap[publisher.userName]} alt={"用户头像"} width={46} className="rounded h-[46px] w-auto" />
@@ -125,8 +133,13 @@ export function CommentSection(props: CommentSectionProps) {
                         <div onClick={() => onTopClick(id)}>置顶</div>
                     </div>}
                     <div className="flex gap-x-2 items-center cursor-pointer">
-                        <Image src={AppraiseIcon} alt={"评优图标"} width={20} height={20} />
-                        <div>评优</div>
+                        {isHonored ? <Fragment>
+                            <Image src={HonoredIcon} alt={"评优图标"} width={20} height={20} />
+                            <div onClick={() => onHonorClick(id, true)}>取消评优</div>
+                        </Fragment> : <Fragment>
+                            <Image src={AppraiseIcon} alt={"评优图标"} width={20} height={20} />
+                            <div onClick={() => onHonorClick(id, false)}>评优</div>
+                        </Fragment>}
                     </div>
                     {Number(id) === currentCommentId ? <div className="flex gap-x-2 items-center cursor-pointer" onClick={() => setCurrentCommentId(-1)}>
                         <Image src={CancelReplyIcon} alt={"评优图标"} width={20} height={20} />
@@ -143,7 +156,7 @@ export function CommentSection(props: CommentSectionProps) {
                     <div className="bg-blue-600 w-[100px] h-[40px] rounded-md flex justify-center items-center text-white ml-auto cursor-pointer" onClick={handleReply}>回复</div>
                 </div>}
                 {traverseChildComments(comment).childComments.map((childComment: CommentItem) => {
-                    return <Comment key={childComment.id} onAddReplySucceed={handleAddReplySucceed} id={childComment.id} content={childComment.content} publisherId={childComment.publisherId} questionId={childComment.questionId} createTime={childComment.createTime} updateTime={childComment.updateTime} publisher={childComment.publisher} parent={childComment.parent} parentId={childComment.parentId} isPinned={false} />
+                    return <Comment key={childComment.id} onAddReplySucceed={handleAddReplySucceed} id={childComment.id} content={childComment.content} publisherId={childComment.publisherId} questionId={childComment.questionId} createTime={childComment.createTime} updateTime={childComment.updateTime} publisher={childComment.publisher} parent={childComment.parent} parentId={childComment.parentId} isPinned={false} onHonorSucceed={handleHonorClick} isHonored={childComment.isHonored} honorNote={childComment.honorNote} honoredUserId={childComment.honoredUserId} />
                 })}
             </div>
         </div>

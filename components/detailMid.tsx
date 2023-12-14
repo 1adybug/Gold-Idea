@@ -9,6 +9,8 @@ import { Skeleton } from "antd"
 import LeftSideToolbar from "./leftSideToolbar"
 import NProgress from 'nprogress'
 import 'nprogress/nprogress.css';
+import { toHonorComment } from "../pages/api"
+import { useUser } from "../app/lib/userContext"
 
 export interface DetailMidProps {
     questionId: number
@@ -29,8 +31,10 @@ export default function DetailMid(props: DetailMidProps) {
     const [modalSource, setModalSource] = useState<QuestionModalSource>("addGoal")
     const [thisQuestionId, setThisQuestionId] = useState<number | undefined>(0)
     const [thisCommentId, setThisCommentId] = useState<number | undefined>(0)
+    const [thisHonorStatus, setThisHonorStatus] = useState(false)
     const [question, setQuestion] = useState<Question | null>(null)
     const [gotQuestion, setGotQuestion] = useState(false)
+    const { userInfo } = useUser()
 
     useEffect(() => {
         NProgress.done()
@@ -61,20 +65,34 @@ export default function DetailMid(props: DetailMidProps) {
         setModalOpen(true)
     }
 
+    async function handleHonorClick(questionId: number, id: number, honorStatus: boolean) {
+        if (honorStatus) {
+            const res = await toHonorComment(questionId, id, "", userInfo.id, honorStatus)
+            if (!res) return
+            await fetchQuestion()
+            return
+        }
+        setThisQuestionId(questionId)
+        setThisCommentId(id)
+        setThisHonorStatus(honorStatus)
+        setModalSource("honor")
+        setModalOpen(true)
+    }
+
     return (
         <Fragment>
             {
                 gotQuestion ? <Fragment>
                     {question && <div className="w-full h-auto mt-[140px] flex flex-col gap-y-10 justify-center items-center">
                         <DetailFirstSection id={question.id} content={question.content} goal={question.goal} createTime={question.createTime} comments={question.comments} publisher={question.publisher} onFunctionClick={handleFunctionClick} attentions={question.attentions} />
-                        <DetailSecondSection userDemo={userDemo} question={question} onAddReplySucceed={onAddReplySucceed} onTopClickSucceed={handleToTopClick} />
+                        <DetailSecondSection userDemo={userDemo} question={question} onAddReplySucceed={onAddReplySucceed} onTopClickSucceed={handleToTopClick} onHonorClickSucceed={handleHonorClick} />
                     </div>}
                 </Fragment> : <div className="flex justify-center">
                     <Skeleton active className="bg-white p-8 w-[1200px] mt-[140px]" />
                 </div>
             }
             {question && <LeftSideToolbar questionId={question.id} collections={question.collections} />}
-            <QuestionModal open={modalOpen} source={modalSource} onCloseModal={() => setModalOpen(false)} questionId={thisQuestionId} commentId={thisCommentId} onFetchNewQuestionDetail={() => fetchQuestion()} />
+            <QuestionModal open={modalOpen} source={modalSource} onCloseModal={() => setModalOpen(false)} questionId={thisQuestionId} commentId={thisCommentId} honorStatus={thisHonorStatus} onFetchNewQuestionDetail={() => fetchQuestion()} />
         </Fragment>
     )
 }

@@ -126,3 +126,19 @@ export async function toTopComment(questionId: number, commentId: number, pinNot
     const data = await res.json()
     return data
 }
+
+export async function toHonorComment(questionId: number, commentId: number, honorNote: string , userId: number, honorStatus: boolean) {
+    const res = await fetch("/api/toHonorComment", {
+        method: "POST",
+        body: JSON.stringify({
+            questionId,
+            commentId,
+            honorNote,
+            userId,
+            honorStatus
+        })
+    })
+    if (res.status !== 200) throw new Error("评优评论出错！")
+    const data = await res.json()
+    return data
+}
