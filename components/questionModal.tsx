@@ -3,14 +3,16 @@ import { Fragment, useEffect, useState } from "react"
 import ModalCloseIcon from "../assets/modalCloseIcon.png"
 import Image from "next/image"
 import Avator from "../assets/avator.jpg"
-import { addComment, addGoal, addQuestion } from "../pages/api"
+import { addComment, addGoal, addQuestion, toTopComment } from "../pages/api"
 import { useRouter } from "next/navigation"
+import { useUser } from "../app/lib/userContext"
 
-export type QuestionModalSource = "publishQuestion" | "addGoal" | "addComment" | "addReply"
+export type QuestionModalSource = "publishQuestion" | "addGoal" | "addComment" | "addReply" | "toTop"
 export interface QuestionModalProps {
     open: boolean
     source: QuestionModalSource
     questionId?: number
+    commentId?: number
     onCloseModal: () => void
     onFetchNewQuestionDetail: () => void
 }
@@ -19,22 +21,25 @@ export const Placeholders: Record<string, string> = {
     "publishQuestion": "写下您的问题，准确地描述问题更容易得到解答",
     "addGoal": "写下您的目的...",
     "addComment": "写下您的留言...",
-    "addReply": "写下您的回复..."
+    "addReply": "写下您的回复...",
+    "toTop": "写下您的备注..."
 }
 
 export const ModalSubmitBtnText: Record<string, string> = {
     "publishQuestion": "发布",
     "addGoal": "提交",
     "addComment": "提交",
-    "addReply": "提交"
+    "addReply": "提交",
+    "toTop": "提交"
 }
 
 export default function QuestionModal(props: QuestionModalProps) {
 
-    const { open, source, questionId, onCloseModal, onFetchNewQuestionDetail } = props
+    const { open, source, questionId, commentId, onCloseModal, onFetchNewQuestionDetail } = props
 
     const router = useRouter()
     const [inputedValue, setInputedValue] = useState("")
+    const { userInfo } = useUser()
 
     useEffect(() => {
         const disableScroll = (e: WheelEvent) => {
@@ -72,6 +77,12 @@ export default function QuestionModal(props: QuestionModalProps) {
         }
         if (source === "addComment" && questionId) {
             const res = await addComment(questionId, inputedValue, 1)
+            if (!res) return
+            onFetchNewQuestionDetail()
+            return
+        }
+        if (source == "toTop" && commentId) {
+            const res = await toTopComment(commentId, inputedValue, userInfo.id)
             if (!res) return
             onFetchNewQuestionDetail()
             return

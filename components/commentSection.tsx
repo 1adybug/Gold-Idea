@@ -12,6 +12,7 @@ import { addComment } from "../pages/api"
 // import traverseChildComments from "../utils/traverseChildComments"
 import RightArrow from "../assets/rightArrow.png"
 import traverseChildComments from "../utils/traverseChildComments"
+import ToppedIcon from "../assets/toppedIcon.png"
 
 export interface CommentItemProps extends Omit<CommentItem, "childComments"> {
     parent: CommentItem
@@ -50,10 +51,10 @@ export function Comment(props: CommentItemProps) {
             <div className="text-2xl">{content}</div>
             <div className="flex gap-x-6 items-center text-xl text-gray-400">
                 <div>发布时间：{advanceTime(createTime)}</div>
-                <div className="flex gap-x-2 items-center cursor-pointer">
+                {/* <div className="flex gap-x-2 items-center cursor-pointer">
                     <Image src={ToTopIcon} alt={"置顶图标"} width={21} height={21} />
-                    <div>置顶</div>
-                </div>
+                    <div onClick={() => onTopClicked(id)}>置顶</div>
+                </div> */}
                 <div className="flex gap-x-2 items-center cursor-pointer">
                     <Image src={AppraiseIcon} alt={"评优图标"} width={20} height={20} />
                     <div>评优</div>
@@ -79,11 +80,12 @@ export function Comment(props: CommentItemProps) {
 export interface CommentSectionProps extends Omit<CommentItem, "childComments"> {
     comment: CommentItem
     onAddReplySucceed: () => void
+    onTopClick: (id: number) => void
 }
 
 export function CommentSection(props: CommentSectionProps) {
 
-    const { questionId, id, content, createTime, publisher, comment, onAddReplySucceed } = props
+    const { questionId, id, content, createTime, publisher, comment, isPinned, pinnedUserId, isPinnedBy, onAddReplySucceed, onTopClick } = props
 
     const [currentCommentId, setCurrentCommentId] = useState(-1)
     const [inputedValue, setinputedValue] = useState("")
@@ -93,14 +95,14 @@ export function CommentSection(props: CommentSectionProps) {
     }
 
     async function handleReply() {
-        const res = await addComment(Number(questionId), inputedValue, 1, Number(id))
+        const res = await addComment(Number(questionId), inputedValue, 3, Number(id))
         if (!res) return
         setCurrentCommentId(-1)
         onAddReplySucceed()
     }
 
     async function handleAddReplySucceed(parentId: number, replyContent: string) {
-        const res = await addComment(Number(questionId), replyContent, 1, parentId)
+        const res = await addComment(Number(questionId), replyContent, 3, parentId)
         if (!res) return
         onAddReplySucceed()
     }
@@ -118,10 +120,10 @@ export function CommentSection(props: CommentSectionProps) {
                 <div className="text-2xl">{content}</div>
                 <div className="flex gap-x-6 items-center text-xl text-gray-400">
                     <div>发布时间：{advanceTime(createTime)}</div>
-                    <div className="flex gap-x-2 items-center cursor-pointer">
+                    {isPinned ? <Image src={ToTopIcon} alt={"已置顶图标"} width={21} height={21} /> : <div className="flex gap-x-2 items-center cursor-pointer">
                         <Image src={ToTopIcon} alt={"置顶图标"} width={21} height={21} />
-                        <div>置顶</div>
-                    </div>
+                        <div onClick={() => onTopClick(id)}>置顶</div>
+                    </div>}
                     <div className="flex gap-x-2 items-center cursor-pointer">
                         <Image src={AppraiseIcon} alt={"评优图标"} width={20} height={20} />
                         <div>评优</div>

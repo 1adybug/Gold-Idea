@@ -111,3 +111,17 @@ export async function deleteQuestion(questionId: number, userId: number) {
     const data = await res.json()
     return data
 }
+
+export async function toTopComment(commentId: number, pinNote: string, userId: number) {
+    const res = await fetch("/api/toTopComment", {
+        method: "POST",
+        body: JSON.stringify({
+            commentId,
+            pinNote,
+            userId
+        })
+    })
+    if (res.status !== 200) throw new Error("置顶评论出错！")
+    const data = await res.json()
+    return data
+}
