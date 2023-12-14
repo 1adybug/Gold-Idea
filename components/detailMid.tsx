@@ -54,7 +54,8 @@ export default function DetailMid(props: DetailMidProps) {
         await fetchQuestion()
     }
 
-    function handleToTopClick(id: number) {
+    function handleToTopClick(questionId: number, id: number) {
+        setThisQuestionId(questionId)
         setThisCommentId(id)
         setModalSource("toTop")
         setModalOpen(true)
@@ -66,7 +67,7 @@ export default function DetailMid(props: DetailMidProps) {
                 gotQuestion ? <Fragment>
                     {question && <div className="w-full h-auto mt-[140px] flex flex-col gap-y-10 justify-center items-center">
                         <DetailFirstSection id={question.id} content={question.content} goal={question.goal} createTime={question.createTime} comments={question.comments} publisher={question.publisher} onFunctionClick={handleFunctionClick} attentions={question.attentions} />
-                        <DetailSecondSection userDemo={userDemo} question={question} onAddReplySucceed={onAddReplySucceed} onTopClick={handleToTopClick} />
+                        <DetailSecondSection userDemo={userDemo} question={question} onAddReplySucceed={onAddReplySucceed} onTopClickSucceed={handleToTopClick} />
                     </div>}
                 </Fragment> : <div className="flex justify-center">
                     <Skeleton active className="bg-white p-8 w-[1200px] mt-[140px]" />

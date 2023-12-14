@@ -112,10 +112,11 @@ export async function deleteQuestion(questionId: number, userId: number) {
     return data
 }
 
-export async function toTopComment(commentId: number, pinNote: string, userId: number) {
+export async function toTopComment(questionId: number, commentId: number, pinNote: string, userId: number) {
     const res = await fetch("/api/toTopComment", {
         method: "POST",
         body: JSON.stringify({
+            questionId,
             commentId,
             pinNote,
             userId

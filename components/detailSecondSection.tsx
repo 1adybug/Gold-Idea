@@ -7,12 +7,16 @@ export interface DetailSecondSectionProps {
     userDemo: User
     question: Question
     onAddReplySucceed: () => void
-    onTopClick: (id: number) => void
+    onTopClickSucceed: (questionId: number, id: number) => void
 }
 
 export default function DetailSecondSection(props: DetailSecondSectionProps) {
 
-    const { question, onAddReplySucceed, onTopClick } = props
+    const { question, onAddReplySucceed, onTopClickSucceed } = props
+
+    function onTopClick(id: number) {
+        onTopClickSucceed(question.id, id)
+    }
 
     return (
         <div className="w-[1200px] h-auto min-h-[300px] flex flex-col gap-y-6 p-10 rounded bg-white shadow-sm">

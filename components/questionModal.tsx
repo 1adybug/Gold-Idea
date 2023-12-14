@@ -81,8 +81,8 @@ export default function QuestionModal(props: QuestionModalProps) {
             onFetchNewQuestionDetail()
             return
         }
-        if (source == "toTop" && commentId) {
-            const res = await toTopComment(commentId, inputedValue, userInfo.id)
+        if (source == "toTop" && questionId && commentId) {
+            const res = await toTopComment(questionId, commentId, inputedValue, userInfo.id)
             if (!res) return
             onFetchNewQuestionDetail()
             return

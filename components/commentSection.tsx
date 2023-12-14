@@ -120,7 +120,7 @@ export function CommentSection(props: CommentSectionProps) {
                 <div className="text-2xl">{content}</div>
                 <div className="flex gap-x-6 items-center text-xl text-gray-400">
                     <div>发布时间：{advanceTime(createTime)}</div>
-                    {isPinned ? <Image src={ToTopIcon} alt={"已置顶图标"} width={21} height={21} /> : <div className="flex gap-x-2 items-center cursor-pointer">
+                    {isPinned ? <Image src={ToppedIcon} alt={"已置顶图标"} width={40} height={40} /> : <div className="flex gap-x-2 items-center cursor-pointer">
                         <Image src={ToTopIcon} alt={"置顶图标"} width={21} height={21} />
                         <div onClick={() => onTopClick(id)}>置顶</div>
                     </div>}

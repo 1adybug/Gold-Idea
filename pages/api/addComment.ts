@@ -17,7 +17,7 @@ export default async function addComment(req: NextApiRequest, res: NextApiRespon
                 questionId,
                 content,
                 publisherId,
-                parentId // 有可能是undefined
+                parentId
             }
         })
         res.status(200).json(addCommentRes)
