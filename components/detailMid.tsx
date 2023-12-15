@@ -95,7 +95,7 @@ export default function DetailMid(props: DetailMidProps) {
             }
             {question && <LeftSideToolbar questionId={question.id} collections={question.collections} onEditClick={() => setQuestionEditOpen(true)} />}
             <QuestionModal open={modalOpen} source={modalSource} onCloseModal={() => setModalOpen(false)} questionId={thisQuestionId} commentId={thisCommentId} honorStatus={thisHonorStatus} onFetchNewQuestionDetail={() => fetchQuestion()} />
-            {question && <QuestionEditModal open={questionEditOpen} questionId={question.id} content={question.content} goal={question.goal} onCloseModal={() => setQuestionEditOpen(false)} />}
+            {question && <QuestionEditModal open={questionEditOpen} questionId={question.id} content={question.content} goal={question.goal} onCloseModal={() => setQuestionEditOpen(false)} onFetchNewQuestionDetail={() => fetchQuestion()} />}
         </Fragment>
     )
 }

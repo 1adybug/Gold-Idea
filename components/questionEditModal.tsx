@@ -1,8 +1,10 @@
 "use client"
-import { Fragment } from "react";
+import { Fragment, useState } from "react";
 import Image from "next/image";
 import Avator from "../assets/avator.jpg"
 import ModalCloseIcon from "../assets/modalCloseIcon.png"
+import { editQuestion } from "../pages/api";
+import { on } from "events";
 
 export interface QuestionEditModalProps {
     open: boolean
@@ -10,18 +12,29 @@ export interface QuestionEditModalProps {
     content: string
     goal: string
     onCloseModal: () => void
+    onFetchNewQuestionDetail: () => void
 }
 
 export default function QuestionEditModal(props: QuestionEditModalProps) {
 
-    const { open, onCloseModal, questionId, content, goal } = props
+    const { open, onCloseModal, questionId, content, goal, onFetchNewQuestionDetail } = props
+    const [currentContent, setCurrentContent] = useState(content)
+    const [currentGoal, setCurrentGoal] = useState(goal)
 
-    function handleInput() {
+    function handleContentInput(e: React.ChangeEvent<HTMLTextAreaElement>) {
+        setCurrentContent(e.target.value)
 
     }
 
-    async function submit() {
+    function handleGoalInput(e: React.ChangeEvent<HTMLTextAreaElement>) {
+        setCurrentGoal(e.target.value)
+    }
 
+    async function submit() {
+        const res = await editQuestion(questionId, currentContent, currentGoal)
+        if (!res) return
+        onCloseModal()
+        onFetchNewQuestionDetail()
     }
 
     return <Fragment>
@@ -33,11 +46,11 @@ export default function QuestionEditModal(props: QuestionEditModalProps) {
                         <div className="flex flex-col gap-y-4 w-full">
                             <div className="flex flex-col gap-y-2">
                                 <div className="text-2xl text-gray-400">内容：</div>
-                                <textarea className="min-h-[260px] max-h-[260px] w-full text-2xl rounded-sm border border-gray-200 focus:outline-none p-2.5" placeholder="请输入问题内容" value={content} onChange={handleInput} />
+                                <textarea className="min-h-[260px] max-h-[260px] w-full text-2xl rounded-sm border border-gray-200 focus:outline-none p-2.5" placeholder="请输入问题内容" value={currentContent} onChange={handleContentInput} />
                             </div>
                             <div className="flex flex-col gap-y-2">
                                 <div className="text-2xl text-gray-400">目标：</div>
-                                <textarea className="min-h-[260px] max-h-[260px] w-full text-2xl rounded-sm border border-gray-200 focus:outline-none p-2.5" placeholder="请输入问题目标" value={goal} onChange={handleInput} />
+                                <textarea className="min-h-[260px] max-h-[260px] w-full text-2xl rounded-sm border border-gray-200 focus:outline-none p-2.5" placeholder="请输入问题目标" value={currentGoal} onChange={handleGoalInput} />
                             </div>
                         </div>
                     </div>
