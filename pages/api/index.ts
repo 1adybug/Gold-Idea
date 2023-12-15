@@ -127,7 +127,7 @@ export async function toTopComment(questionId: number, commentId: number, pinNot
     return data
 }
 
-export async function toHonorComment(questionId: number, commentId: number, honorNote: string , userId: number, honorStatus: boolean) {
+export async function toHonorComment(questionId: number, commentId: number, honorNote: string, userId: number, honorStatus: boolean) {
     const res = await fetch("/api/toHonorComment", {
         method: "POST",
         body: JSON.stringify({
@@ -139,6 +139,20 @@ export async function toHonorComment(questionId: number, commentId: number, hono
         })
     })
     if (res.status !== 200) throw new Error("评优评论出错！")
+    const data = await res.json()
+    return data
+}
+
+export async function editQuestion(questionId: number, content: string, goal: string) {
+    const res = await fetch("/api/editQuestion", {
+        method: "POST",
+        body: JSON.stringify({
+            questionId,
+            content,
+            goal
+        })
+    })
+    if (res.status !== 200) throw new Error("修改问题出错！")
     const data = await res.json()
     return data
 }

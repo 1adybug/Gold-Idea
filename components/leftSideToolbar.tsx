@@ -14,11 +14,12 @@ import { useUser } from "../app/lib/userContext"
 export interface LeftSideToolbarProps {
     questionId: number
     collections: Collection[]
+    onEditClick: () => void
 }
 
 export default function LeftSideToolbar(props: LeftSideToolbarProps) {
 
-    const { questionId, collections } = props
+    const { questionId, collections, onEditClick } = props
     const [isCollected, setIsCollected] = useState(false)
     const [deleteModalOpen, setDeleteModalOpen] = useState(false)
     const router = useRouter()
@@ -62,7 +63,7 @@ export default function LeftSideToolbar(props: LeftSideToolbarProps) {
         <Fragment>
             <div className="flex flex-col gap-y-6 fixed top-1/2 transform -translate-y-1/2 left-0 pl-4">
                 <div className="p-4 rounded-full bg-white cursor-pointer hover:shadow-lg">
-                    <Image src={EditIcon} width={40} height={40} alt="编辑图标" />
+                    <Image src={EditIcon} width={40} height={40} alt="编辑图标" onClick={() => onEditClick()} />
                 </div>
                 <div className="p-4 rounded-full bg-white cursor-pointer hover:shadow-lg" onClick={handleAttentionClick}>
                     <Image src={isCollected ? CollectedIcon : UnCollectionIcon} width={40} height={40} alt="关注图标" />

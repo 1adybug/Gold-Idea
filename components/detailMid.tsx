@@ -4,6 +4,7 @@ import DetailFirstSection, { User } from "./detailFirstSection"
 import DetailSecondSection from "./detailSecondSection"
 import { Question } from "./questionContainer"
 import QuestionModal, { QuestionModalSource } from "./questionModal"
+import QuestionEditModal from "./questionEditModal"
 import { API_BASE_URL } from "../constant/publicURL"
 import { Skeleton } from "antd"
 import LeftSideToolbar from "./leftSideToolbar"
@@ -34,6 +35,7 @@ export default function DetailMid(props: DetailMidProps) {
     const [thisHonorStatus, setThisHonorStatus] = useState(false)
     const [question, setQuestion] = useState<Question | null>(null)
     const [gotQuestion, setGotQuestion] = useState(false)
+    const [questionEditOpen, setQuestionEditOpen] = useState(false)
     const { userInfo } = useUser()
 
     useEffect(() => {
@@ -91,8 +93,9 @@ export default function DetailMid(props: DetailMidProps) {
                     <Skeleton active className="bg-white p-8 w-[1200px] mt-[140px]" />
                 </div>
             }
-            {question && <LeftSideToolbar questionId={question.id} collections={question.collections} />}
+            {question && <LeftSideToolbar questionId={question.id} collections={question.collections} onEditClick={() => setQuestionEditOpen(true)} />}
             <QuestionModal open={modalOpen} source={modalSource} onCloseModal={() => setModalOpen(false)} questionId={thisQuestionId} commentId={thisCommentId} honorStatus={thisHonorStatus} onFetchNewQuestionDetail={() => fetchQuestion()} />
+            {question && <QuestionEditModal open={questionEditOpen} questionId={question.id} content={question.content} goal={question.goal} onCloseModal={() => setQuestionEditOpen(false)} />}
         </Fragment>
     )
 }
