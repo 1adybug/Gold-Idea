@@ -23,7 +23,6 @@ export default function QuestionEditModal(props: QuestionEditModalProps) {
 
     function handleContentInput(e: React.ChangeEvent<HTMLTextAreaElement>) {
         setCurrentContent(e.target.value)
-
     }
 
     function handleGoalInput(e: React.ChangeEvent<HTMLTextAreaElement>) {

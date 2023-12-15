@@ -35,6 +35,16 @@ export default async function findQuestionByID(req: NextApiRequest, res: NextApi
                                 }
                             }
                         },
+                        isPinnedBy: {
+                            include: {
+                                unit: true
+                            }
+                        },
+                        isHonoredBy: {
+                            include: {
+                                unit: true
+                            }
+                        },
                         childComments: generateInclude(20)
                     }
                 },

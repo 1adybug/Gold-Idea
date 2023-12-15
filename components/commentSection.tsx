@@ -5,8 +5,8 @@ import ToTopIcon from "../assets/toTop.png"
 import AppraiseIcon from "../assets/appraise.png"
 import ReplyIcon from "../assets/replyIcon.png"
 import CancelReplyIcon from "../assets/cancelReplyIcon.png"
-import { Fragment, useState } from "react"
-import { AvatorMap } from "./detailFirstSection"
+import { Fragment, useEffect, useState } from "react"
+import { AvatorMap, User } from "./detailFirstSection"
 import advanceTime from "../utils/timeFormatConversion"
 import { addComment } from "../pages/api"
 // import traverseChildComments from "../utils/traverseChildComments"
@@ -14,6 +14,7 @@ import RightArrow from "../assets/rightArrow.png"
 import traverseChildComments from "../utils/traverseChildComments"
 import ToppedIcon from "../assets/toppedIcon.png"
 import HonoredIcon from "../assets/honored.png"
+import { Popover } from "antd"
 
 export interface CommentItemProps extends Omit<CommentItem, "childComments"> {
     parent: CommentItem
@@ -80,6 +81,28 @@ export function Comment(props: CommentItemProps) {
     </div>
 }
 
+export interface PopoverContentProps {
+    pinNote?: string
+    isPinnedBy?: User
+    honorNote?: string
+    isHonoredBy?: User
+}
+
+export function PopoverContent(props: PopoverContentProps) {
+
+    const { pinNote, isPinnedBy, honorNote, isHonoredBy } = props
+
+    return <div className="flex flex-col gap-y-2">
+        <div>备注：{pinNote ? pinNote : honorNote}</div>
+        <div className="flex gap-x-2">
+            <div>姓名：{isPinnedBy ? isPinnedBy.userName : isHonoredBy?.userName}</div>
+            <div>警号：{isPinnedBy ? isPinnedBy.policeNo : isHonoredBy?.policeNo}</div>
+            <div>手机号：{isPinnedBy ? isPinnedBy.phone : isHonoredBy?.phone}</div>
+            <div>单位：{isPinnedBy ? isPinnedBy.unit.unitName : isHonoredBy?.unit.unitName}</div>
+        </div>
+    </div>
+}
+
 export interface CommentSectionProps extends Omit<CommentItem, "childComments"> {
     comment: CommentItem
     onAddReplySucceed: () => void
@@ -89,7 +112,7 @@ export interface CommentSectionProps extends Omit<CommentItem, "childComments"> 
 
 export function CommentSection(props: CommentSectionProps) {
 
-    const { questionId, id, content, createTime, publisher, comment, isPinned, isHonored, onAddReplySucceed, onTopClick, onHonorClick } = props
+    const { questionId, id, content, createTime, publisher, comment, isPinned, isHonored, isHonoredBy, honorNote, pinNote, isPinnedBy, onAddReplySucceed, onTopClick, onHonorClick } = props
 
     const [currentCommentId, setCurrentCommentId] = useState(-1)
     const [inputedValue, setinputedValue] = useState("")
@@ -97,6 +120,11 @@ export function CommentSection(props: CommentSectionProps) {
     function textareaChange(e: React.ChangeEvent<HTMLTextAreaElement>) {
         setinputedValue(e.target.value)
     }
+
+    useEffect(() => {
+        console.log(2, isHonoredBy);
+
+    }, [])
 
     async function handleReply() {
         const res = await addComment(Number(questionId), inputedValue, 3, Number(id))
@@ -128,15 +156,19 @@ export function CommentSection(props: CommentSectionProps) {
                 <div className="text-2xl">{content}</div>
                 <div className="flex gap-x-6 items-center text-xl text-gray-400">
                     <div>发布时间：{advanceTime(createTime)}</div>
-                    {isPinned ? <Image src={ToppedIcon} alt={"已置顶图标"} width={40} height={40} /> : <div className="flex gap-x-2 items-center cursor-pointer">
+                    {isPinned ? <Popover content={<PopoverContent pinNote={pinNote} isPinnedBy={isPinnedBy} />}>
+                        <Image src={ToppedIcon} alt={"已置顶图标"} width={40} height={40} />
+                    </Popover> : <div className="flex gap-x-2 items-center cursor-pointer">
                         <Image src={ToTopIcon} alt={"置顶图标"} width={21} height={21} />
                         <div onClick={() => onTopClick(id)}>置顶</div>
                     </div>}
                     <div className="flex gap-x-2 items-center cursor-pointer">
-                        {isHonored ? <Fragment>
-                            <Image src={HonoredIcon} alt={"评优图标"} width={20} height={20} />
-                            <div onClick={() => onHonorClick(id, true)}>取消评优</div>
-                        </Fragment> : <Fragment>
+                        {isHonored ? <Popover content={<PopoverContent isHonoredBy={isHonoredBy} honorNote={honorNote} />}>
+                            <div className="flex items-center gap-x-2">
+                                <Image src={HonoredIcon} alt={"评优图标"} width={20} height={20} />
+                                <div onClick={() => onHonorClick(id, true)}>取消评优</div>
+                            </div>
+                        </Popover> : <Fragment>
                             <Image src={AppraiseIcon} alt={"评优图标"} width={20} height={20} />
                             <div onClick={() => onHonorClick(id, false)}>评优</div>
                         </Fragment>}
