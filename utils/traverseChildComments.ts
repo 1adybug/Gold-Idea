@@ -4,8 +4,6 @@ import { CommentItem } from "../components/comments"
 export default function traverseChildComments(comment: CommentItem) {
     const result: CommentItem = wyDeepClone(comment)
     result.childComments = wyDeepClone(processComments(flattenChildComments(result.childComments)))
-    console.log(result);
-    
     return result
 }
 

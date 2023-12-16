@@ -5,7 +5,7 @@ import ToTopIcon from "../assets/toTop.png"
 import AppraiseIcon from "../assets/appraise.png"
 import ReplyIcon from "../assets/replyIcon.png"
 import CancelReplyIcon from "../assets/cancelReplyIcon.png"
-import { Fragment, useState } from "react"
+import { Fragment, useEffect, useState } from "react"
 import { AvatorMap, User } from "./detailFirstSection"
 import advanceTime from "../utils/timeFormatConversion"
 import { addComment } from "../pages/api"
@@ -185,7 +185,7 @@ export function CommentSection(props: CommentSectionProps) {
                     <div className="bg-blue-600 w-[100px] h-[40px] rounded-md flex justify-center items-center text-white ml-auto cursor-pointer" onClick={handleReply}>回复</div>
                 </div>}
                 {traverseChildComments(comment).childComments.map((childComment: CommentItem) => {
-                    return <Comment key={childComment.id} onAddReplySucceed={handleAddReplySucceed} id={childComment.id} content={childComment.content} publisherId={childComment.publisherId} questionId={childComment.questionId} createTime={childComment.createTime} updateTime={childComment.updateTime} publisher={childComment.publisher} parent={childComment.parent} parentId={childComment.parentId} isPinned={false} onHonorSucceed={handleHonorClick} isHonored={childComment.isHonored} honorNote={childComment.honorNote} honoredUserId={childComment.honoredUserId} />
+                    return <Comment key={childComment.id} onAddReplySucceed={handleAddReplySucceed} id={childComment.id} content={childComment.content} publisherId={childComment.publisherId} questionId={childComment.questionId} createTime={childComment.createTime} updateTime={childComment.updateTime} publisher={childComment.publisher} parent={childComment.parent} parentId={childComment.parentId} isPinned={false} onHonorSucceed={handleHonorClick} isHonored={childComment.isHonored} honorNote={childComment.honorNote} honoredUserId={childComment.honoredUserId} isHonoredBy={childComment.isHonoredBy} />
                 })}
             </div>
         </div>

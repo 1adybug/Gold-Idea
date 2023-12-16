@@ -14,6 +14,11 @@ export interface Include {
                 unit: boolean
             }
         }
+        isHonoredBy: {
+            include: {
+                unit: true
+            }
+        }
         childComments: Include | true | null
     }
 }
@@ -32,6 +37,11 @@ export default function generateInclude(depth: number): any {
                 }
             },
             publisher: {
+                include: {
+                    unit: true
+                }
+            },
+            isHonoredBy: {
                 include: {
                     unit: true
                 }
