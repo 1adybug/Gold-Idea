@@ -5,7 +5,7 @@ import ToTopIcon from "../assets/toTop.png"
 import AppraiseIcon from "../assets/appraise.png"
 import ReplyIcon from "../assets/replyIcon.png"
 import CancelReplyIcon from "../assets/cancelReplyIcon.png"
-import { Fragment, useEffect, useState } from "react"
+import { Fragment, useState } from "react"
 import { AvatorMap, User } from "./detailFirstSection"
 import advanceTime from "../utils/timeFormatConversion"
 import { addComment } from "../pages/api"
@@ -24,7 +24,7 @@ export interface CommentItemProps extends Omit<CommentItem, "childComments"> {
 
 export function Comment(props: CommentItemProps) {
 
-    const { id, content, parent, createTime, publisher, isHonored, onAddReplySucceed, onHonorSucceed } = props
+    const { id, content, parent, createTime, publisher, isHonored, honorNote, isHonoredBy, onAddReplySucceed, onHonorSucceed } = props
 
     const [currentCommentId, setCurrentCommentId] = useState(-1)
     const [inputedValue, setinputedValue] = useState("")
@@ -55,10 +55,12 @@ export function Comment(props: CommentItemProps) {
             <div className="flex gap-x-6 items-center text-xl text-gray-400">
                 <div>发布时间：{advanceTime(createTime)}</div>
                 <div className="flex gap-x-2 items-center cursor-pointer">
-                    {isHonored ? <Fragment>
-                        <Image src={HonoredIcon} alt={"取消评优图标"} width={20} height={20} />
-                        <div onClick={() => onHonorSucceed(id, true)}>取消评优</div>
-                    </Fragment> : <Fragment>
+                    {isHonored ? <Popover content={<PopoverContent honorNote={honorNote} isHonoredBy={isHonoredBy} />}>
+                        <div className="flex items-center gap-x-2">
+                            <Image src={HonoredIcon} alt={"取消评优图标"} width={20} height={20} />
+                            <div onClick={() => onHonorSucceed(id, true)}>取消评优</div>
+                        </div>
+                    </Popover> : <Fragment>
                         <Image src={AppraiseIcon} alt={"评优图标"} width={20} height={20} />
                         <div onClick={() => onHonorSucceed(id, false)}>评优</div>
                     </Fragment>}
@@ -120,11 +122,6 @@ export function CommentSection(props: CommentSectionProps) {
     function textareaChange(e: React.ChangeEvent<HTMLTextAreaElement>) {
         setinputedValue(e.target.value)
     }
-
-    useEffect(() => {
-        console.log(2, isHonoredBy);
-
-    }, [])
 
     async function handleReply() {
         const res = await addComment(Number(questionId), inputedValue, 3, Number(id))
